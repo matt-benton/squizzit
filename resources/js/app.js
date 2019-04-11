@@ -1,7 +1,8 @@
-import VueRouter from 'vue-router';
-import { routes } from './routes';
-import axios from 'axios';
-import { store } from './store';
+import VueRouter from 'vue-router'
+import { routes } from './routes'
+import axios from 'axios'
+import { store } from './store'
+import Vuelidate from 'vuelidate'
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -13,24 +14,13 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
+Vue.use(Vuelidate)
 
 const router = new VueRouter({
     routes
 });
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-
-// const files = require.context('./', true, /\.vue$/i);
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
-
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
