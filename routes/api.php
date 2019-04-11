@@ -19,3 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/register', 'API\UserController@store');
 Route::post('/login', 'API\UserController@login');
+Route::post('/check_for_existing_email', 'API\UserController@checkForExistingEmail');

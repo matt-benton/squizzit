@@ -3,6 +3,8 @@
         <div class="columns">
             <div class="column is-4 is-offset-4">
                 <div class="box">
+
+                    <!-- Email -->
                     <div class="field">
                         <label for="email" class="label">Email</label>
                         <div class="control has-icons-left has-icons-right">
@@ -21,9 +23,11 @@
                                 <i class="fas fa-check"></i>
                             </span>
                             <p class="help is-danger" v-if="$v.form.email.$error">A valid email address is required.</p>
+                            <p class="help is-danger" v-if="$v.form.email.unique === false">This email address has already been taken.</p>
                         </div>
                     </div>
 
+                    <!-- Password -->
                     <div class="field">
                         <label for="password" class="label">Password</label>
                         <div class="control has-icons-left has-icons-right">
@@ -50,6 +54,7 @@
                         </div>
                     </div>
 
+                    <!-- Password Confirmation -->
                     <div class="field">
                         <label class="label" for="password_confirmation">Confirm Password</label>
                         <div class="control has-icons-left has-icons-right">
@@ -116,6 +121,19 @@
                 email: {
                     required,
                     email,
+                    unique: function (value) {
+                        if (value === '') return true;
+
+                        return axios.post('/api/check_for_existing_email', {
+                            email: this.form.email
+                        })
+                        .then(response => {
+                            return !response.data.exists;
+                        })
+                        .catch(e => {
+                            return true;
+                        })
+                    },
                 },
                 password: {
                     required,
