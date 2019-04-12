@@ -54,18 +54,4 @@ class UserController extends Controller
 
         return response()->json(['error' => 'Login credentials do not match our records.'], 401);
     }
-
-    public function checkForExistingEmail(Request $request) {
-        $request->validate([
-            'email' => ['email']
-        ]);
-
-        $email = User::where('email', $request->email)->first();
-
-        if ($email) {
-            return response(['exists' => true]);
-        }
-
-        return response(['exists' => false]);
-    }
 }

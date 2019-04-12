@@ -23,7 +23,6 @@
                                 <i class="fas fa-check"></i>
                             </span>
                             <p class="help is-danger" v-if="$v.form.email.$error">A valid email address is required.</p>
-                            <p class="help is-danger" v-if="$v.form.email.unique === false">This email address has already been taken.</p>
                         </div>
                     </div>
 
@@ -32,10 +31,10 @@
                         <label for="password" class="label">Password</label>
                         <div class="control has-icons-left has-icons-right">
                             <input class="input"
-                                :class="{ 'is-danger': $v.form.password.$error, 'is-success': $v.form.password.$invalid === false }"
-                                type="password"
-                                name="password"
-                                v-model.trim.lazy="$v.form.password.$model">
+                                    :class="{ 'is-danger': $v.form.password.$error, 'is-success': $v.form.password.$invalid === false }"
+                                    type="password"
+                                    name="password"
+                                    v-model.trim.lazy="$v.form.password.$model">
                             <span class="icon is-small is-left">
                                 <i class="fas fa-lock"></i>
                             </span>
@@ -77,7 +76,12 @@
 
                     <div class="field">
                         <div class="control">
-                            <button type="button" class="button is-primary is-rounded" @click="register" :disabled="$v.$invalid">Sign Up</button>
+                            <button
+                                    type="button"
+                                    class="button is-primary is-rounded"
+                                    @click="register"
+                                    :disabled="$v.$invalid"
+                                    dusk="sign-up-button">Sign Up</button>
                             <router-link to="/" class="button is-text is-rounded">Go Back</router-link>
                         </div>
                     </div>
@@ -100,13 +104,15 @@
                     email: '',
                     password: '',
                     password_confirmation: '',
-                }
+                },
+                emailError: '',
             }
         },
         methods: {
             register() {
                 axios.post('/api/register', this.form)
                 .then(response => {
+                    console.log('success');
                     this.$store.dispatch('storeUser', response.data);
                     auth.storeUser(response.data.email, response.data.token);
                     this.$router.push('/home');
@@ -121,19 +127,6 @@
                 email: {
                     required,
                     email,
-                    unique: function (value) {
-                        if (value === '') return true;
-
-                        return axios.post('/api/check_for_existing_email', {
-                            email: this.form.email
-                        })
-                        .then(response => {
-                            return !response.data.exists;
-                        })
-                        .catch(e => {
-                            return true;
-                        })
-                    },
                 },
                 password: {
                     required,
