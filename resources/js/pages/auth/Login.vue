@@ -25,7 +25,7 @@
 
                     <div class="field">
                         <div class="control">
-                            <button type="button" class="button is-primary is-rounded" @click="login">Sign In</button>
+                            <button type="button" class="button is-primary is-rounded" @click="login" dusk="sign-in-button">Sign In</button>
                             <router-link to="/" class="button is-text is-rounded">Go Back</router-link>
                         </div>
                     </div>
