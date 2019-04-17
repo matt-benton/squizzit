@@ -29,6 +29,7 @@
                             <router-link to="/" class="button is-text is-rounded">Go Back</router-link>
                         </div>
                     </div>
+                    <p class="help is-danger" v-if="form.error">{{ form.error }}</p>
                 </div>
             </div>
         </div>
@@ -46,6 +47,7 @@
                 form: {
                     email: '',
                     password: '',
+                    error: '',
                 }
             }
         },
@@ -58,7 +60,7 @@
                     this.$router.push('/home');
                 })
                 .catch(e => {
-                    console.log(e);
+                    this.form.error = e.response.data.error;
                 });
             }
         }
