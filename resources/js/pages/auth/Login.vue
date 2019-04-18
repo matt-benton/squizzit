@@ -23,12 +23,20 @@
                         </div>
                     </div>
 
-                    <div class="field">
-                        <div class="control">
-                            <button type="button" class="button is-primary is-rounded" @click="login" dusk="sign-in-button">Sign In</button>
-                            <router-link to="/" class="button is-text is-rounded">Go Back</router-link>
+                    <div class="field is-horizontal">
+                        <div class="column is-two-thirds">
+                            <div class="control">
+                                <button type="button" class="button is-primary is-rounded" @click="login" dusk="sign-in-button">Sign In</button>
+                                <router-link to="/" class="button is-text is-rounded">Go Back</router-link>
+                            </div>
+                        </div>
+                        <div class="column is-one-third">
+                            <div class="control">
+                                <router-link to="/send_password_reset" class="button is-text is-rounded">Forgot password?</router-link>
+                            </div>
                         </div>
                     </div>
+
                     <p class="help is-danger" v-if="form.error">{{ form.error }}</p>
                 </div>
             </div>
