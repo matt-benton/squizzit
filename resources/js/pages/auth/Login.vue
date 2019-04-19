@@ -32,7 +32,7 @@
                         </div>
                         <div class="column is-one-third">
                             <div class="control">
-                                <router-link to="/send_password_reset" class="button is-text is-rounded">Forgot password?</router-link>
+                                <router-link to="/auth/send_password_reset" class="button is-text is-rounded">Forgot password?</router-link>
                             </div>
                         </div>
                     </div>

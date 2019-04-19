@@ -11,10 +11,10 @@
                     </h2>
                     <div class="columns">
                         <div class="column is-1">
-                            <router-link to="/login" class="button is-info is-inverted is-rounded">Login</router-link>
+                            <router-link to="/auth/login" class="button is-info is-inverted is-rounded">Login</router-link>
                         </div>
                         <div class="column is-1">
-                            <router-link to="/signup" class="button is-info is-inverted is-rounded">Make an Account</router-link>
+                            <router-link to="/auth/signup" class="button is-info is-inverted is-rounded">Make an Account</router-link>
                         </div>
                     </div>
                 </div>
