@@ -43,7 +43,7 @@
         },
         methods: {
             submit() {
-                axios.post('/api/send_password_reset', {
+                axios.post('/password/email', {
                     email: this.email
                 })
                 .then(response => {

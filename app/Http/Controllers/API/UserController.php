@@ -56,18 +56,4 @@ class UserController extends Controller
 
         return response()->json(['error' => 'Login credentials do not match our records.'], 401);
     }
-
-    public function sendPasswordReset(Request $request)
-    {
-        $messages = ['exists' => 'An account with this email address could not be found.'];
-
-        $validator = Validator::make($request->all(), ['email' => 'required|email|exists:users'], $messages)->validate();
-
-        $user = User::where('email', $request->email)->first();
-
-        \Mail::to($user)
-            ->send(new ResetPassword);
-
-        return response('SUCCESS: An email was sent to reset your password.');
-    }
 }
