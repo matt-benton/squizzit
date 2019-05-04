@@ -16,7 +16,7 @@ class SignUpTest extends DuskTestCase
     public function testSignUp()
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit('/#/signup')
+            $browser->visit('/#/auth/signup')
                     ->type('email', 'matt@test.com')
                     ->type('password', 'Secret001')
                     ->type('password_confirmation', 'Secret001')
@@ -35,7 +35,7 @@ class SignUpTest extends DuskTestCase
         ]);
 
         $this->browse(function (Browser $browser) {
-            $browser->visit('/#/login')
+            $browser->visit('/#/auth/login')
                     ->type('email', 'matt@test.com')
                     ->type('password', 'Secret001')
                     ->click('@sign-in-button')
