@@ -1,15 +1,15 @@
 <template>
     <div>
+        <navbar></navbar>
         <div>
             <h1>Home</h1>
-        </div>
-        <div>
-            <button @click="logout">Logout</button>
         </div>
     </div>
 </template>
 
 <script>
+    import Navbar from '../components/Navbar.vue'
+
     export default {
         data() {
             return {
@@ -19,12 +19,8 @@
         created() {
             this.$store.dispatch('checkForToken');
         },
-        methods: {
-            logout() {
-                localStorage.clear();
-                this.$store.dispatch('clearUser');
-                this.$router.push('/');
-            }
+        components: {
+            'navbar': Navbar
         }
     }
 </script>
