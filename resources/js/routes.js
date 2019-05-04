@@ -19,6 +19,6 @@ export const routes = [
     { path: '/auth/signup', component: SignUp },
     { path: '/auth/login', component: Login },
     { path: '/auth/send_password_reset', component: SendPasswordReset },
-    { path: '/auth/reset_password', component: ResetPassword },
+    { path: '/auth/reset_password/:token', component: ResetPassword },
     { path: '/home', component: Home, beforeEnter: checkAuth },
 ];

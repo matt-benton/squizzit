@@ -113,7 +113,6 @@
                 axios.post('/api/register', this.form)
                 .then(response => {
                     this.$store.dispatch('storeUser', response.data);
-                    auth.storeUser(response.data.email, response.data.token);
                     this.$router.push('/home');
                 })
                 .catch(e => {
