@@ -29,7 +29,7 @@
 
                             <div class="field">
                                 <div class="control">
-                                    <button class="button is-primary is-rounded" :disabled="$v.$invalid" @click="submit">Save Quiz</button>
+                                    <button class="button is-primary is-rounded" :disabled="$v.$invalid" @click="submit" dusk="save-quiz-button">Save Quiz</button>
                                 </div>
                             </div>
                         </div>
@@ -63,9 +63,6 @@
                     if (response.data.hasOwnProperty('id')) {
                         this.$router.push(`/quizzes/${response.data.id}`);
                     }
-                })
-                .catch(e => {
-
                 })
             }
         },
