@@ -46,7 +46,7 @@ class QuizController extends Controller
      */
     public function show(Quiz $quiz)
     {
-        dd('hey');
+        return response(['quiz' => $quiz]);
     }
 
     /**

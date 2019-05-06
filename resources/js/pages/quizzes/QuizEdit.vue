@@ -3,7 +3,9 @@
         <navbar></navbar>
         <div class="container">
             <section class="section">
-                {{ quiz }}
+                <p>{{ quiz.id }}</p>
+                <p>{{ quiz.name }}</p>
+                <p>{{ quiz.description }}</p>
             </section>
         </div>
     </div>
