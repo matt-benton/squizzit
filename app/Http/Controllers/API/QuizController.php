@@ -35,7 +35,7 @@ class QuizController extends Controller
             'description' => $request->description
         ]);
 
-        return response('success');
+        return response(['id' => $quiz->id]);
     }
 
     /**
@@ -46,7 +46,7 @@ class QuizController extends Controller
      */
     public function show(Quiz $quiz)
     {
-        //
+        dd('hey');
     }
 
     /**

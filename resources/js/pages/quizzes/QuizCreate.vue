@@ -60,7 +60,9 @@
                     description: this.form.description,
                 })
                 .then(response => {
-
+                    if (response.data.hasOwnProperty('id')) {
+                        this.$router.push(`/quizzes/${response.data.id}`);
+                    }
                 })
                 .catch(e => {
 
