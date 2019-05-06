@@ -17,5 +17,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware('auth:api')->group(function () {
+    Route::apiResources([
+        'quizzes' => 'API\QuizController',
+    ]);
+});
+
 Route::post('/register', 'API\UserController@store');
 Route::post('/login', 'API\UserController@login');

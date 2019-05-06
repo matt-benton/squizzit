@@ -68,6 +68,7 @@
                     this.$router.push('/home');
                 })
                 .catch(e => {
+                    console.log(e);
                     this.form.error = e.response.data.error;
                 });
             }

@@ -1,38 +1,40 @@
 <template>
     <div>
         <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
-            <div id="navbarBasicExample" class="navbar-menu">
-                <div class="navbar-start">
-                    <a class="navbar-item">
-                        Home
-                    </a>
-
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link">
-                            Quizzes
+            <div class="container">
+                <div class="navbar-menu">
+                    <div class="navbar-start">
+                        <a class="navbar-item">
+                            Home
                         </a>
 
-                        <div class="navbar-dropdown">
-                            <a class="navbar-item">
-                                Make A New Quiz
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a class="navbar-link">
+                                Quizzes
                             </a>
-                            <a class="navbar-item">
-                                My Quizzes
-                            </a>
+
+                            <div class="navbar-dropdown">
+                                <router-link to="/quizzes/create" class="navbar-item">
+                                    Make A New Quiz
+                                </router-link>
+                                <a class="navbar-item">
+                                    My Quizzes
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="navbar-end">
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link">
-                            {{ email }}
-                        </a>
-
-                        <div class="navbar-dropdown">
-                            <a class="navbar-item" @click="logout">
-                                Logout
+                    <div class="navbar-end">
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a class="navbar-link">
+                                {{ email }}
                             </a>
+
+                            <div class="navbar-dropdown">
+                                <a class="navbar-item" @click="logout">
+                                    Logout
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -42,6 +44,10 @@
 </template>
 
 <script>
+    import Auth from '../services/AuthService'
+
+    const auth = new Auth();
+
     export default {
         data() {
             return {
@@ -51,6 +57,7 @@
         methods: {
             logout() {
                 localStorage.clear();
+                auth.clearRequestHeaders();
                 this.$store.dispatch('clearUser');
                 this.$router.push('/');
             }
