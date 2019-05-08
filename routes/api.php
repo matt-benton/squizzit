@@ -19,7 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::middleware('auth:api')->group(function () {
     Route::apiResources([
-        'quizzes' => 'API\QuizController',
+        'answers' => 'API\AnswerController',
+        'questions' => 'API\QuestionController',
+        'quizzes' => 'API\QuizController'
     ]);
 });
 

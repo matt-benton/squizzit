@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Quiz;
+use App\Answer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class QuizController extends Controller
+class AnswerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,50 +26,49 @@ class QuizController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required'
-        ]);
+        $answer = new Answer;
+        $answer->question_id = $request->question_id;
+        $answer->text = $request->text;
+        $answer->correct = $request->correct;
+        $answer->save();
 
-        $quiz = Quiz::create([
-            'name' => $request->name,
-            'description' => $request->description
-        ]);
-
-        return response(['id' => $quiz->id]);
+        return response(['answer' => $answer]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Quiz  $quiz
+     * @param  \App\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Answer $answer)
     {
-        $quiz = Quiz::where('id', $id)->with('questions.answers')->first();
-
-        return response(['quiz' => $quiz]);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Quiz  $quiz
+     * @param  \App\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Quiz $quiz)
+    public function update(Request $request, Answer $answer)
     {
-        //
+        $answer->text = $request->text;
+        $answer->correct = $request->correct;
+        $answer->save();
+
+        return response(['answer' => $answer]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Quiz  $quiz
+     * @param  \App\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Quiz $quiz)
+    public function destroy(Answer $answer)
     {
         //
     }

@@ -16,8 +16,8 @@ class CreateAnswersTable extends Migration
         Schema::create('answers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('question_id');
-            $table->string('text');
-            $table->boolean('correct');
+            $table->string('text')->nullable();
+            $table->boolean('correct')->default(0);
             $table->timestamps();
 
             $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
