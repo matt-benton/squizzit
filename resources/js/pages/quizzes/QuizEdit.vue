@@ -17,13 +17,13 @@
                                 Questions
                             </p>
                             <ul class="menu-list">
-                                <li v-for="question in quiz.questions"><a :href="'#question-container-' + question.id">{{ question.text.length > 60 ? question.text.substring(0, 60) + '...' : question.text }}</a></li>
+                                <li v-for="question in quiz.questions" :key="question.id"><a :href="'#question-container-' + question.id">{{ question.text.length > 60 ? question.text.substring(0, 60) + '...' : question.text }}</a></li>
                             </ul>
                         </aside>
                     </div>
 
                     <div class="column">
-                        <div v-for="question in quiz.questions" :id="'question-container-' + question.id">
+                        <div v-for="question in quiz.questions" :key="question.id" :id="'question-container-' + question.id">
                             <div class="field">
                                 <span class="is-pulled-right has-text-danger" @click="removeQuestion(question.id)"><i class="fas fa-times"></i></span>
                                 <label class="label" for="question_type">Question Type</label>
@@ -50,7 +50,7 @@
                             </div>
 
                             <div v-show="question.type === 'multiple_choice'">
-                                <div v-for="answer in question.answers">
+                                <div v-for="answer in question.answers" :key="answer.id">
                                     <div class="field">
                                         <label class="label" for="answer_text">Answer</label>
                                         <input type="text" class="input" name="answer_text" v-model="answer.text" @change="updateAnswer(answer.id, question.id)">
