@@ -1,95 +1,44 @@
 <template>
     <div>
         <navbar></navbar>
-        <div class="container">
-            <section class="section">
-                <p>
-                    <span class="is-size-3">{{ quiz.name }}</span>
-                    <span class="has-text-weight-light">{{ quiz.description }}</span>
-                </p>
-            </section>
-            <hr>
-            <section class="section">
-                <div class="columns">
-                    <div class="column is-one-quarter">
-                        <aside class="menu">
-                            <p class="menu-label">
-                                Questions
-                            </p>
-                            <ul class="menu-list">
-                                <li v-for="question in quiz.questions" :key="question.id"><a :href="'#question-container-' + question.id">{{ question.text.length > 60 ? question.text.substring(0, 60) + '...' : question.text }}</a></li>
-                            </ul>
-                        </aside>
-                    </div>
-
-                    <div class="column">
-                        <div v-for="question in quiz.questions" :key="question.id" :id="'question-container-' + question.id">
-                            <div class="field">
-                                <span class="is-pulled-right has-text-danger" @click="removeQuestion(question.id)"><i class="fas fa-times"></i></span>
-                                <label class="label" for="question_type">Question Type</label>
-                                <div class="control">
-                                    <div class="select" name="question_type">
-                                        <select v-model="question.type" @change="updateQuestion(question.id)">
-                                            <option value="multiple_choice">Multiple Choice</option>
-                                            <option value="short_answer">Short Answer</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="field">
-                                <label class="label" for="question_text">Question Text</label>
-                                <div class="control">
-                                    <textarea
-                                            class="textarea"
-                                            name="question_text"
-                                            placeholder="Enter Question"
-                                            v-model.lazy="question.text"
-                                            @change="updateQuestion(question.id)"></textarea>
-                                </div>
-                            </div>
-
-                            <div v-show="question.type === 'multiple_choice'">
-                                <div v-for="answer in question.answers" :key="answer.id">
-                                    <div class="field">
-                                        <label class="label" for="answer_text">Answer</label>
-                                        <input type="text" class="input" name="answer_text" v-model="answer.text" @change="updateAnswer(answer.id, question.id)">
-                                    </div>
-
-                                    <label class="answer_correct">
-                                        <input type="checkbox" v-model="answer.correct" @change="updateAnswer(answer.id, question.id)">
-                                        Correct Answer
-                                    </label>
-                                </div>
-
-                                <div class="field">
-                                    <div class="control">
-                                        <button class="button is-rounded" @click="addAnswer(question.id)">Add Answer</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                        </div>
-
-                        <div class="field">
-                            <div class="control">
-                                <button class="button is-rounded" @click="addQuestion">New Question</button>
-                            </div>
-                        </div>
-                    </div>
+        <section class="section is-small">
+            <p><span class="is-size-3">{{ quiz.name }}</span></p>
+            <p><span class="has-text-weight-light">{{ quiz.description }}</span></p>
+        </section>
+        <hr>
+        <section class="section">
+            <div class="columns">
+                <!-- left side nav -->
+                <div class="column is-one-quarter">
+                    <aside class="menu">
+                        <p class="menu-label">
+                            Questions 
+                            <button class="button is-primary is-rounded is-small is-pulled-right" @click="selectQuestion(returnNewQuestion())">+ New</button>
+                        </p>
+                        <ul class="menu-list">
+                            <li v-for="question in quiz.questions" :key="question.id" @click="selectQuestion(question)"><a href="#">{{ question.text.length > 60 ? question.text.substring(0, 60) + '...' : question.text }}</a></li>
+                        </ul>
+                    </aside>
                 </div>
-            </section>
-        </div>
+
+                <!-- questions/form -->
+                <div class="column ml-md">
+                    <question-editor v-if="selectedQuestion" :question="selectedQuestion" @question-saved="saveQuestion($event)"></question-editor>
+                </div>
+            </div>
+        </section>
     </div>
 </template>
 
 <script>
     import Navbar from '../../components/Navbar.vue'
+    import QuestionEditor from '../../components/QuestionEditor.vue'
 
     export default {
         data() {
             return {
-                quiz: ''
+                quiz: '',
+                selectedQuestion: ''
             }
         },
         created() {
@@ -102,9 +51,11 @@
                     this.quiz = response.data.quiz;
                 })
             },
-            addQuestion () {
+            addQuestion (question) {
                 axios.post('/api/questions', {
-                    quiz_id: this.quiz.id
+                    quiz_id: this.quiz.id,
+                    type: question.type,
+                    text: question.text
                 })
                 .then(response => {
                     this.quiz.questions.push(response.data.question);
@@ -120,6 +71,20 @@
                 .then(response => {
                     question = response.data.question;
                 })
+            },
+            selectQuestion (question) {
+                this.selectedQuestion = question;
+            },
+            deselectQuestion () {
+                this.selectedQuestion = '';
+            },
+            returnNewQuestion () {
+                return {
+                    answers: [],
+                    quiz_id: this.quiz.id,
+                    text: '',
+                    type: ''
+                }
             },
             addAnswer (question_id) {
                 let question = this.findQuestion(question_id);
@@ -160,10 +125,20 @@
                 .then(response => {
                     this.quiz.questions.splice(index, 1);
                 })
+            },
+            saveQuestion(question) {
+                if (question.hasOwnProperty('id')) {
+                    this.updateQuestion(question);
+                } else {
+                    this.addQuestion(question);
+                }
+
+                this.deselectQuestion();
             }
         },
         components: {
-            'navbar': Navbar
+            'navbar': Navbar,
+            'question-editor': QuestionEditor
         }
     }
 </script>

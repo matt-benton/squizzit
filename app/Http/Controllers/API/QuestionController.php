@@ -34,11 +34,13 @@ class QuestionController extends Controller
     {
         $question = new Question;
         $question->quiz_id = $request->quiz_id;
-        $question->text = '';
+        $question->type = $request->type;
+        $question->text = $request->text;
         $question->save();
 
+        // ! might not need this
         // Get an empty collection for adding answers in the view
-        $question->answers = $question->answers;
+        // $question->answers = $question->answers;
 
         return response(['question' => $question]);
     }
