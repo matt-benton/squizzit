@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Quiz;
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
+use App\Quiz;
 
 class QuizController extends Controller
 {
@@ -15,7 +17,7 @@ class QuizController extends Controller
      */
     public function index()
     {
-        //
+        return response(['quizzes' => Auth::user()->quizzes]);
     }
 
     /**
@@ -34,6 +36,8 @@ class QuizController extends Controller
             'name' => $request->name,
             'description' => $request->description
         ]);
+
+        Auth::user()->quizzes()->attach($quiz->id, ['role' => 'maker']);
 
         return response(['id' => $quiz->id]);
     }

@@ -4,9 +4,9 @@
             <div class="container">
                 <div class="navbar-menu">
                     <div class="navbar-start">
-                        <a class="navbar-item">
+                        <router-link to="/home" class="navbar-item">
                             Home
-                        </a>
+                        </router-link>
 
                         <div class="navbar-item has-dropdown is-hoverable">
                             <a class="navbar-link">
@@ -17,9 +17,9 @@
                                 <router-link to="/quizzes/create" class="navbar-item">
                                     Make A New Quiz
                                 </router-link>
-                                <a class="navbar-item">
+                                <router-link to="/quizzes" class="navbar-item">
                                     My Quizzes
-                                </a>
+                                </router-link>
                             </div>
                         </div>
                     </div>
