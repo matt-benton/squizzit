@@ -2,15 +2,18 @@
     <div>
         <navbar></navbar>
         <div class="container">
-            <section class="section">
-                <div class="card" v-for="quiz in quizzes" :key="quiz.id">
+            <section class="section pb-sm">
+                <p class="is-size-4 has-text-grey">My Quizzes</p>
+            </section>
+            <section class="section quiz-grid">
+                <div class="card" v-for="quiz in orderedQuizzes" :key="quiz.id">
                     <header class="card-header">
-                        <p class="card-header-title">
-                            This is my test
-                        </p>
+                        <router-link :to="`/quizzes/${quiz.id}`" class="card-header-title">
+                            {{ quiz.name }}
+                        </router-link>
                     </header>
                     <div class="card-content">
-                        This is a test description
+                        {{ quiz.description }}
                     </div>
                 </div>
             </section>
@@ -25,6 +28,11 @@
         data() {
             return {
                 quizzes: []
+            }
+        },
+        computed: {
+            orderedQuizzes: function () {
+                return this.quizzes.sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase())
             }
         },
         created() {
@@ -43,3 +51,13 @@
         },
     }
 </script>
+
+<style>
+
+.quiz-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+}
+
+</style>

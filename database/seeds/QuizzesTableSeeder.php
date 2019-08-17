@@ -12,7 +12,7 @@ class QuizzesTableSeeder extends Seeder
     public function run()
     {
         // create quizzes and attach them to the default user
-        $quizzes = factory(App\Quiz::class, 10)->create();
+        $quizzes = factory(App\Quiz::class, 50)->create();
 
         $defaultUser = App\User::findOrFail(1);
         
