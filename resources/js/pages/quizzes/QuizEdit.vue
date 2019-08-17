@@ -1,32 +1,37 @@
 <template>
-    <div>
+    <div class="page-container has-background-light">
         <navbar></navbar>
-        <section class="section is-small">
-            <p><span class="is-size-3">{{ quiz.name }}</span></p>
-            <p><span class="has-text-weight-light">{{ quiz.description }}</span></p>
-        </section>
-        <hr>
-        <section class="section">
-            <div class="columns">
-                <!-- left side nav -->
-                <div class="column is-one-quarter">
-                    <aside class="menu">
-                        <p class="menu-label">
-                            Questions 
-                            <button class="button is-primary is-rounded is-small is-pulled-right" @click="selectQuestion(returnNewQuestion())">+ New</button>
-                        </p>
-                        <ul class="menu-list">
-                            <li v-for="question in quiz.questions" :key="question.id" @click="selectQuestion(question)"><a href="#">{{ question.text.length > 60 ? question.text.substring(0, 60) + '...' : question.text }}</a></li>
-                        </ul>
-                    </aside>
-                </div>
+        <div class="container">
+            <section class="section is-small">
+                <p><span class="is-size-3">{{ quiz.name }}</span></p>
+                <p><span class="has-text-weight-light">{{ quiz.description }}</span></p>
+            </section>
+            <hr class="has-background-primary">
+            <section class="section">
+                <div class="columns">
+                    <!-- left side nav -->
+                    <div class="column is-one-quarter">
+                        <aside class="menu">
+                            <p class="menu-label">
+                                Questions 
+                                <button class="button is-primary is-rounded is-small is-pulled-right" @click="selectQuestion(returnNewQuestion())">+ New</button>
+                            </p>
+                            <ol class="menu-list">
+                                <li v-for="question in quiz.questions" :key="question.id" @click="selectQuestion(question)"><a>{{ question.text.length > 60 ? question.text.substring(0, 60) + '...' : question.text }}</a></li>
+                            </ol>
+                        </aside>
+                    </div>
 
-                <!-- questions/form -->
-                <div class="column ml-md">
-                    <question-editor v-if="selectedQuestion" :question="selectedQuestion" @question-saved="saveQuestion($event)"></question-editor>
+                    <!-- questions/form -->
+                    <div class="column ml-md">
+                        <question-editor 
+                            v-if="selectedQuestion" 
+                            :question="selectedQuestion" 
+                            @question-saved="saveQuestion($event)"></question-editor>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </div>
 </template>
 
@@ -61,10 +66,8 @@
                     this.quiz.questions.push(response.data.question);
                 })
             },
-            updateQuestion (id) {
-                let question = this.findQuestion(id);
-
-                axios.put(`/api/questions/${id}`, {
+            updateQuestion (question) {
+                axios.put(`/api/questions/${question.id}`, {
                     text: question.text,
                     type: question.type
                 })
@@ -142,3 +145,11 @@
         }
     }
 </script>
+
+<style>
+
+.page-container {
+    height: 100vh;
+}
+
+</style>

@@ -50,7 +50,7 @@ class QuizController extends Controller
      */
     public function show($id)
     {
-        $quiz = Quiz::where('id', $id)->with('questions.answers')->first();
+        $quiz = Auth::user()->quizzes()->where('id', $id)->with('questions.answers')->first();
 
         return response(['quiz' => $quiz]);
     }

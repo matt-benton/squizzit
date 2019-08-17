@@ -25,15 +25,14 @@
         </div>
 
         <div v-show="question.type === 'multiple_choice'">
-            <div v-for="answer in question.answers" :key="answer.id">
+            <div v-for="answer in question.answers" :key="answer.id" class="mb-sm">
                 <div class="field">
                     <input 
                         type="text" 
                         class="input" 
                         name="answer_text"
                         v-model="answer.text" 
-                        placeholder="Answer Text Here"
-                        @change="updateAnswer(answer.id, question.id)">
+                        placeholder="Answer Text Here">
                 </div>
 
                 <!-- <label class="answer_correct">
@@ -41,15 +40,17 @@
                     Correct
                 </label> -->
             </div>
-
-            <div class="field">
-                <div class="control">
-                    <button class="button is-rounded is-pulled-right" @click="addAnswer(question.id)">Add Answer</button>
-                </div>
-            </div>
         </div>
 
-        <button v-show="question.type && question.text" class="button is-rounded is-pulled-right ml-sm" @click="$emit('question-saved', question)">Save Question</button>
+        <button v-show="question.type && question.text" 
+            class="button is-rounded is-primary is-pulled-right ml-sm" 
+            @click="$emit('question-saved', question)">
+            Save Question
+        </button>
+        <button class="button is-rounded is-pulled-right" 
+            @click="addAnswer(question.id)" v-if="question.type === 'multiple_choice'">
+            Add Answer
+        </button>
     </div>
 </template>
 
@@ -63,7 +64,9 @@
         },
         props: ['question'],
         methods: {
-            
+            addAnswer() {
+                this.question.answers.push({ text: '' });
+            }
         }
     }
 </script>
