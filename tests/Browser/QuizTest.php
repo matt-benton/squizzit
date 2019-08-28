@@ -6,14 +6,12 @@ use Tests\DuskTestCase;
 use Tests\Browser\Pages\Login;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Support\Str;
-use App\User;
 
 class QuizTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
-    public function testExample()
+    public function testCreatingAQuiz()
     {
         $this->browse(function (Browser $browser) {
             $browser->visit(new Login)
