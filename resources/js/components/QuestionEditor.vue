@@ -1,11 +1,11 @@
 <template>
-    <div>
+    <div id="question-editor-container">
         <div class="field">
             <!-- <span class="is-pulled-right has-text-danger" @click="removeQuestion(question.id)"><i class="fas fa-times"></i></span> -->
             <label class="label" for="question_type">Select Type</label>
             <div class="control">
                 <div class="select" name="question_type">
-                    <select v-model="question.type">
+                    <select v-model="question.type" name="question_type">
                         <option value="multiple_choice">Multiple Choice</option>
                         <option value="short_answer">Short Answer</option>
                     </select>
@@ -44,7 +44,8 @@
 
         <button v-show="question.type && question.text" 
             class="button is-rounded is-primary is-pulled-right ml-sm" 
-            @click="$emit('question-saved', question)">
+            @click="$emit('question-saved', question)"
+            id="save-question-button">
             Save Question
         </button>
         <button class="button is-rounded is-pulled-right" 

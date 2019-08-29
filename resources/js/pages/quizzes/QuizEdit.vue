@@ -11,10 +11,10 @@
                 <div class="columns">
                     <!-- left side nav -->
                     <div class="column is-one-quarter">
-                        <aside class="menu">
+                        <aside class="menu" id="question-nav-list">
                             <p class="menu-label">
                                 Questions 
-                                <button class="button is-primary is-rounded is-small is-pulled-right" @click="selectQuestion(returnNewQuestion())">+ New</button>
+                                <button class="button is-primary is-rounded is-small is-pulled-right" id="new-question-button" @click="selectQuestion(returnNewQuestion())">+ New</button>
                             </p>
                             <ol class="menu-list">
                                 <li v-for="question in quiz.questions" :key="question.id" @click="selectQuestion(question)"><a>{{ question.text.length > 60 ? question.text.substring(0, 60) + '...' : question.text }}</a></li>

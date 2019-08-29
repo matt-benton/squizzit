@@ -2,12 +2,9 @@
 
 namespace Tests\Browser\Pages;
 
-use Illuminate\Support\Str;
 use Laravel\Dusk\Browser;
-use App\User;
-use Hash;
 
-class Login extends Page
+class QuizCreate extends Page
 {
     /**
      * Get the URL for the page.
@@ -16,7 +13,7 @@ class Login extends Page
      */
     public function url()
     {
-        return '/#/auth/login';
+        return '/#/quizzes/create';
     }
 
     /**
@@ -43,17 +40,11 @@ class Login extends Page
         ];
     }
 
-    public function loginUser(Browser $browser)
+    public function createQuiz(Browser $browser)
     {
-        $user = User::create([
-            'email' => 'matt@test.com',
-            'password' => Hash::make('Secret001'),
-            'api_token' => Str::random(60),
-        ]);
-
-        $browser->type('email', $user->email)
-                ->type('password', 'Secret001')
-                ->click('@sign-in-button')
-                ->waitForText('Home');
+        $browser->type('name', 'My Test Quiz')
+                ->type('description', 'This is a quiz that was made by an automated test.')
+                ->click('@save-quiz-button')
+                ->waitForText('My Test Quiz');
     }
 }
