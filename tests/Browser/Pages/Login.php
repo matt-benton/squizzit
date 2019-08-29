@@ -2,13 +2,18 @@
 
 namespace Tests\Browser\Pages;
 
-use Illuminate\Support\Str;
 use Laravel\Dusk\Browser;
 use App\User;
-use Hash;
 
 class Login extends Page
 {
+    protected $user;
+
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
+
     /**
      * Get the URL for the page.
      *
@@ -45,14 +50,8 @@ class Login extends Page
 
     public function loginUser(Browser $browser)
     {
-        $user = User::create([
-            'email' => 'matt@test.com',
-            'password' => Hash::make('Secret001'),
-            'api_token' => Str::random(60),
-        ]);
-
-        $browser->type('email', $user->email)
-                ->type('password', 'Secret001')
+        $browser->type('email', $this->user->email)
+                ->type('password', 'password')
                 ->click('@sign-in-button')
                 ->waitForText('Home');
     }

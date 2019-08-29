@@ -5,8 +5,11 @@ namespace Tests\Browser;
 use Tests\DuskTestCase;
 use Tests\Browser\Pages\Login;
 use Tests\Browser\Pages\QuizCreate;
+use Tests\Browser\Pages\QuizEdit;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Str;
+use Hash;
 
 class QuizTest extends DuskTestCase
 {
@@ -14,8 +17,10 @@ class QuizTest extends DuskTestCase
 
     public function testCreatingAQuiz()
     {
-        $this->browse(function (Browser $browser) {
-            $browser->visit(new Login)
+        $user = factory(\App\User::class)->create();
+
+        $this->browse(function (Browser $browser) use ($user) {
+            $browser->visit(new Login($user))
                     ->loginUser()
                     ->visit(new QuizCreate)
                     ->createQuiz()
@@ -30,8 +35,10 @@ class QuizTest extends DuskTestCase
 
     public function testAddingQuestionToQuiz()
     {
-        $this->browse(function (Browser $browser) {
-            $browser->visit(new Login)
+        $user = factory(\App\User::class)->create();
+
+        $this->browse(function (Browser $browser) use ($user) {
+            $browser->visit(new Login($user))
                     ->loginUser()
                     ->visit(new QuizCreate)
                     ->createQuiz()
@@ -44,6 +51,21 @@ class QuizTest extends DuskTestCase
                     ->assertMissing('#question-editor-container')
                     ->pause(1000)
                     ->assertSeeIn('#question-nav-list', 'What is your name?');
+        });
+    }
+
+    public function testAddingAnswerToQuestion()
+    {
+        $user = factory(\App\User::class)->create();
+        $quiz = factory(\App\Quiz::class)->create();
+        $user->quizzes()->attach($quiz->id, ['role' => 'maker']);
+        $quiz->questions()->save(factory(\App\Question::class)->make());
+
+        $this->browse(function (Browser $browser) use ($user, $quiz) {
+            $browser->visit(new Login($user))
+                ->loginUser()
+                ->visit(new QuizEdit($quiz))
+                ->addAnswerToQuestion();
         });
     }
 }

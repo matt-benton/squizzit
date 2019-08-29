@@ -25,14 +25,29 @@
         </div>
 
         <div v-show="question.type === 'multiple_choice'">
-            <div v-for="answer in question.answers" :key="answer.id" class="mb-sm">
-                <div class="field">
-                    <input 
-                        type="text" 
-                        class="input" 
-                        name="answer_text"
-                        v-model="answer.text" 
-                        placeholder="Answer Text Here">
+            <div v-for="(answer, index) in question.answers" :key="answer.id" class="mb-sm">
+                <div class="field is-horizontal">
+                    <div class="field-body">
+                        <div class="field is-expanded">
+                            <div class="field has-addons">
+                                <div class="control is-expanded">
+                                    <input 
+                                        type="text" 
+                                        class="input" 
+                                        name="answer_text"
+                                        v-model="answer.text" 
+                                        placeholder="Answer Text Here"
+                                        :dusk="`answer-input-${index}`">
+                                </div>
+                                <!-- <div class="control">
+                                    <button class="button is-primary" style="border: 0px"><i class="fas fa-check"></i></button>
+                                </div> -->
+                                <!-- <div class="control">
+                                    <button class="button is-danger is-outlined" style="border: 0px"><i class="fas fa-times"></i></button>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- <label class="answer_correct">
@@ -49,7 +64,7 @@
             Save Question
         </button>
         <button class="button is-rounded is-pulled-right" 
-            @click="addAnswer(question.id)" v-if="question.type === 'multiple_choice'">
+            @click="addAnswer(question.id)" v-if="question.type === 'multiple_choice'" id="add-answer-button">
             Add Answer
         </button>
     </div>
