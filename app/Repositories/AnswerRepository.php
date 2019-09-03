@@ -15,7 +15,11 @@ class AnswerRepository
         {
             $ans = new Answer;
             $ans->text = $answer['text'];
-            $ans->correct = $answer['correct'];
+
+            if (array_key_exists('correct', $answer)) {
+                $ans->correct = $answer['correct'];
+            }
+
             array_push($newAnswers, $ans);
         }
 

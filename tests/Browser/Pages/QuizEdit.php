@@ -52,9 +52,6 @@ class QuizEdit extends Page
         $browser->pause(1000)
                 ->click("@question-link-{$this->quiz->questions[0]->id}")
                 ->click('#add-answer-button')
-                ->type('@answer-input-0', 'Answer 1')
-                ->click('#add-answer-button')
-                ->type('@answer-input-1', 'Answer 2')
-                ->pause(10000);
+                ->type('@answer-input-0', 'Answer 1');
     }
 }

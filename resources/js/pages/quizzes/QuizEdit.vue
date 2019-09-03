@@ -60,9 +60,7 @@
             },
             addQuestion (question) {
                 axios.post('/api/questions', {
-                    quiz_id: this.quiz.id,
-                    type: question.type,
-                    text: question.text
+                    question
                 })
                 .then(response => {
                     this.quiz.questions.push(response.data.question);
@@ -70,11 +68,11 @@
             },
             updateQuestion (question) {
                 axios.put(`/api/questions/${question.id}`, {
-                    text: question.text,
-                    type: question.type
+                    question
                 })
                 .then(response => {
-                    question = response.data.question;
+                    let oldQuestion = this.quiz.questions.find(q => q.id === response.data.question.id);
+                    oldQuestion = response.data.question;
                 })
             },
             selectQuestion (question) {

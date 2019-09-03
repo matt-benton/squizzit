@@ -39,21 +39,15 @@
                                         placeholder="Answer Text Here"
                                         :dusk="`answer-input-${index}`">
                                 </div>
-                                <!-- <div class="control">
-                                    <button class="button is-primary" style="border: 0px"><i class="fas fa-check"></i></button>
-                                </div> -->
-                                <!-- <div class="control">
-                                    <button class="button is-danger is-outlined" style="border: 0px"><i class="fas fa-times"></i></button>
-                                </div> -->
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- <label class="answer_correct">
-                    <input type="checkbox" v-model="answer.correct" @change="updateAnswer(answer.id, question.id)">
+                <label class="answer_correct">
+                    <input type="checkbox" v-model="answer.correct">
                     Correct
-                </label> -->
+                </label>
             </div>
         </div>
 

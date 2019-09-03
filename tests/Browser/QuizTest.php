@@ -8,8 +8,6 @@ use Tests\Browser\Pages\QuizCreate;
 use Tests\Browser\Pages\QuizEdit;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Support\Str;
-use Hash;
 
 class QuizTest extends DuskTestCase
 {
@@ -59,13 +57,22 @@ class QuizTest extends DuskTestCase
         $user = factory(\App\User::class)->create();
         $quiz = factory(\App\Quiz::class)->create();
         $user->quizzes()->attach($quiz->id, ['role' => 'maker']);
-        $quiz->questions()->save(factory(\App\Question::class)->make());
+        $question = $quiz->questions()->save(factory(\App\Question::class)->make());
 
-        $this->browse(function (Browser $browser) use ($user, $quiz) {
+        $this->browse(function (Browser $browser) use ($user, $quiz, $question) {
             $browser->visit(new Login($user))
-                ->loginUser()
-                ->visit(new QuizEdit($quiz))
-                ->addAnswerToQuestion();
+                    ->loginUser()
+                    ->visit(new QuizEdit($quiz))
+                    ->addAnswerToQuestion()
+                    ->click('#save-question-button')
+                    ->assertMissing('#question-editor-container')
+                    ->click('@question-link-1')
+                    ->assertValue('@answer-input-0', 'Answer 1');
+
+            $this->assertDatabaseHas('answers', [
+                'question_id' => $question->id,
+                'text' => 'Answer 1'
+            ]);
         });
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Question;
+use App\Answer;
 use App\Http\Controllers\Controller;
 use App\Repositories\AnswerRepository;
 use Illuminate\Http\Request;
@@ -32,15 +33,15 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
+        $inputQuestion = $request->question;
+
         $question = new Question;
-        $question->quiz_id = $request->quiz_id;
-        $question->type = $request->type;
-        $question->text = $request->text;
+        $question->quiz_id = $inputQuestion['quiz_id'];
+        $question->type = $inputQuestion['type'];
+        $question->text = $inputQuestion['text'];
         $question->save();
 
-        // ! might not need this
-        // Get an empty collection for adding answers in the view
-        // $question->answers = $question->answers;
+        $question->answers = $this->answer->saveManyAnswers($inputQuestion['answers'], $question);
 
         return response(['question' => $question]);
     }
@@ -65,9 +66,29 @@ class QuestionController extends Controller
      */
     public function update(Request $request, Question $question)
     {
-        $question->type = $request->type;
-        $question->text = $request->text;
+        $inputQuestion = $request->question;
+        $question->type = $inputQuestion['type'];
+        $question->text = $inputQuestion['text'];
         $question->save();
+
+        // create or update answers
+        foreach ($inputQuestion['answers'] as $answer) {
+            if (array_key_exists('id', $answer)) {
+                $ans = $question->answers()->where('id', $answer['id'])->first();
+            } else {
+                $ans = new Answer;
+            }
+
+            $ans->text = $answer['text'];
+
+            if (array_key_exists('correct', $answer)) {
+                $ans->correct = $answer['correct'];
+            }
+
+            $question->answers()->save($ans);
+        }
+
+        $question->answers = $question->answers;
 
         return response(['question' => $question]);
     }
