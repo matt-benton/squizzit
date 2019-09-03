@@ -26,28 +26,24 @@
 
         <div v-show="question.type === 'multiple_choice'">
             <div v-for="(answer, index) in question.answers" :key="answer.id" class="mb-sm">
-                <div class="field is-horizontal">
-                    <div class="field-body">
-                        <div class="field is-expanded">
-                            <div class="field has-addons">
-                                <div class="control is-expanded">
-                                    <input 
-                                        type="text" 
-                                        class="input" 
-                                        name="answer_text"
-                                        v-model="answer.text" 
-                                        placeholder="Answer Text Here"
-                                        :dusk="`answer-input-${index}`">
-                                </div>
+                    <div class="answer-input-container">
+                        <input 
+                            type="text" 
+                            class="input answer-input" 
+                            name="answer_text"
+                            v-model="answer.text" 
+                            placeholder="Answer Text Here"
+                            :dusk="`answer-input-${index}`">
+                        <div class="answer-menu">
+                            <div class="buttons has-addons">
+                                <span class="button is-success is-selected is-outlined">Correct</span>
+                                <span class="button">Incorrect</span>
                             </div>
+                            <button class="button is-danger is-outlined" @click="removeAnswer(index)" :dusk="`remove-answer-button-${index}`">
+                                <span class="fa fa-times"></span>
+                            </button>
                         </div>
                     </div>
-                </div>
-
-                <label class="answer_correct">
-                    <input type="checkbox" v-model="answer.correct">
-                    Correct
-                </label>
             </div>
         </div>
 
@@ -76,7 +72,26 @@
         methods: {
             addAnswer() {
                 this.question.answers.push({ text: '' });
+            },
+            removeAnswer(index) {
+                this.question.answers.splice(index, 1);
             }
         }
     }
 </script>
+
+<style>
+    .answer-input-container {
+        display: flex;
+    }
+
+    .answer-input {
+        flex-grow: 1;
+        margin-right: 1rem !important; /* ! you might be able to replace this with a utility class */
+    }
+
+    .answer-menu {
+        display: flex;
+        width: 50%;
+    }
+</style>

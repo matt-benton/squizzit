@@ -75,4 +75,38 @@ class QuizTest extends DuskTestCase
             ]);
         });
     }
+
+    public function testRemovingAnswerFromQuestion()
+    {
+        $user = factory(\App\User::class)->create();
+        $quiz = factory(\App\Quiz::class)->create();
+        $user->quizzes()->attach($quiz->id, ['role' => 'maker']);
+        $question = $quiz->questions()->save(factory(\App\Question::class)->make());
+        $answer = $question->answers()->save(factory(\App\Answer::class)->make());
+
+        $this->browse(function (Browser $browser) use ($user, $quiz, $question, $answer) {
+            $browser->visit(new Login($user))
+                    ->loginUser()
+                    ->visit(new QuizEdit($quiz))
+                    ->pause(1000)
+                    ->click('@question-link-1')
+                    ->waitFor('@answer-input-0')
+                    ->click('@remove-answer-button-0')
+                    ->waitUntilMissing('@answer-input-0')
+                    ->click('#save-question-button')
+                    ->click('@question-link-1')
+                    ->waitFor('#question-editor-container')
+                    ->assertMissing('@answer-input-0');
+
+            $this->assertDatabaseMissing('answers', [
+                'question_id' => $question->id,
+                'text' => $answer->text
+            ]);
+        });
+    }
+
+    public function testEditingAnswer()
+    {
+        // todo
+    }
 }

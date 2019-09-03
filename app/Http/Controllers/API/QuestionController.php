@@ -71,18 +71,24 @@ class QuestionController extends Controller
         $question->text = $inputQuestion['text'];
         $question->save();
 
+        // delete answers if they are missing from request data
+        $answersFromDatabase = $question->answers;
+        $inputAnswers = collect($inputQuestion['answers']);
+
+        $this->removeAnswers($answersFromDatabase, $inputAnswers);
+
         // create or update answers
-        foreach ($inputQuestion['answers'] as $answer) {
-            if (array_key_exists('id', $answer)) {
-                $ans = $question->answers()->where('id', $answer['id'])->first();
+        foreach ($inputAnswers as $inputAnswer) {
+            if (array_key_exists('id', $inputAnswer)) {
+                $ans = $answersFromDatabase->where('id', $inputAnswer['id'])->first();
             } else {
                 $ans = new Answer;
             }
 
-            $ans->text = $answer['text'];
-
-            if (array_key_exists('correct', $answer)) {
-                $ans->correct = $answer['correct'];
+            $ans->text = $inputAnswer['text'];
+            
+            if (array_key_exists('correct', $inputAnswer)) {
+                $ans->correct = $inputAnswer['correct'];
             }
 
             $question->answers()->save($ans);
@@ -104,5 +110,15 @@ class QuestionController extends Controller
         $question->delete();
 
         return response('success');
+    }
+
+    private function removeAnswers($answersFromDatabase, $answersFromInput)
+    {
+        foreach ($answersFromDatabase as $dbAnswer) {
+            // if $inputAnswers does not contain an answer with the same id then delete the $dbAnswer from the database
+            if (!$answersFromInput->contains('id', $dbAnswer->id)) {
+                $dbAnswer->delete();
+            }
+        }
     }
 }
