@@ -107,6 +107,38 @@ class QuizTest extends DuskTestCase
 
     public function testEditingAnswer()
     {
-        // todo
+        $user = factory(\App\User::class)->create();
+        $quiz = factory(\App\Quiz::class)->create();
+        $user->quizzes()->attach($quiz->id, ['role' => 'maker']);
+        $question = $quiz->questions()->save(factory(\App\Question::class)->make());
+        $answer = $question->answers()->save(factory(\App\Answer::class)->make());
+
+        $this->browse(function (Browser $browser) use ($user, $quiz, $question, $answer) {
+            $browser->visit(new Login($user))
+                    ->loginUser()
+                    ->visit(new QuizEdit($quiz))
+                    ->pause(1000)
+                    ->click('@question-link-1')
+                    ->waitFor('@answer-input-0')
+                    ->type('@answer-input-0', 'This answer has been edited.')
+                    ->check('@answer-checkbox-0')
+                    ->click('#save-question-button')
+                    ->waitUntilMissing('#question-editor-container')
+                    ->click('@question-link-1')
+                    ->waitFor('#question-editor-container')
+                    ->assertValue('@answer-input-0', 'This answer has been edited.');
+
+            $this->assertDatabaseHas('answers', [
+                'question_id' => $question->id,
+                'text' => 'This answer has been edited.',
+                'correct' => 1
+            ]);
+
+            $this->assertDatabaseMissing('answers', [
+                'question_id' => $question->id,
+                'text' => $answer->text,
+                'correct' => 0
+            ]);    
+        });
     }
 }

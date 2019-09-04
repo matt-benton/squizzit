@@ -4,7 +4,7 @@
             <!-- <span class="is-pulled-right has-text-danger" @click="removeQuestion(question.id)"><i class="fas fa-times"></i></span> -->
             <label class="label" for="question_type">Select Type</label>
             <div class="control">
-                <div class="select" name="question_type">
+                <div class="select is-rounded" name="question_type">
                     <select v-model="question.type" name="question_type">
                         <option value="multiple_choice">Multiple Choice</option>
                         <option value="short_answer">Short Answer</option>
@@ -29,17 +29,17 @@
                     <div class="answer-input-container">
                         <input 
                             type="text" 
-                            class="input answer-input" 
+                            class="input answer-input is-rounded" 
                             name="answer_text"
                             v-model="answer.text" 
                             placeholder="Answer Text Here"
                             :dusk="`answer-input-${index}`">
                         <div class="answer-menu">
-                            <div class="buttons has-addons">
-                                <span class="button is-success is-selected is-outlined">Correct</span>
-                                <span class="button">Incorrect</span>
-                            </div>
-                            <button class="button is-danger is-outlined" @click="removeAnswer(index)" :dusk="`remove-answer-button-${index}`">
+                            <label class="checkbox">
+                                <input type="checkbox" :dusk="`answer-checkbox-${index}`" v-model="answer.correct">
+                                <span class="ml-sm">Correct</span>
+                            </label>
+                            <button class="button is-danger is-inverted is-rounded ml-sm" @click="removeAnswer(index)" :dusk="`remove-answer-button-${index}`">
                                 <span class="fa fa-times"></span>
                             </button>
                         </div>
@@ -55,7 +55,7 @@
         </button>
         <button class="button is-rounded is-pulled-right" 
             @click="addAnswer(question.id)" v-if="question.type === 'multiple_choice'" id="add-answer-button">
-            Add Answer
+            New Answer
         </button>
     </div>
 </template>
@@ -92,6 +92,14 @@
 
     .answer-menu {
         display: flex;
-        width: 50%;
+        align-items: center;
+    }
+
+    .checkbox {
+        display: flex;
+    }
+
+    textarea {
+        border-radius: 15px !important;
     }
 </style>
