@@ -1,5 +1,5 @@
 <template>
-    <div class="page-container has-background-light">
+    <div class="has-background-light">
         <navbar></navbar>
         <div class="container">
             <section class="section is-small">
@@ -145,11 +145,3 @@
         }
     }
 </script>
-
-<style>
-
-.page-container {
-    height: 100vh;
-}
-
-</style>
