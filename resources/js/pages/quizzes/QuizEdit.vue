@@ -3,8 +3,24 @@
         <navbar></navbar>
         <div class="container">
             <section class="section is-small">
-                <p><span class="is-size-3">{{ quiz.name }}</span></p>
-                <p><span class="has-text-weight-light">{{ quiz.description }}</span></p>
+                <p>
+                    <input 
+                        id="quiz-name-input"
+                        type="text"
+                        class="mb-sm"
+                        placeholder="Quiz Title" 
+                        v-model.lazy="quiz.name"
+                        @change="updateQuiz">
+                </p>
+                <p>
+                    <input
+                        id="quiz-description-input"
+                        type="text"
+                        placeholder="Quiz Description"
+                        v-model.lazy="quiz.description"
+                        @change="updateQuiz">
+                </p>
+
             </section>
             <hr class="has-background-primary">
             <section class="section">
@@ -57,6 +73,17 @@
                 .then(response => {
                     this.quiz = response.data.quiz;
                 })
+            },
+            updateQuiz () {
+                if (this.quiz.name) {
+                    axios.put(`/api/quizzes/${this.$route.params.id}`, {
+                        name: this.quiz.name,
+                        description: this.quiz.description
+                    })
+                    .then(response => {
+                        this.quiz = response.data.quiz;
+                    })
+                }
             },
             addQuestion (question) {
                 axios.post('/api/questions', {
@@ -145,3 +172,30 @@
         }
     }
 </script>
+
+<style>
+
+#quiz-name-input {
+    background: whitesmoke;
+    border-bottom: 0;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+    box-shadow: 0 0;
+    border-radius: 0;
+    font-size: 2rem;
+    padding: 0;
+    color: #4a4a4a;
+}
+
+#quiz-description-input {
+    border: 0;
+    box-shadow: 0 0;
+    color: #4a4a4a;
+    font-size: 1rem;
+    font-weight: 300 !important;
+    background: whitesmoke;
+    width: 100%;
+}
+
+</style>

@@ -45,6 +45,11 @@ class QuizCreate extends Page
         $browser->type('name', 'My Test Quiz')
                 ->type('description', 'This is a quiz that was made by an automated test.')
                 ->click('@save-quiz-button')
-                ->waitForText('My Test Quiz');
+                ->pause(1000)
+                ->assertInputValue('#quiz-name-input', 'My Test Quiz')
+                ->assertInputValue(
+                    '#quiz-description-input',
+                    'This is a quiz that was made by an automated test.'
+                );
     }
 }

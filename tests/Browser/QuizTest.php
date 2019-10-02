@@ -21,12 +21,47 @@ class QuizTest extends DuskTestCase
             $browser->visit(new Login($user))
                     ->loginUser()
                     ->visit(new QuizCreate)
-                    ->createQuiz()
-                    ->assertSee('This is a quiz that was made by an automated test.');
+                    ->createQuiz();
 
             $this->assertDatabaseHas('quizzes', [
                 'name' => 'My Test Quiz',
                 'description' => 'This is a quiz that was made by an automated test.'
+            ]);
+        });
+    }
+
+    public function testEditingQuizMainInfo()
+    {
+        $user = factory(\App\User::class)->create();
+        $quiz = factory(\App\Quiz::class)->create();
+        $user->quizzes()->attach($quiz->id, ['role' => 'maker']);
+
+        $this->browse(function (Browser $browser) use ($user, $quiz) {
+            $nameInputText = 'My Edited Quiz Name';
+            $descriptionInputText = 'This quiz has been edited by an automated test.';
+
+            $browser->visit(new Login($user))
+                    ->loginUser()
+                    ->visit(new QuizEdit($quiz))
+                    ->pause(1000)
+                    ->clear('#quiz-name-input')
+                    ->pause(1000)
+                    ->keys('#quiz-name-input', $nameInputText)
+                    ->pause(1000)
+                    ->clear('#quiz-description-input')
+                    ->pause(1000)
+                    ->keys('#quiz-description-input', $descriptionInputText)
+                    ->click('hr')
+                    ->pause(1000);
+
+            $this->assertDatabaseMissing('quizzes', [
+                'name' => $quiz->name,
+                'description' => $quiz->description
+            ]);
+
+            $this->assertDatabaseHas('quizzes', [
+                'name' => $nameInputText,
+                'description' => $descriptionInputText
             ]);
         });
     }

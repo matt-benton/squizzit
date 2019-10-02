@@ -50,9 +50,7 @@ class QuizController extends Controller
      */
     public function show($id)
     {
-        $quiz = Auth::user()->quizzes()->where('id', $id)->with('questions.answers')->first();
-
-        return response(['quiz' => $quiz]);
+        return response(['quiz' => $this->retrieveQuizWithRelations($id)]);
     }
 
     /**
@@ -64,7 +62,16 @@ class QuizController extends Controller
      */
     public function update(Request $request, Quiz $quiz)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'description' => 'nullable',
+        ]);
+
+        $quiz->name = $request->name;
+        $quiz->description = $request->description;
+        $quiz->save();
+
+        return response(['quiz' => $this->retrieveQuizWithRelations($quiz->id)]);
     }
 
     /**
@@ -76,5 +83,10 @@ class QuizController extends Controller
     public function destroy(Quiz $quiz)
     {
         //
+    }
+
+    private function retrieveQuizWithRelations($id)
+    {
+        return Auth::user()->quizzes()->where('id', $id)->with('questions.answers')->first();
     }
 }
