@@ -3,7 +3,12 @@
         <navbar></navbar>
         <div class="container">
             <section class="section is-small">
-                <h1 class="is-size-3 has-text-weight-normal">{{ quiz.name }}</h1>
+                <h1 class="is-size-3 has-text-weight-normal">
+                    {{ quiz.name }}
+                    <router-link :to="`/quizzes/${quiz.id}`">
+                        <button class="button is-white is-pulled-right is-rounded">Back to Quiz</button>
+                    </router-link>
+                </h1>
                 <h3 class="is-size-5 has-text-weight-light">{{ quiz.description }}</h3>
             </section>
             <hr class="has-background-primary">
