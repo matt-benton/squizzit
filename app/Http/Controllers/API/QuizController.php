@@ -88,7 +88,10 @@ class QuizController extends Controller
 
     public function sendInvite(Request $request, $quizId)
     {
-        // ! validate incoming email
+        $request->validate([
+            'email' => 'required|email'
+        ]);
+
         $email = $request->email;
 
         $quiz = Auth::user()->quizzes()->where('id', $quizId)->first();

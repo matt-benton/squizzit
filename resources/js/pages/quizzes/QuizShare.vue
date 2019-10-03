@@ -19,15 +19,14 @@
                                 class="input" 
                                 type="text" 
                                 placeholder="Email of person to invite" 
-                                v-model="email"
+                                v-model="form.email.value"
                                 @keydown.enter="sendInvite">
                         </div>
                         <div class="control">
                             <button class="button is-primary" @click="sendInvite">Invite</button>
                         </div>
                     </div>
-                        <p class="help">Validation text should go here</p>
-                        <p class="help">Keyboard shortcut text</p>
+                    <p class="help is-danger">{{ form.email.errorMessage }}</p>
                 </form>
             </section>
         </div>
@@ -36,13 +35,17 @@
 
 <script>
     import Navbar from '../../components/Navbar.vue'
-    import { required } from 'vuelidate/lib/validators'
 
     export default {
         data() {
             return {
                 quiz: '',
-                email: '',
+                form: {
+                    email: {
+                        value: '',
+                        errorMessage: ''
+                    }
+                },
                 successMessage: ''
             }
         },
@@ -58,14 +61,15 @@
             },
             sendInvite() {
                 axios.post(`/api/quizzes/${this.quiz.id}/invite`, {
-                        email: this.email
+                        email: this.form.email.value
                     })
                     .then(response => {
                         this.setSuccessMessage(response.data.message);
                         this.clearEmail();
+                        this.resetEmailErrorMessage();
                     })
                     .catch(e => {
-                        // ! do something with error
+                        this.setEmailErrorMessage(e.response.data.errors.email[0]);
                     });
             },
             setSuccessMessage(message) {
@@ -74,15 +78,14 @@
             resetSuccessMessage() {
                 this.successMessage = '';
             },
+            setEmailErrorMessage(message) {
+                this.form.email.errorMessage = message;
+            },
+            resetEmailErrorMessage() {
+                this.form.email.errorMessage = '';
+            },
             clearEmail() {
-                this.email = '';
-            }
-        },
-        validations: {
-            form: {
-                name: {
-                    required
-                }
+                this.form.email.value = '';
             }
         },
         components: {
