@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use Auth;
+use Mail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Mail\InviteToQuiz;
 use App\Quiz;
 
 class QuizController extends Controller
@@ -83,6 +84,18 @@ class QuizController extends Controller
     public function destroy(Quiz $quiz)
     {
         //
+    }
+
+    public function sendInvite(Request $request, $quizId)
+    {
+        // ! validate incoming email
+        $email = $request->email;
+
+        $quiz = Auth::user()->quizzes()->where('id', $quizId)->first();
+        
+        Mail::to($email)->queue(new InviteToQuiz);
+
+        return response(['message' => "Your invite to {$email} has been sent!"]);
     }
 
     private function retrieveQuizWithRelations($id)

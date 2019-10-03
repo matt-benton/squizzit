@@ -8,6 +8,7 @@ import Welcome from './pages/Welcome.vue'
 import QuizCreate from './pages/quizzes/QuizCreate.vue'
 import QuizEdit from './pages/quizzes/QuizEdit.vue'
 import QuizList from './pages/quizzes/QuizList.vue'
+import QuizShare from './pages/quizzes/QuizShare.vue'
 
 const checkAuth = function (to, from, next) {
     if (localStorage.getItem('token')) {
@@ -26,5 +27,6 @@ export const routes = [
     { path: '/home', component: Home, beforeEnter: checkAuth },
     { path: '/quizzes/create', component: QuizCreate, beforeEnter: checkAuth },
     { path: '/quizzes/:id', component: QuizEdit, beforeEnter: checkAuth },
+    { path: '/quizzes/:id/share', component: QuizShare, beforeEnter: checkAuth },
     { path: '/quizzes', component: QuizList, beforeEnter: checkAuth }
 ];

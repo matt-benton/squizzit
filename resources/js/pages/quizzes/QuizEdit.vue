@@ -11,6 +11,11 @@
                         placeholder="Quiz Title" 
                         v-model.lazy="quiz.name"
                         @change="updateQuiz">
+                    <router-link :to="`/quizzes/${quiz.id}/share`" class="button is-primary is-pulled-right is-rounded">
+                        <i class="fas fa-share-square"></i>
+                        &nbsp;
+                        Share
+                    </router-link>
                 </p>
                 <p>
                     <input
