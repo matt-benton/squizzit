@@ -21,11 +21,8 @@ Route::middleware('auth:api')->group(function () {
     Route::apiResources([
         'answers' => 'API\AnswerController',
         'questions' => 'API\QuestionController',
-        'quizzes' => 'API\QuizController'
-    ]);
-
-    Route::resource('quiz_invites', 'API\QuizInviteController')->only([
-        'store', 'show'
+        'quizzes' => 'API\QuizController',
+        'quiz_invites' => 'API\QuizInviteController'
     ]);
 });
 

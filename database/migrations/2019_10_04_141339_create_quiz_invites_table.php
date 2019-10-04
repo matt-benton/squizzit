@@ -15,7 +15,6 @@ class CreateQuizInvitesTable extends Migration
     {
         Schema::create('quiz_invites', function (Blueprint $table) {
             $table->string('email')->index();
-            $table->string('token');
             $table->unsignedBigInteger('quiz_id');
             $table->timestamp('created_at');
 

@@ -4,9 +4,25 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Mail\InviteToQuiz;
+use App\QuizInvite;
+use Mail;
+use Auth;
 
 class QuizInviteController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $quizInvites = QuizInvite::where('email', Auth::user()->email)->with('quiz')->get();
+
+        return response(['quizInvites' => $quizInvites]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -25,7 +41,7 @@ class QuizInviteController extends Controller
 
         $quiz = Auth::user()->quizzes()->where('id', $quizId)->first();
 
-        $quizInvite = QuizInvite::create([
+        QuizInvite::create([
             'email' => $email,
             'quiz_id' => $quiz->id
         ]);
@@ -42,6 +58,29 @@ class QuizInviteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
         //
     }

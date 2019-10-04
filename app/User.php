@@ -41,4 +41,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Quiz');
     }
+
+    public function quizInvites()
+    {
+        return $this->hasMany('App\QuizInvite');
+    }
 }

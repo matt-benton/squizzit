@@ -17,6 +17,5 @@ class QuizInviteObserver
     public function created(QuizInvite $quizInvite)
     {
         $quizInvite->setCreatedAt(Carbon::now()->timestamp);
-        $quizInvite->setToken(Str::random(60));
     }
 }
