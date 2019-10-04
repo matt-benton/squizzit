@@ -27,6 +27,20 @@
                     <div class="navbar-end">
                         <div class="navbar-item has-dropdown is-hoverable">
                             <a class="navbar-link">
+                                <i class="far fa-bell"></i>
+                            </a>
+
+                            <div class="navbar-dropdown">
+                                <router-link to="/invites" class="navbar-item">
+                                    Invites
+                                    &nbsp;
+                                    <span class="tag is-info is-rounded">3</span>
+                                </router-link>
+                            </div>
+                        </div>
+
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a class="navbar-link">
                                 {{ email }}
                             </a>
 

@@ -9,6 +9,7 @@ import QuizCreate from './pages/quizzes/QuizCreate.vue'
 import QuizEdit from './pages/quizzes/QuizEdit.vue'
 import QuizList from './pages/quizzes/QuizList.vue'
 import QuizShare from './pages/quizzes/QuizShare.vue'
+import Invites from './pages/Invites.vue'
 
 const checkAuth = function (to, from, next) {
     if (localStorage.getItem('token')) {
@@ -25,6 +26,7 @@ export const routes = [
     { path: '/auth/send_password_reset', component: SendPasswordReset },
     { path: '/auth/reset_password/:token', component: ResetPassword },
     { path: '/home', component: Home, beforeEnter: checkAuth },
+    { path: '/invites', component: Invites, beforeEnter: checkAuth },
     { path: '/quizzes/create', component: QuizCreate, beforeEnter: checkAuth },
     { path: '/quizzes/:id', component: QuizEdit, beforeEnter: checkAuth },
     { path: '/quizzes/:id/share', component: QuizShare, beforeEnter: checkAuth },
