@@ -24,7 +24,9 @@ Route::middleware('auth:api')->group(function () {
         'quizzes' => 'API\QuizController'
     ]);
 
-    Route::post('quizzes/{quizId}/invite', 'API\QuizController@sendInvite');
+    Route::resource('quiz_invites', 'API\QuizInviteController')->only([
+        'store', 'show'
+    ]);
 });
 
 Route::post('/register', 'API\UserController@store');

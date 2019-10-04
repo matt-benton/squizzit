@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use App\Observers\QuizInviteObserver;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Telescope\TelescopeServiceProvider;
+
+use App\QuizInvite;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +29,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        QuizInvite::observe(QuizInviteObserver::class);
     }
 }

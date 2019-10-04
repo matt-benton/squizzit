@@ -86,21 +86,6 @@ class QuizController extends Controller
         //
     }
 
-    public function sendInvite(Request $request, $quizId)
-    {
-        $request->validate([
-            'email' => 'required|email'
-        ]);
-
-        $email = $request->email;
-
-        $quiz = Auth::user()->quizzes()->where('id', $quizId)->first();
-        
-        Mail::to($email)->queue(new InviteToQuiz);
-
-        return response(['message' => "Your invite to {$email} has been sent!"]);
-    }
-
     private function retrieveQuizWithRelations($id)
     {
         return Auth::user()->quizzes()->where('id', $id)->with('questions.answers')->first();

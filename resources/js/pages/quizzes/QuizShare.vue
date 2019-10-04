@@ -65,8 +65,9 @@
                     })
             },
             sendInvite() {
-                axios.post(`/api/quizzes/${this.quiz.id}/invite`, {
-                        email: this.form.email.value
+                axios.post(`/api/quiz_invites`, {
+                        email: this.form.email.value,
+                        quiz_id: this.quiz.id
                     })
                     .then(response => {
                         this.setSuccessMessage(response.data.message);
