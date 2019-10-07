@@ -1,7 +1,7 @@
 <template>
-    <div class="has-background-light">
+    <div id="quiz-edit-container">
         <navbar></navbar>
-        <div class="container">
+        <div class="container" id="quiz-edit-body">
             <section class="section is-small">
                 <p>
                     <input 
@@ -25,35 +25,37 @@
                         v-model.lazy="quiz.description"
                         @change="updateQuiz">
                 </p>
-
             </section>
+
             <hr class="has-background-primary">
-            <section class="section">
-                <div class="columns">
-                    <!-- left side nav -->
-                    <div class="column is-one-quarter">
-                        <aside class="menu" id="question-nav-list">
-                            <p class="menu-label">
-                                Questions 
-                                <button class="button is-primary is-rounded is-small is-pulled-right" id="new-question-button" @click="selectQuestion(returnNewQuestion())">+ New</button>
-                            </p>
-                            <ol class="menu-list">
-                                <li v-for="question in quiz.questions" :key="question.id" @click="selectQuestion(question)">
-                                    <a :dusk="`question-link-${quiz.id}`">{{ question.text.length > 60 ? question.text.substring(0, 60) + '...' : question.text }}</a>
-                                </li>
-                            </ol>
-                        </aside>
-                    </div>
-
-                    <!-- questions/form -->
-                    <div class="column ml-md">
-                        <question-editor 
-                            v-if="selectedQuestion" 
-                            :question="selectedQuestion" 
-                            @question-saved="saveQuestion($event)"></question-editor>
-                    </div>
+            <div class="columns">
+                <!-- left side nav -->
+                <div class="column is-one-quarter" id="left-side-column">
+                    <aside class="menu" id="question-nav-list">
+                        <p class="menu-label">
+                            Questions 
+                            <button class="button is-primary is-rounded is-small is-pulled-right" id="new-question-button" @click="selectQuestion(returnNewQuestion())">+ New</button>
+                        </p>
+                        <ul class="menu-list">
+                            <li v-for="(question, index) in quiz.questions" :key="question.id" @click="selectQuestion(question)">
+                                <a :dusk="`question-link-${quiz.id}`">
+                                    {{ index + 1 }}.
+                                    &nbsp;
+                                    {{ question.text.length > 60 ? question.text.substring(0, 60) + '...' : question.text }}
+                                </a>
+                            </li>
+                        </ul>
+                    </aside>
                 </div>
-            </section>
+
+                <!-- questions/form -->
+                <div class="column ml-md">
+                    <question-editor 
+                        v-if="selectedQuestion" 
+                        :question="selectedQuestion" 
+                        @question-saved="saveQuestion($event)"></question-editor>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -180,6 +182,10 @@
 
 <style>
 
+#quiz-edit-container {
+    height: 100vh;
+}
+
 #quiz-name-input {
     background: whitesmoke;
     border-bottom: 0;
@@ -201,6 +207,11 @@
     font-weight: 300 !important;
     background: whitesmoke;
     width: 100%;
+}
+
+#left-side-column {
+    overflow: scroll;
+    height: 66vh;
 }
 
 </style>
