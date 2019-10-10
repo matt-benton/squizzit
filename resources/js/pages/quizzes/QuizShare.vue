@@ -25,7 +25,7 @@
                                 type="text" 
                                 placeholder="Email of person to invite" 
                                 v-model="form.email.value"
-                                @keydown.enter="sendInvite">
+                                @keydown.enter.prevent="sendInvite">
                         </div>
                         <div class="control">
                             <button class="button is-primary" @click="sendInvite">Invite</button>
@@ -65,6 +65,7 @@
                     })
             },
             sendInvite() {
+                console.log('sendInvite called');
                 axios.post(`/api/quiz_invites`, {
                         email: this.form.email.value,
                         quiz_id: this.quiz.id

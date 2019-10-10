@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use Auth;
-use Mail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Mail\InviteToQuiz;
 use App\Quiz;
+use App\QuizInvite;
 
 class QuizController extends Controller
 {
@@ -84,6 +83,28 @@ class QuizController extends Controller
     public function destroy(Quiz $quiz)
     {
         //
+    }
+
+    public function addTaker(Request $request)
+    {
+        $request->validate([
+            'quizInviteId' => 'required|numeric',
+            'quizId' => 'required|numeric'
+        ]);
+
+        $quiz = Quiz::findOrFail($request->quizId);
+        $quizInvite = QuizInvite::findOrFail($request->quizInviteId);
+        
+        // add the user to the quiz
+        $quiz->users()->attach(Auth::user()->id, ['role' => 'taker']);
+
+        // update the quiz invite
+        $quizInvite->accepted = 1;
+        $quizInvite->save();
+
+        return response([
+            'success' => true   
+        ]);
     }
 
     private function retrieveQuizWithRelations($id)

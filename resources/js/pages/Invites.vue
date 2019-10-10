@@ -1,22 +1,24 @@
 <template>
     <div>
         <navbar></navbar>
-        <section class="section">
-            <div class="card mb-md" v-for="inv in quizInvites" :key="inv.email">
-                <header class="card-header">
-                    <p class="card-header-title">You have been invited to take a quiz!</p>
-                </header>
-                <div class="card-content">
-                    <div class="content">
-                        <p>{{ inv.quiz.name }}
-                        <p>{{ inv.quiz.description }}</p>
+        <div class="container">
+            <section class="section">
+                <div class="card mb-md" v-for="inv in quizInvites" :key="inv.id">
+                    <header class="card-header">
+                        <p class="card-header-title">You have been invited to take a quiz!</p>
+                    </header>
+                    <div class="card-content">
+                        <div class="content">
+                            <p>{{ inv.quiz.name }}
+                            <p>{{ inv.quiz.description }}</p>
+                        </div>
                     </div>
+                    <footer class="card-footer">
+                        <a class="card-footer-item" @click="joinQuiz(inv)">Take Quiz</a>
+                    </footer>
                 </div>
-                <footer class="card-footer">
-                    <a href="#" class="card-footer-item">Take Quiz</a>
-                </footer>
-            </div>
-        </section>
+            </section>
+        </div>
     </div>
 </template>
 <script>
@@ -36,6 +38,17 @@ export default {
             axios.get('/api/quiz_invites')
                 .then(response => {
                     this.quizInvites = response.data.quizInvites;
+                })
+        },
+        joinQuiz(invite) {
+            axios.post(`/api/quizzes/join`, {
+                    quizInviteId: invite.id,
+                    quizId: invite.quiz_id
+                })
+                .then(response => {
+                    if (response.data.success) {
+                        this.$router.push(`/quizzes/${invite.quiz.id}/take`);
+                    }
                 })
         }
     },

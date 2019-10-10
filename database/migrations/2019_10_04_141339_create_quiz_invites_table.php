@@ -14,8 +14,10 @@ class CreateQuizInvitesTable extends Migration
     public function up()
     {
         Schema::create('quiz_invites', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->string('email')->index();
             $table->unsignedBigInteger('quiz_id');
+            $table->boolean('accepted')->nullable();    // 1 if accepted, 0 if declined, null if no action taken
             $table->timestamp('created_at');
 
             $table->foreign('quiz_id')->references('id')->on('quizzes');

@@ -9,6 +9,7 @@ import QuizCreate from './pages/quizzes/QuizCreate.vue'
 import QuizEdit from './pages/quizzes/QuizEdit.vue'
 import QuizList from './pages/quizzes/QuizList.vue'
 import QuizShare from './pages/quizzes/QuizShare.vue'
+import QuizTake from './pages/quizzes/QuizTake.vue'
 import Invites from './pages/Invites.vue'
 
 const checkAuth = function (to, from, next) {
@@ -30,5 +31,6 @@ export const routes = [
     { path: '/quizzes/create', component: QuizCreate, beforeEnter: checkAuth },
     { path: '/quizzes/:id', component: QuizEdit, beforeEnter: checkAuth },
     { path: '/quizzes/:id/share', component: QuizShare, beforeEnter: checkAuth },
-    { path: '/quizzes', component: QuizList, beforeEnter: checkAuth }
+    { path: '/quizzes', component: QuizList, beforeEnter: checkAuth },
+    { path: '/quizzes/:id/take', component: QuizTake, beforeEnter: checkAuth }
 ];

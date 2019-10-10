@@ -24,6 +24,8 @@ Route::middleware('auth:api')->group(function () {
         'quizzes' => 'API\QuizController',
         'quiz_invites' => 'API\QuizInviteController'
     ]);
+
+    Route::post('/quizzes/join', 'API\QuizController@addTaker');
 });
 
 Route::post('/register', 'API\UserController@store');

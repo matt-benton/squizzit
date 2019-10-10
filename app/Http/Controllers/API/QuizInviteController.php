@@ -18,7 +18,10 @@ class QuizInviteController extends Controller
      */
     public function index()
     {
-        $quizInvites = QuizInvite::where('email', Auth::user()->email)->with('quiz')->get();
+        // get invites that have not been accepted or declined
+        $quizInvites = QuizInvite::where('email', Auth::user()->email)
+            ->where('accepted', null)
+            ->with('quiz')->get();
 
         return response(['quizInvites' => $quizInvites]);
     }
