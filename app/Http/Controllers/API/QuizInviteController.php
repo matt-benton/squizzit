@@ -87,4 +87,16 @@ class QuizInviteController extends Controller
     {
         //
     }
+
+    public function decline($id)
+    {
+        $quizInvite = QuizInvite::findOrFail($id);
+
+        if ($quizInvite->email === Auth::user()->email) {
+            $quizInvite->accepted = 0;
+            $quizInvite->save();
+
+            return response(['message' => 'Quiz invite declined.']);
+        }
+    }
 }

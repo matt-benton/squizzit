@@ -15,6 +15,7 @@
                     </div>
                     <footer class="card-footer">
                         <a class="card-footer-item" @click="joinQuiz(inv)">Take Quiz</a>
+                        <a class="card-footer-item" @click="decline(inv)">Decline</a>
                     </footer>
                 </div>
             </section>
@@ -50,6 +51,17 @@ export default {
                         this.$router.push(`/quizzes/${invite.quiz.id}/take`);
                     }
                 })
+        },
+        decline(invite) {
+            axios.get(`/api/quiz_invites/${invite.id}/decline`)
+                .then(response => {
+                    this.clear(invite);
+                })
+        },
+        clear(invite) {
+            const index = this.quizInvites.findIndex(inv => inv.id === invite.id);
+
+            this.quizInvites.splice(index, 1);
         }
     },
     components: {

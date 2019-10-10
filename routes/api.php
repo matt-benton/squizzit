@@ -26,6 +26,7 @@ Route::middleware('auth:api')->group(function () {
     ]);
 
     Route::post('/quizzes/join', 'API\QuizController@addTaker');
+    Route::get('/quiz_invites/{id}/decline', 'API\QuizInviteController@decline');
 });
 
 Route::post('/register', 'API\UserController@store');
