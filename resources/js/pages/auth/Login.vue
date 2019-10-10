@@ -6,7 +6,7 @@
                     <div class="field">
                         <label for="email" class="label">Email</label>
                         <div class="control has-icons-left">
-                            <input class="input" type="email" name="email" v-model="form.email">
+                            <input class="input" type="email" name="email" v-model="form.email" @keydown.enter="login">
                             <span class="icon is-small is-left">
                                 <i class="far fa-envelope"></i>
                             </span>
@@ -16,7 +16,7 @@
                     <div class="field">
                         <label for="password" class="label">Password</label>
                         <div class="control has-icons-left">
-                            <input class="input" type="password" name="password" v-model="form.password">
+                            <input class="input" type="password" name="password" v-model="form.password" @keydown.enter="login">
                             <span class="icon is-small is-left">
                                 <i class="fas fa-lock"></i>
                             </span>
@@ -68,7 +68,6 @@
                     this.$router.push('/home');
                 })
                 .catch(e => {
-                    console.log(e);
                     this.form.error = e.response.data.error;
                 });
             }
