@@ -17,7 +17,7 @@
                     <button class="delete" @click="resetSuccessMessage"></button>
                     {{ successMessage }}
                 </div>
-                <form>
+                <form id="invite-form">
                     <div class="field has-addons">
                         <div class="control">
                             <input 
@@ -25,10 +25,11 @@
                                 type="text" 
                                 placeholder="Email of person to invite" 
                                 v-model="form.email.value"
-                                @keydown.enter.prevent="sendInvite">
+                                @keydown.enter.prevent="sendInvite"
+                                name="email">
                         </div>
                         <div class="control">
-                            <button class="button is-primary" @click="sendInvite">Invite</button>
+                            <button class="button is-primary" @click.prevent="sendInvite" id="invite-button">Invite</button>
                         </div>
                     </div>
                     <p class="help is-danger">{{ form.email.errorMessage }}</p>
@@ -65,7 +66,6 @@
                     })
             },
             sendInvite() {
-                console.log('sendInvite called');
                 axios.post(`/api/quiz_invites`, {
                         email: this.form.email.value,
                         quiz_id: this.quiz.id
