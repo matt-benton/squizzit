@@ -199,6 +199,10 @@
     color: #4a4a4a;
 }
 
+#quiz-name-input:focus {
+    outline: none;
+}
+
 #quiz-description-input {
     border: 0;
     box-shadow: 0 0;
@@ -207,6 +211,10 @@
     font-weight: 300 !important;
     background: whitesmoke;
     width: 100%;
+}
+
+#quiz-description-input {
+    outline: none;
 }
 
 #left-side-column {
