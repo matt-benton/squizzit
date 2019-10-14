@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="has-background-light">
         <navbar></navbar>
         <div class="container">
             <section class="section">
