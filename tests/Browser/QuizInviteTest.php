@@ -2,13 +2,11 @@
 
 namespace Tests\Browser;
 
-use App\Mail\InviteToQuiz;
 use Tests\DuskTestCase;
 use Tests\Browser\Pages\Login;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\Browser\Pages\QuizEdit;
-use Mail;
 
 class QuizInviteTest extends DuskTestCase
 {
@@ -51,7 +49,7 @@ class QuizInviteTest extends DuskTestCase
     {
         $recipient = factory(\App\User::class)->create();
         $quiz = factory(\App\Quiz::class)->create();
-        $invite = factory(\App\QuizInvite::class)->create([
+        factory(\App\QuizInvite::class)->create([
             'email' => $recipient->email,
             'quiz_id' => $quiz->id
         ]);
@@ -69,6 +67,32 @@ class QuizInviteTest extends DuskTestCase
                 'email' => $recipient->email,
                 'quiz_id' => $quiz->id,
                 'accepted' => 1
+            ]);
+        });
+    }
+
+    public function testUserCanDeclineInvite()
+    {
+        $recipient = factory(\App\User::class)->create();
+        $quiz = factory(\App\Quiz::class)->create();
+        factory(\App\QuizInvite::class)->create([
+            'email' => $recipient->email,
+            'quiz_id' => $quiz->id
+        ]);
+
+        $this->browse(function (Browser $browser) use ($recipient, $quiz) {
+            $browser->visit(new Login($recipient))
+                    ->loginUser()
+                    ->visit('/#/invites')
+                    ->waitForText($quiz->name)
+                    ->clickLink('Decline')
+                    ->pause(1000)
+                    ->assertDontSee($quiz->name);
+
+            $this->assertDatabaseHas('quiz_invites', [
+                'email' => $recipient->email,
+                'quiz_id' => $quiz->id,
+                'accepted' => 0
             ]);
         });
     }
