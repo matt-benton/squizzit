@@ -14,9 +14,6 @@ class QuizInviteTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
-    /**
-     * @group tacos
-     */
     public function testSendingQuizInvite()
     {
         $sender = factory(\App\User::class)->create();
@@ -47,6 +44,32 @@ class QuizInviteTest extends DuskTestCase
                     ->visit('/#/invites')
                     ->waitForText($quiz->name)
                     ->assertSee($quiz->description);
+        });
+    }
+
+    public function testUserCanAcceptInvite()
+    {
+        $recipient = factory(\App\User::class)->create();
+        $quiz = factory(\App\Quiz::class)->create();
+        $invite = factory(\App\QuizInvite::class)->create([
+            'email' => $recipient->email,
+            'quiz_id' => $quiz->id
+        ]);
+
+        $this->browse(function (Browser $browser) use ($recipient, $quiz) {
+            $browser->visit(new Login($recipient))
+                    ->loginUser()
+                    ->visit('/#/invites')
+                    ->waitForText($quiz->name)
+                    ->clickLink('Take Quiz')
+                    ->pause(1000)
+                    ->assertSee('QuizTake');
+
+            $this->assertDatabaseHas('quiz_invites', [
+                'email' => $recipient->email,
+                'quiz_id' => $quiz->id,
+                'accepted' => 1
+            ]);
         });
     }
 }
