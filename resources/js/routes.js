@@ -30,5 +30,6 @@ export const routes = [
     { path: '/quizzes/:id', component: QuizEdit, beforeEnter: checkAuth },
     { path: '/quizzes/:id/share', component: QuizShare, beforeEnter: checkAuth },
     { path: '/quizzes', component: QuizList, beforeEnter: checkAuth },
-    { path: '/quizzes/:id/take', component: QuizTake, beforeEnter: checkAuth }
+    { path: '/quizzes/:id/take', component: QuizTake, beforeEnter: checkAuth },
+    { path: '*', redirect: '/quizzes' }
 ];

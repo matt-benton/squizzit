@@ -53,6 +53,6 @@ class Login extends Page
         $browser->type('email', $this->user->email)
                 ->type('password', 'password')
                 ->click('@sign-in-button')
-                ->waitForText('Home');
+                ->waitForText('My Quizzes');
     }
 }
