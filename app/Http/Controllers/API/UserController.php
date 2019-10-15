@@ -7,12 +7,10 @@ use App\Rules\HasLowercase;
 use App\Rules\HasNumber;
 use App\Rules\HasUppercase;
 use App\User;
-use App\Mail\ResetPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Auth;
 use Hash;
-use Validator;
 
 class UserController extends Controller
 {
@@ -55,5 +53,13 @@ class UserController extends Controller
         }
 
         return response()->json(['error' => 'Login credentials do not match our records.'], 401);
+    }
+
+    public function emailIsUnique(Request $request) {
+        $request->validate([
+            'email' => 'required|email'
+        ]);
+        
+        return response(['unique' => User::where('email', $request->email)->doesntExist()]);
     }
 }

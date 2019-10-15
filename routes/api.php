@@ -31,3 +31,4 @@ Route::middleware('auth:api')->group(function () {
 
 Route::post('/register', 'API\UserController@store');
 Route::post('/login', 'API\UserController@login');
+Route::post('/email_is_unique', 'API\UserController@emailIsUnique');

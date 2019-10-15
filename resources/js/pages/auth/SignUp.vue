@@ -22,7 +22,9 @@
                             <span class="icon is-small is-right" v-else-if="$v.form.email.$invalid === false">
                                 <i class="fas fa-check"></i>
                             </span>
-                            <p class="help is-danger" v-if="$v.form.email.$error">A valid email address is required.</p>
+                            <p class="help is-danger" v-show="$v.form.email.$dirty && $v.form.email.required === false">An email address is required.</p>
+                            <p class="help is-danger" v-show="$v.form.email.$dirty && $v.form.email.email === false">The email must be a valid email address.</p>
+                            <p class="help is-danger" v-show="$v.form.email.$error && $v.form.email.isUnique === false">An account with this email address is already registered.</p>
                         </div>
                     </div>
 
@@ -34,6 +36,7 @@
                                     :class="{ 'is-danger': $v.form.password.$error, 'is-success': $v.form.password.$invalid === false }"
                                     type="password"
                                     name="password"
+                                    id="password-input"
                                     v-model.trim.lazy="$v.form.password.$model">
                             <span class="icon is-small is-left">
                                 <i class="fas fa-lock"></i>
@@ -104,8 +107,7 @@
                     email: '',
                     password: '',
                     password_confirmation: '',
-                },
-                emailError: '',
+                }
             }
         },
         methods: {
@@ -115,9 +117,6 @@
                     this.$store.dispatch('storeUser', response.data);
                     auth.storeUser(response.data.email, response.data.token);
                     this.$router.push('/home');
-                })
-                .catch(e => {
-                    console.log(e);
                 });
             }
         },
@@ -126,6 +125,16 @@
                 email: {
                     required,
                     email,
+                    isUnique(email) {
+                        return new Promise((resolve, reject) => {
+                            axios.post('/api/email_is_unique', {
+                                    email
+                                })
+                                .then(response => {
+                                     resolve(response.data.unique);
+                                });
+                        });
+                    }
                 },
                 password: {
                     required,

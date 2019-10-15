@@ -18,6 +18,8 @@ class SignUpTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->visit('/#/auth/signup')
                     ->type('email', 'matt@test.com')
+                    ->click('#password-input')      // click into the next input
+                    ->pause(1000)                   // wait for the axios request to return
                     ->type('password', 'Secret001')
                     ->type('password_confirmation', 'Secret001')
                     ->click('@sign-up-button')
@@ -41,6 +43,19 @@ class SignUpTest extends DuskTestCase
                     ->click('@sign-in-button')
                     ->waitForText('Home')
                     ->assertSee('Home');
+        });
+    }
+
+    public function testDuplicateEmailIsBlocked()
+    {
+        $user = factory(\App\User::class)->create();
+
+        $this->browse(function (Browser $browser) use ($user) {
+            $browser->visit('/#/auth/signup')
+                    ->type('email', $user->email)
+                    ->click('#password-input')
+                    ->waitForText('An account with this email address is already registered.')
+                    ->assertSee('An account with this email address is already registered.');
         });
     }
 }
