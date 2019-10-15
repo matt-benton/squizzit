@@ -65,7 +65,7 @@
                 .then(response => {
                     this.$store.dispatch('storeUser', response.data);
                     auth.storeUser(response.data.email, response.data.token);
-                    this.$router.push('/home');
+                    this.$router.push('/quizzes');
                 })
                 .catch(e => {
                     this.form.error = e.response.data.error;

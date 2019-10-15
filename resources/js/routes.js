@@ -1,5 +1,4 @@
 import { store } from './store'
-import Home from './pages/Home.vue'
 import Login from './pages/auth/Login.vue'
 import ResetPassword from './pages/auth/ResetPassword.vue'
 import SendPasswordReset from './pages/auth/SendPasswordReset.vue'
@@ -26,7 +25,6 @@ export const routes = [
     { path: '/auth/login', component: Login },
     { path: '/auth/send_password_reset', component: SendPasswordReset },
     { path: '/auth/reset_password/:token', component: ResetPassword },
-    { path: '/home', component: Home, beforeEnter: checkAuth },
     { path: '/invites', component: Invites, beforeEnter: checkAuth },
     { path: '/quizzes/create', component: QuizCreate, beforeEnter: checkAuth },
     { path: '/quizzes/:id', component: QuizEdit, beforeEnter: checkAuth },
