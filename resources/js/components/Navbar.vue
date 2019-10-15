@@ -25,19 +25,10 @@
                     </div>
 
                     <div class="navbar-end">
-                        <div class="navbar-item has-dropdown is-hoverable">
-                            <a class="navbar-link">
-                                <i class="far fa-bell"></i>
-                            </a>
-
-                            <div class="navbar-dropdown">
-                                <router-link to="/invites" class="navbar-item">
-                                    Invites
-                                    &nbsp;
-                                    <span class="tag is-info is-rounded">3</span>
-                                </router-link>
-                            </div>
-                        </div>
+                        <router-link to="/invites" class="navbar-item">
+                            Invites
+                            <span class="tag is-white is-rounded ml-xs" v-show="numQuizInvites > 0">{{ numQuizInvites }}</span>
+                        </router-link>
 
                         <div class="navbar-item has-dropdown is-hoverable">
                             <a class="navbar-link">
@@ -65,8 +56,12 @@
     export default {
         data() {
             return {
-                email: localStorage.getItem('email')
+                email: localStorage.getItem('email'),
+                numQuizInvites: 0
             }
+        },
+        created() {
+            this.getNumQuizInvites();
         },
         methods: {
             logout() {
@@ -74,6 +69,12 @@
                 auth.clearRequestHeaders();
                 this.$store.dispatch('clearUser');
                 this.$router.push('/');
+            },
+            getNumQuizInvites() {
+                axios.get('/api/quiz_invites')
+                    .then(response => {
+                        this.numQuizInvites = response.data.quizInvites.length;
+                    })
             }
         }
     }
