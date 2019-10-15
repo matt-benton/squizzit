@@ -12,7 +12,8 @@
                                     :class="{ 'is-danger': $v.form.email.$error, 'is-success': $v.form.email.$invalid === false }"
                                     type="text"
                                     name="email"
-                                    v-model.trim.lazy="$v.form.email.$model">
+                                    v-model.trim.lazy="$v.form.email.$model"
+                                    @keydown.enter="register">
                             <span class="icon is-small is-left">
                                 <i class="far fa-envelope"></i>
                             </span>
@@ -37,7 +38,8 @@
                                     type="password"
                                     name="password"
                                     id="password-input"
-                                    v-model.trim.lazy="$v.form.password.$model">
+                                    v-model.trim.lazy="$v.form.password.$model"
+                                    @keydown.enter="register">
                             <span class="icon is-small is-left">
                                 <i class="fas fa-lock"></i>
                             </span>
@@ -61,10 +63,11 @@
                         <label class="label" for="password_confirmation">Confirm Password</label>
                         <div class="control has-icons-left has-icons-right">
                             <input class="input"
-                            :class="{ 'is-danger': $v.form.password_confirmation.$error, 'is-success': $v.form.password_confirmation.$invalid === false && $v.form.password_confirmation.$dirty }"
-                            type="password"
-                            name="password_confirmation"
-                            v-model.trim="$v.form.password_confirmation.$model">
+                                :class="{ 'is-danger': $v.form.password_confirmation.$error, 'is-success': $v.form.password_confirmation.$invalid === false && $v.form.password_confirmation.$dirty }"
+                                type="password"
+                                name="password_confirmation"
+                                v-model.trim="$v.form.password_confirmation.$model"
+                                @keydown.enter="register">
                             <span class="icon is-small is-left">
                                 <i class="fas fa-lock"></i>
                             </span>
