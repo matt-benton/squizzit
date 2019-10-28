@@ -1,6 +1,5 @@
 <template>
     <div class="has-background-light">
-        <navbar></navbar>
         <div class="container">
             <section class="section pb-sm">
                 <p class="is-size-4 has-text-grey">My Quizzes</p>
@@ -43,7 +42,6 @@
 </template>
 
 <script>
-    import Navbar from '../../components/Navbar.vue'
 
     export default {
         data() {
@@ -53,7 +51,7 @@
         },
         computed: {
             orderedQuizzes: function () {
-                return this.quizzes.sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase())
+                return this.quizzes.sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase());
             }
         },
         created() {
@@ -66,9 +64,6 @@
                     this.quizzes = response.data.quizzes;
                 })
             }
-        },
-        components: {
-            'navbar': Navbar
         },
     }
 </script>

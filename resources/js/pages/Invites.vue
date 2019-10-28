@@ -1,6 +1,5 @@
 <template>
     <div class="has-background-light">
-        <navbar></navbar>
         <div class="container">
             <section class="section">
                 <div class="card mb-md" v-for="inv in quizInvites" :key="inv.id">
@@ -23,7 +22,6 @@
     </div>
 </template>
 <script>
-import Navbar from '../components/Navbar.vue'
 
 export default {
     data() {
@@ -64,8 +62,5 @@ export default {
             this.quizInvites.splice(index, 1);
         }
     },
-    components: {
-        'navbar': Navbar
-    }
 }
 </script>

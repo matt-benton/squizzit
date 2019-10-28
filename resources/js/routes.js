@@ -10,6 +10,7 @@ import QuizList from './pages/quizzes/QuizList.vue'
 import QuizShare from './pages/quizzes/QuizShare.vue'
 import QuizTake from './pages/quizzes/QuizTake.vue'
 import Invites from './pages/Invites.vue'
+import Container from './templates/Container.vue'
 
 const checkAuth = function (to, from, next) {
     if (localStorage.getItem('token')) {
@@ -25,11 +26,15 @@ export const routes = [
     { path: '/auth/login', component: Login },
     { path: '/auth/send_password_reset', component: SendPasswordReset },
     { path: '/auth/reset_password/:token', component: ResetPassword },
-    { path: '/invites', component: Invites, beforeEnter: checkAuth },
-    { path: '/quizzes/create', component: QuizCreate, beforeEnter: checkAuth },
-    { path: '/quizzes/:id', component: QuizEdit, beforeEnter: checkAuth },
-    { path: '/quizzes/:id/share', component: QuizShare, beforeEnter: checkAuth },
-    { path: '/quizzes', component: QuizList, beforeEnter: checkAuth },
-    { path: '/quizzes/:id/take', component: QuizTake, beforeEnter: checkAuth },
+    { path: '/app', component: Container, 
+        children: [
+            { path: '/invites', component: Invites, beforeEnter: checkAuth },
+            { path: '/quizzes/create', component: QuizCreate, beforeEnter: checkAuth },
+            { path: '/quizzes/:id', component: QuizEdit, beforeEnter: checkAuth },
+            { path: '/quizzes/:id/share', component: QuizShare, beforeEnter: checkAuth },
+            { path: '/quizzes', component: QuizList, beforeEnter: checkAuth },
+            { path: '/quizzes/:id/take', component: QuizTake, beforeEnter: checkAuth },
+        ],
+    },
     { path: '*', redirect: '/quizzes' }
 ];

@@ -1,6 +1,5 @@
 <template>
     <div id="quiz-edit-container">
-        <navbar></navbar>
         <div class="container" id="quiz-edit-body">
             <section class="section is-small">
                 <p>
@@ -61,7 +60,6 @@
 </template>
 
 <script>
-    import Navbar from '../../components/Navbar.vue'
     import QuestionEditor from '../../components/QuestionEditor.vue'
 
     export default {
@@ -174,7 +172,6 @@
             }
         },
         components: {
-            'navbar': Navbar,
             'question-editor': QuestionEditor
         }
     }

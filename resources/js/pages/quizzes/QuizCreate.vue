@@ -1,6 +1,5 @@
 <template>
     <div>
-        <navbar></navbar>
         <div class="container">
             <section class="section">
                 <div class="columns">
@@ -41,7 +40,6 @@
 </template>
 
 <script>
-    import Navbar from '../../components/Navbar.vue'
     import { required } from 'vuelidate/lib/validators'
 
     export default {
@@ -72,9 +70,6 @@
                     required
                 }
             }
-        },
-        components: {
-            'navbar': Navbar
         },
     }
 </script>

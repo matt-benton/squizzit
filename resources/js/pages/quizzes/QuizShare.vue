@@ -1,6 +1,5 @@
 <template>
     <div>
-        <navbar></navbar>
         <div class="container">
             <section class="section is-small">
                 <h1 class="is-size-3 has-text-weight-normal">
@@ -40,7 +39,6 @@
 </template>
 
 <script>
-    import Navbar from '../../components/Navbar.vue'
 
     export default {
         data() {
@@ -94,9 +92,6 @@
             clearEmail() {
                 this.form.email.value = '';
             }
-        },
-        components: {
-            'navbar': Navbar
         },
     }
 </script>
