@@ -17,4 +17,9 @@ class Quiz extends Model
     {
         return $this->hasMany('App\Question');
     }
+
+    public function takerAnswers()
+    {
+        return $this->hasManyThrough('App\TakerAnswer', 'App\Question');
+    }
 }

@@ -11,12 +11,21 @@
                 <p class="mb-sm">{{ question.text }}</p>
                 <div class="control" v-if="question.type === 'multiple_choice'">
                     <label class="radio radio-label mb-sm" v-for="answer in question.answers" :key="answer.id">
-                        <input type="radio" :name="`question-${ index + 1 }-answers`">
+                        <input 
+                            type="radio" 
+                            :name="`question-${ index + 1 }-answers`" 
+                            :value="answer.text" 
+                            v-model="question.takerAnswer.text"
+                            @change="saveAnswer(question)">
                         {{ answer.text }}
                     </label>
                 </div>
                 <div class="control" v-if="question.type === 'short_answer'">
-                    <textarea class="textarea" placeholder="Answer Text"></textarea>
+                    <textarea 
+                        class="textarea" 
+                        placeholder="Answer Text" 
+                        v-model="question.takerAnswer.text" 
+                        @change="saveAnswer(question)"></textarea>
                 </div>
             </section>
         </div>
@@ -35,10 +44,16 @@ export default {
     },
     methods: {
         getQuiz () {
-            axios.get(`/api/quizzes/${this.$route.params.id}`)
+            axios.get(`/api/quizzes/${this.$route.params.id}/take`)
                 .then(response => {
                     this.quiz = response.data.quiz;
                 });
+        },
+        saveAnswer (question) {
+            axios.post(`/api/taker_answers/save`, {
+                    question_id: question.id,
+                    answer_text: question.takerAnswer.text,
+                })
         },
     },
 }

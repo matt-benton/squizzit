@@ -25,6 +25,9 @@ Route::middleware('auth:api')->group(function () {
         'quiz_invites' => 'API\QuizInviteController'
     ]);
 
+    Route::post('/taker_answers/save', 'API\TakerAnswerController@save');
+
+    Route::get('/quizzes/{id}/take', 'API\QuizController@getQuizForTaker');
     Route::post('/quizzes/join', 'API\QuizController@addTaker');
     Route::get('/quiz_invites/{id}/decline', 'API\QuizInviteController@decline');
 });

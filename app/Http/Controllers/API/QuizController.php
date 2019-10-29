@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Quiz;
 use App\QuizInvite;
+use App\TakerAnswer;
 
 class QuizController extends Controller
 {
@@ -105,6 +106,26 @@ class QuizController extends Controller
         return response([
             'success' => true   
         ]);
+    }
+
+    public function getQuizForTaker($quizId)
+    {
+        $quiz = $this->retrieveQuizWithRelations($quizId);
+
+        $takerAnswers = $quiz->takerAnswers;
+
+        foreach ($quiz->questions as $question) {
+            $question->takerAnswer = $takerAnswers->first(function ($ans) use ($question) {
+                return $ans->user_id === Auth::user()->id && $ans->question_id === $question->id;
+            });
+
+            if ($question->takerAnswer === null) {
+                $question->takerAnswer = new TakerAnswer;
+                $question->takerAnswer->text = '';
+            }
+        }
+
+        return response(['quiz' => $quiz]);
     }
 
     private function retrieveQuizWithRelations($id)
