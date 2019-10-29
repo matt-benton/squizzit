@@ -15,7 +15,9 @@
                         {{ answer.text }}
                     </label>
                 </div>
-                <!-- still need short answer type -->
+                <div class="control" v-if="question.type === 'short_answer'">
+                    <textarea class="textarea" placeholder="Answer Text"></textarea>
+                </div>
             </section>
         </div>
     </div>

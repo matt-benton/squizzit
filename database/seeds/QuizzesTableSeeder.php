@@ -18,17 +18,27 @@ class QuizzesTableSeeder extends Seeder
             'name' => 'Long Quiz',
             'description' => 'Long quiz containing 75 questions.'
         ]);
-        $longQuizQuestions = $longQuiz->questions()->createMany(
-            factory(App\Question::class, 75)->make([
+
+        // multiple choice questions
+        $multipleChoiceQuestions = $longQuiz->questions()->createMany(
+            factory(App\Question::class, 35)->make([
                 'quiz_id' => $longQuiz->id
             ])->toArray()
         );
 
-        foreach ($longQuizQuestions as $question) {
+        foreach ($multipleChoiceQuestions as $question) {
             $question->answers()->createMany(
                 factory(App\Answer::class, 4)->make()->toArray()
             );
         }
+
+        // short answer questions
+        $shortAnswerQuestions = $longQuiz->questions()->createMany(
+            factory(App\Question::class, 25)->make([
+                'quiz_id' => $longQuiz->id,
+                'type' => 'short_answer',
+            ])->toArray()
+        );
 
         $longQuiz->users()->attach($defaultUser, ['role' => 'maker']);
 
