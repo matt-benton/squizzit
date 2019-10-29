@@ -39,7 +39,7 @@ class User extends Authenticatable
 
     public function quizzes()
     {
-        return $this->belongsToMany('App\Quiz');
+        return $this->belongsToMany('App\Quiz')->withPivot(['role']);
     }
 
     public function quizInvites()

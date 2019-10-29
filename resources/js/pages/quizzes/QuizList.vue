@@ -7,7 +7,10 @@
             <section class="section quiz-grid" v-if="quizzes.length > 0">
                 <div class="card" v-for="quiz in orderedQuizzes" :key="quiz.id">
                     <header class="card-header">
-                        <router-link :to="`/quizzes/${quiz.id}`" class="card-header-title">
+                        <router-link :to="`/quizzes/${quiz.id}`" class="card-header-title" v-if="quiz.pivot.role === 'maker'">
+                            {{ quiz.name }}
+                        </router-link>
+                        <router-link :to="`/quizzes/${quiz.id}/take`" class="card-header-title" v-else>
                             {{ quiz.name }}
                         </router-link>
                     </header>
