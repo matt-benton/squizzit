@@ -60,8 +60,8 @@ class QuizInviteTest extends DuskTestCase
                     ->visit('/#/invites')
                     ->waitForText($quiz->name)
                     ->clickLink('Take Quiz')
-                    ->pause(1000)
-                    ->assertSee('QuizTake');
+                    ->pause(2000)
+                    ->assertSee($quiz->name);
 
             $this->assertDatabaseHas('quiz_invites', [
                 'email' => $recipient->email,
@@ -86,7 +86,7 @@ class QuizInviteTest extends DuskTestCase
                     ->visit('/#/invites')
                     ->waitForText($quiz->name)
                     ->clickLink('Decline')
-                    ->pause(1000)
+                    ->waitUntilMissing('.card')
                     ->assertDontSee($quiz->name);
 
             $this->assertDatabaseHas('quiz_invites', [

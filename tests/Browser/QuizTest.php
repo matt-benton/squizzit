@@ -152,7 +152,7 @@ class QuizTest extends DuskTestCase
             $browser->visit(new Login($user))
                     ->loginUser()
                     ->visit(new QuizEdit($quiz))
-                    ->pause(1000)
+                    ->waitFor('@question-link-1')
                     ->click('@question-link-1')
                     ->waitFor('@answer-input-0')
                     ->type('@answer-input-0', 'This answer has been edited.')

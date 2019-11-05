@@ -19,7 +19,7 @@ class SignUpTest extends DuskTestCase
             $browser->visit('/#/auth/signup')
                     ->type('email', 'matt@test.com')
                     ->click('#password-input')      // click into the next input
-                    ->pause(1000)                   // wait for the axios request to return
+                    ->pause(2000)                   // wait for the axios request to return
                     ->type('password', 'Secret001')
                     ->type('password_confirmation', 'Secret001')
                     ->click('@sign-up-button')
