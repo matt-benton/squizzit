@@ -9,6 +9,7 @@ import QuizEdit from './pages/quizzes/QuizEdit.vue'
 import QuizList from './pages/quizzes/QuizList.vue'
 import QuizShare from './pages/quizzes/QuizShare.vue'
 import QuizTake from './pages/quizzes/QuizTake.vue'
+import QuizResults from './pages/quizzes/QuizResults.vue'
 import Invites from './pages/Invites.vue'
 import Container from './templates/Container.vue'
 
@@ -34,6 +35,7 @@ export const routes = [
             { path: '/quizzes/:id/share', component: QuizShare, beforeEnter: checkAuth },
             { path: '/quizzes', component: QuizList, beforeEnter: checkAuth },
             { path: '/quizzes/:id/take', component: QuizTake, beforeEnter: checkAuth },
+            { path: '/quizzes/:id/results', component: QuizResults },
         ],
     },
     { path: '*', redirect: '/quizzes' }

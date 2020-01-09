@@ -2,7 +2,7 @@
     <div class="has-background-light">
         <div class="container">
             <section class="section is-small">
-                <h1 class="is-size-3 has-text-weight-normal">{{ quiz.name }}</h1>
+                <h1 class="is-size-3 has-text-weight-normal" id="quiz-title">{{ quiz.name }}</h1>
                 <h3 class="is-size-5 has-text-weight-light">{{ quiz.description }}</h3>
             </section>
             <hr class="has-background-primary">
@@ -27,6 +27,9 @@
                         v-model="question.takerAnswer.text" 
                         @change="saveAnswer(question)"></textarea>
                 </div>
+            </section>
+            <section class="section is-small">
+                <button class="button is-primary is-rounded" id="submit-quiz-button" @click="submitQuiz">Submit Answers</button>
             </section>
         </div>
     </div>
@@ -54,6 +57,16 @@ export default {
                     question_id: question.id,
                     answer_text: question.takerAnswer.text,
                 })
+        },
+        submitQuiz () {
+            axios.post(`/api/quizzes/${this.quiz.id}/submit`, {
+                    quizId: this.quiz.id,
+                })
+                .then(response => {
+                    if (response.data.message === 'success') {
+                        this.$router.push(`/quizzes/${this.quiz.id}/results`);
+                    }
+                });
         },
     },
 }

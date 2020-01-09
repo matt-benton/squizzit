@@ -17,6 +17,7 @@ class CreateQuizUserTable extends Migration
             $table->unsignedBigInteger('quiz_id');
             $table->unsignedBigInteger('user_id');
             $table->string('role');
+            $table->dateTime('submitted_at')->nullable();
             $table->timestamps();
 
             $table->foreign('quiz_id')->references('id')->on('quizzes')->onDelete('cascade');

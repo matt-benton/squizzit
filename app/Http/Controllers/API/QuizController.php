@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Quiz;
 use App\QuizInvite;
 use App\TakerAnswer;
+use Carbon\Carbon;
 
 class QuizController extends Controller
 {
@@ -126,6 +127,19 @@ class QuizController extends Controller
         }
 
         return response(['quiz' => $quiz]);
+    }
+
+    public function submit(Request $request)
+    {
+        $request->validate([
+            'quizId' => 'required|numeric'
+        ]);
+
+        $now = Carbon::now();
+
+        Auth::user()->quizzes()->updateExistingPivot($request->quizId, ['submitted_at' => $now->toDateTimeString()]);
+
+        return response(['message' => 'success']);
     }
 
     private function retrieveQuizWithRelations($id)
