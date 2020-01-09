@@ -51,4 +51,13 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\TakerAnswer');
     }
+
+    public function hasSubmittedQuiz($quizId)
+    {
+        $quiz = $this->quizzes()->where('id', $quizId)->withPivot('submitted_at')->first();
+
+        if ($quiz->pivot->submitted_at) {
+            return true;
+        }
+    }
 }
