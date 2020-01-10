@@ -142,6 +142,17 @@ class QuizController extends Controller
         return response(['message' => 'success']);
     }
 
+    public function isSubmitted($quizId)
+    {
+        $result = 0;
+
+        if (Auth::user()->hasSubmittedQuiz($quizId)) {
+            $result = 1;
+        }
+
+        return response($result);
+    }
+
     private function retrieveQuizWithRelations($id)
     {
         return Auth::user()->quizzes()->where('id', $id)->with('questions.answers')->first();

@@ -42,6 +42,16 @@ export default {
             quiz: '',
         }
     },
+    beforeRouteEnter(to, from, next) {
+        next(vm => {
+            axios.get(`/api/quizzes/${vm.$route.params.id}/is_submitted`)
+                .then(response => {
+                    if (response.data === 1) {
+                        next(`/quizzes/${vm.quiz.id}/results`);
+                    }
+                });
+        });
+    },
     created() {
         this.getQuiz();
     },

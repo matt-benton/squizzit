@@ -30,6 +30,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/quizzes/{id}/take', 'API\QuizController@getQuizForTaker');
     Route::post('/quizzes/{id}/submit', 'API\QuizController@submit');
     Route::post('/quizzes/join', 'API\QuizController@addTaker');
+    Route::get('/quizzes/{id}/is_submitted', 'API\QuizController@isSubmitted');
     Route::get('/quiz_invites/{id}/decline', 'API\QuizInviteController@decline');
 });
 
