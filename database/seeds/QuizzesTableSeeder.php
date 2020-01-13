@@ -36,7 +36,6 @@ class QuizzesTableSeeder extends Seeder
         $shortAnswerQuestions = $longQuiz->questions()->createMany(
             factory(App\Question::class, 25)->make([
                 'quiz_id' => $longQuiz->id,
-                'type' => 'short_answer',
             ])->toArray()
         );
 

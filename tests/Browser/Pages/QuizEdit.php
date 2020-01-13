@@ -47,11 +47,10 @@ class QuizEdit extends Page
         ];
     }
 
-    public function addAnswerToQuestion(Browser $browser)
+    public function addAnswerToQuestion(Browser $browser, $answerIndex, $answerText)
     {
         $browser->pause(1000)
-                ->click("@question-link-{$this->quiz->questions[0]->id}")
                 ->click('#add-answer-button')
-                ->type('@answer-input-0', 'Answer 1');
+                ->type("@answer-input-{$answerIndex}", $answerText);
     }
 }

@@ -1,22 +1,8 @@
 <template>
     <div id="question-editor-container">
         <div class="field">
-            <!-- <span class="is-pulled-right has-text-danger" @click="removeQuestion(question.id)"><i class="fas fa-times"></i></span> -->
-            <label class="label" for="question_type">Select Type</label>
-            <div class="control">
-                <div class="select is-rounded" name="question_type">
-                    <select v-model="question.type" name="question_type">
-                        <option value="multiple_choice">Multiple Choice</option>
-                        <option value="short_answer">Short Answer</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="field">
             <div class="control">
                 <textarea
-                        v-show="question.type"
                         class="textarea"
                         name="question_text"
                         placeholder="Enter Question"
@@ -24,7 +10,7 @@
             </div>
         </div>
 
-        <div v-show="question.type === 'multiple_choice'">
+        <div>
             <div v-for="(answer, index) in question.answers" :key="answer.id" class="mb-sm">
                     <div class="answer-input-container">
                         <input 
@@ -47,14 +33,14 @@
             </div>
         </div>
 
-        <button v-show="question.type && question.text" 
+        <button v-show="question.text && questionHasAnswers(question)" 
             class="button is-rounded is-primary is-pulled-right ml-sm" 
             @click="$emit('question-saved', question)"
             id="save-question-button">
             Save Question
         </button>
         <button class="button is-rounded is-pulled-right" 
-            @click="addAnswer(question.id)" v-if="question.type === 'multiple_choice'" id="add-answer-button">
+            @click="addAnswer(question.id)" id="add-answer-button">
             New Answer
         </button>
     </div>
@@ -75,6 +61,11 @@
             },
             removeAnswer(index) {
                 this.question.answers.splice(index, 1);
+            },
+            questionHasAnswers(question) {
+                if (question.answers.length > 1) {
+                    return true;
+                }
             }
         }
     }

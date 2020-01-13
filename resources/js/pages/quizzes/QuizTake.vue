@@ -9,7 +9,7 @@
             <section class="section" v-for="(question, index) in quiz.questions" :key="question.id">
                 <p class="menu-label">Question {{ index + 1 }}</p>
                 <p class="mb-sm">{{ question.text }}</p>
-                <div class="control" v-if="question.type === 'multiple_choice'">
+                <div class="control">
                     <label class="radio radio-label mb-sm" v-for="answer in question.answers" :key="answer.id">
                         <input 
                             type="radio" 
@@ -19,13 +19,6 @@
                             @change="saveAnswer(question)">
                         {{ answer.text }}
                     </label>
-                </div>
-                <div class="control" v-if="question.type === 'short_answer'">
-                    <textarea 
-                        class="textarea" 
-                        placeholder="Answer Text" 
-                        v-model="question.takerAnswer.text" 
-                        @change="saveAnswer(question)"></textarea>
                 </div>
             </section>
             <section class="section is-small">

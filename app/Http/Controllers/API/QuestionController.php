@@ -37,7 +37,6 @@ class QuestionController extends Controller
 
         $question = new Question;
         $question->quiz_id = $inputQuestion['quiz_id'];
-        $question->type = $inputQuestion['type'];
         $question->text = $inputQuestion['text'];
         $question->save();
 
@@ -67,7 +66,6 @@ class QuestionController extends Controller
     public function update(Request $request, Question $question)
     {
         $inputQuestion = $request->question;
-        $question->type = $inputQuestion['type'];
         $question->text = $inputQuestion['text'];
         $question->save();
 

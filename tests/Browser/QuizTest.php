@@ -76,10 +76,16 @@ class QuizTest extends DuskTestCase
                     ->visit(new QuizCreate)
                     ->createQuiz()
                     ->click('#new-question-button')
-                    ->select('question_type', 'short_answer')
                     // the save question button should not be visible if the textarea is empty
                     ->assertMissing('#save-question-button')
                     ->type('question_text', 'What is your name?')
+                    // the save question button should still be invisible until we add two answers
+                    ->click('#add-answer-button')
+                    ->type('@answer-input-0', 'Mark')
+                    // still need to add one more answer before the button is visible
+                    ->assertMissing('#save-question-button')
+                    ->click('#add-answer-button')
+                    ->type('@answer-input-1', 'Jerry')
                     ->click('#save-question-button')
                     ->assertMissing('#question-editor-container')
                     ->pause(1000)
@@ -98,7 +104,11 @@ class QuizTest extends DuskTestCase
             $browser->visit(new Login($user))
                     ->loginUser()
                     ->visit(new QuizEdit($quiz))
-                    ->addAnswerToQuestion()
+                    ->waitFor("@question-link-{$question->id}")
+                    ->click("@question-link-{$question->id}")
+                    ->addAnswerToQuestion(0, 'Answer 1')
+                    ->addAnswerToQuestion(1, 'Answer 2')
+                    ->waitFor('#save-question-button')
                     ->click('#save-question-button')
                     ->assertMissing('#question-editor-container')
                     ->click('@question-link-1')
@@ -117,9 +127,9 @@ class QuizTest extends DuskTestCase
         $quiz = factory(\App\Quiz::class)->create();
         $user->quizzes()->attach($quiz->id, ['role' => 'maker']);
         $question = $quiz->questions()->save(factory(\App\Question::class)->make());
-        $answer = $question->answers()->save(factory(\App\Answer::class)->make());
+        $answers = $question->answers()->saveMany(factory(\App\Answer::class, 3)->make());
 
-        $this->browse(function (Browser $browser) use ($user, $quiz, $question, $answer) {
+        $this->browse(function (Browser $browser) use ($user, $quiz, $question, $answers) {
             $browser->visit(new Login($user))
                     ->loginUser()
                     ->visit(new QuizEdit($quiz))
@@ -127,15 +137,15 @@ class QuizTest extends DuskTestCase
                     ->click('@question-link-1')
                     ->waitFor('@answer-input-0')
                     ->click('@remove-answer-button-0')
-                    ->waitUntilMissing('@answer-input-0')
+                    ->waitUntilMissing('@answer-input-2') // We have 3 answers, if we remove one then the third answer "element" will be missing
                     ->click('#save-question-button')
                     ->click('@question-link-1')
                     ->waitFor('#question-editor-container')
-                    ->assertMissing('@answer-input-0');
+                    ->assertMissing('@answer-input-2');
 
             $this->assertDatabaseMissing('answers', [
                 'question_id' => $question->id,
-                'text' => $answer->text
+                'text' => $answers[0]->text
             ]);
         });
     }
@@ -146,9 +156,9 @@ class QuizTest extends DuskTestCase
         $quiz = factory(\App\Quiz::class)->create();
         $user->quizzes()->attach($quiz->id, ['role' => 'maker']);
         $question = $quiz->questions()->save(factory(\App\Question::class)->make());
-        $answer = $question->answers()->save(factory(\App\Answer::class)->make());
+        $answers = $question->answers()->saveMany(factory(\App\Answer::class, 2)->make());
 
-        $this->browse(function (Browser $browser) use ($user, $quiz, $question, $answer) {
+        $this->browse(function (Browser $browser) use ($user, $quiz, $question, $answers) {
             $browser->visit(new Login($user))
                     ->loginUser()
                     ->visit(new QuizEdit($quiz))
@@ -171,7 +181,7 @@ class QuizTest extends DuskTestCase
 
             $this->assertDatabaseMissing('answers', [
                 'question_id' => $question->id,
-                'text' => $answer->text,
+                'text' => $answers[0]->text,
                 'correct' => 0
             ]);    
         });
