@@ -42,11 +42,11 @@ class QuizTakeTest extends DuskTestCase
                     ->visit("/#/quizzes/{$quiz->id}/take")
                     ->waitFor('#quiz-title')
                     ->assertSee($questions[0]->text)
-                    ->radio("question-1-answers", $questions[0]->answers[rand(0, 3)]->text)
+                    ->radio("question-1-answers", $questions[0]->answers[rand(0, 3)]->id)
                     ->assertSee($questions[1]->text)
-                    ->radio("question-2-answers", $questions[1]->answers[rand(0, 3)]->text)
+                    ->radio("question-2-answers", $questions[1]->answers[rand(0, 3)]->id)
                     ->assertSee($questions[2]->text)
-                    ->radio("question-3-answers", $questions[2]->answers[rand(0, 3)]->text)
+                    ->radio("question-3-answers", $questions[2]->answers[rand(0, 3)]->id)
                     ->click("#submit-quiz-button")
                     ->waitForText('my results!');
 

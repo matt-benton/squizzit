@@ -18,8 +18,18 @@ class Quiz extends Model
         return $this->hasMany('App\Question');
     }
 
+    public function answers()
+    {
+        return $this->hasManyThrough('App\Answer', 'App\Question');
+    }
+
     public function takerAnswers()
     {
         return $this->hasManyThrough('App\TakerAnswer', 'App\Question');
+    }
+
+    public function getCorrectAnswers()
+    {
+        return $this->answers()->where('correct', 1)->get();
     }
 }

@@ -16,11 +16,13 @@ class CreateTakerAnswersTable extends Migration
         Schema::create('taker_answers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('answer_id');
             $table->unsignedBigInteger('question_id');
-            $table->text('text');
+            $table->boolean('is_correct')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('answer_id')->references('id')->on('answers');
             $table->foreign('question_id')->references('id')->on('questions');
         });
     }

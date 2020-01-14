@@ -23,7 +23,7 @@ class TakerAnswerController extends Controller
     public function save(Request $request)
     {
         $request->validate([
-            'answer_text' => 'required',
+            'answer_id' => 'required|numeric',
             'question_id' => 'required|numeric',
         ]);
 
@@ -38,7 +38,7 @@ class TakerAnswerController extends Controller
             'question_id' => $request->question_id,
         ]);
 
-        $takerAnswer->text = $request->answer_text;
+        $takerAnswer->answer_id = $request->answer_id;
         $takerAnswer->save();
     }
 }

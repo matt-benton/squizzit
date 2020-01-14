@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\QuizSubmitted;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -135,9 +136,13 @@ class QuizController extends Controller
             'quizId' => 'required|numeric'
         ]);
 
+        $quiz = Quiz::findOrFail($request->quizId);
+
         $now = Carbon::now();
 
-        Auth::user()->quizzes()->updateExistingPivot($request->quizId, ['submitted_at' => $now->toDateTimeString()]);
+        Auth::user()->quizzes()->updateExistingPivot($quiz->id, ['submitted_at' => $now->toDateTimeString()]);
+
+        event(new QuizSubmitted($quiz));
 
         return response(['message' => 'success']);
     }

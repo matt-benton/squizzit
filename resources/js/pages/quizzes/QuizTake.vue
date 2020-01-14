@@ -14,8 +14,8 @@
                         <input 
                             type="radio" 
                             :name="`question-${ index + 1 }-answers`" 
-                            :value="answer.text" 
-                            v-model="question.takerAnswer.text"
+                            :value="answer.id" 
+                            v-model="question.takerAnswer.answer_id"
                             @change="saveAnswer(question)">
                         {{ answer.text }}
                     </label>
@@ -58,7 +58,7 @@ export default {
         saveAnswer (question) {
             axios.post(`/api/taker_answers/save`, {
                     question_id: question.id,
-                    answer_text: question.takerAnswer.text,
+                    answer_id: question.takerAnswer.answer_id,
                 })
         },
         submitQuiz () {
