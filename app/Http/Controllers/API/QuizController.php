@@ -158,6 +158,18 @@ class QuizController extends Controller
         return response($result);
     }
 
+    public function getResults($id)
+    {
+        $quiz = $this->retrieveQuizWithRelations($id);
+
+        $takerAnswers = $quiz->takerAnswers()->where('user_id', Auth::user()->id)->get();
+
+        return response([
+            'quiz' => $quiz,
+            'takerAnswers' => $takerAnswers,
+        ]);
+    }
+
     private function retrieveQuizWithRelations($id)
     {
         return Auth::user()->quizzes()->where('id', $id)->with('questions.answers')->first();

@@ -70,4 +70,33 @@ class QuizTakeTest extends DuskTestCase
              */
         });
     }
+
+    /**
+     * @group hey
+     */
+    public function testGetQuizResults()
+    {
+        $taker = factory(\App\User::class)->create();
+        $quiz = factory(\App\Quiz::class)->create();
+        $taker->quizzes()->attach($quiz->id, ['role' => 'taker']);
+        $questions = $quiz->questions()->saveMany([
+            factory(\App\Question::class)->make(),
+            factory(\App\Question::class)->make(),
+            factory(\App\Question::class)->make()
+        ]);
+
+        $this->browse(function (Browser $browser) use ($taker, $quiz, $questions) {
+            $browser->visit(new Login($taker))
+                    ->loginUser()
+                    ->visit("/#/quizzes/")
+                    ->waitFor($quiz->title)
+                    ->click($quiz->title)
+                    ->waitFor($questions[0]->text);
+                    // ->assertSee($questions[0]->text);
+        });
+
+        // user click on a quiz that he/she has taken and submitted
+
+        // user sees a results page
+    }
 }
