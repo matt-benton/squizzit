@@ -3,11 +3,12 @@
         <div class="container">
             <section class="section is-small">
                 <h1 class="is-size-1">{{ quiz.name }}</h1>
+                <h3 class="is-size-3">Your Score: {{ score }}</h3>
             </section>
             <hr class="has-background-primary">
             <section class="section" v-for="(question, index) in quiz.questions" :key="question.id">
                 <p class="menu-label">
-                    <i v-if="questionIsCorrect(question)" class="far fa-check-circle has-text-success" ></i>
+                    <i v-if="questionIsCorrect(question)" class="far fa-check-circle has-text-success"></i>
                     <i v-else class="fas fa-times has-text-danger"></i>
                     Question {{ index + 1 }} 
                 </p>
@@ -32,6 +33,7 @@ export default {
         return {
             quiz: '',
             takerAnswers: [],
+            score: '',
         }
     },
     created() {
@@ -43,6 +45,7 @@ export default {
                 .then(response => {
                     this.quiz = response.data.quiz;
                     this.takerAnswers = response.data.takerAnswers;
+                    this.score = response.data.score;
                 });
         },
         questionIsCorrect(question) {

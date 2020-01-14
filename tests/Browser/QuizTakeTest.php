@@ -2,10 +2,13 @@
 
 namespace Tests\Browser;
 
+use App\Events\QuizSubmitted;
+use App\TakerAnswer;
 use Tests\Browser\Pages\Login;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Carbon\Carbon;
 
 class QuizTakeTest extends DuskTestCase
 {
@@ -48,7 +51,7 @@ class QuizTakeTest extends DuskTestCase
                     ->assertSee($questions[2]->text)
                     ->radio("question-3-answers", $questions[2]->answers[rand(0, 3)]->id)
                     ->click("#submit-quiz-button")
-                    ->waitForText('my results!');
+                    ->waitForText('Your Score');
 
             $this->assertDatabaseHas('taker_answers', [
                 'user_id' => $taker->id,
@@ -82,21 +85,55 @@ class QuizTakeTest extends DuskTestCase
         $questions = $quiz->questions()->saveMany([
             factory(\App\Question::class)->make(),
             factory(\App\Question::class)->make(),
-            factory(\App\Question::class)->make()
+            factory(\App\Question::class)->make(),
+            factory(\App\Question::class)->make(),
         ]);
+
+        foreach ($questions as $key=>$question) {
+            $answers = $question->answers()->saveMany([
+                factory(\App\Answer::class)->make(),
+                factory(\App\Answer::class)->make([
+                    'correct' => 1,
+                ]),
+                factory(\App\Answer::class)->make(),
+                factory(\App\Answer::class)->make()
+            ]);
+
+            // make the first answer incorrect but all the rest correct
+            if ($key === 0) {
+                TakerAnswer::create([
+                    'user_id' => $taker->id,
+                    'question_id' => $question->id,
+                    'answer_id' => $answers[3]->id,
+                ]);
+            } else {
+                TakerAnswer::create([
+                    'user_id' => $taker->id,
+                    'question_id' => $question->id,
+                    'answer_id' => $answers[1]->id,
+                ]);
+            }
+        }
+
+        $now = Carbon::now();
+
+        $taker->quizzes()->updateExistingPivot($quiz->id, ['submitted_at' => $now->toDateTimeString()]);
+
+        event(new QuizSubmitted($quiz));
 
         $this->browse(function (Browser $browser) use ($taker, $quiz, $questions) {
             $browser->visit(new Login($taker))
                     ->loginUser()
                     ->visit("/#/quizzes/")
                     ->waitFor($quiz->title)
-                    ->click($quiz->title)
-                    ->waitFor($questions[0]->text);
-                    // ->assertSee($questions[0]->text);
+                    ->click('.card-header-title')
+                    ->waitForText($questions[0]->text)
+                    ->assertSee('Your Score: 75')
+                    ->assertVisible('.fa-check-circle')
+                    ->assertVisible('.fa-times')
+                    ->assertVisible('.has-text-success')
+                    ->assertVisible('.has-text-danger')
+                    ->assertVisible('.has-text-weight-bold');
         });
-
-        // user click on a quiz that he/she has taken and submitted
-
-        // user sees a results page
     }
 }

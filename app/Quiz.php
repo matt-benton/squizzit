@@ -32,4 +32,15 @@ class Quiz extends Model
     {
         return $this->answers()->where('correct', 1)->get();
     }
+
+    // ! needs unit test
+    public function getTakerScore($taker)
+    {
+        $takerAnswers = $this->takerAnswers()->where('user_id', $taker->id)->get();
+        $correctTakerAnswers = $takerAnswers->filter(function ($takerAnswer) {
+            return $takerAnswer->is_correct === 1;
+        });
+
+        return round(count($correctTakerAnswers) / count($takerAnswers) * 100);
+    }
 }

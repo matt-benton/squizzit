@@ -161,12 +161,13 @@ class QuizController extends Controller
     public function getResults($id)
     {
         $quiz = $this->retrieveQuizWithRelations($id);
-
         $takerAnswers = $quiz->takerAnswers()->where('user_id', Auth::user()->id)->get();
+        $score = $quiz->getTakerScore(Auth::user());
 
         return response([
             'quiz' => $quiz,
             'takerAnswers' => $takerAnswers,
+            'score' => $score,
         ]);
     }
 
