@@ -74,9 +74,6 @@ class QuizTakeTest extends DuskTestCase
         });
     }
 
-    /**
-     * @group hey
-     */
     public function testGetQuizResults()
     {
         $taker = factory(\App\User::class)->create();
@@ -128,7 +125,8 @@ class QuizTakeTest extends DuskTestCase
                     ->waitFor($quiz->title)
                     ->click('.card-header-title')
                     ->waitForText($questions[0]->text)
-                    ->assertSee('Your Score: 75')
+                    ->waitForText('Your Score: 75')
+                    ->assertSee('You answered 3 out of 4 questions correctly.')
                     ->assertVisible('.fa-check-circle')
                     ->assertVisible('.fa-times')
                     ->assertVisible('.has-text-success')

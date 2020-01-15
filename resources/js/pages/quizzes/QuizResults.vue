@@ -4,6 +4,7 @@
             <section class="section is-small">
                 <h1 class="is-size-1">{{ quiz.name }}</h1>
                 <h3 class="is-size-3">Your Score: {{ score }}</h3>
+                <p>You answered {{ correctAnswers }} out of {{ totalQuestions }} questions correctly.</p>
             </section>
             <hr class="has-background-primary">
             <section class="section" v-for="(question, index) in quiz.questions" :key="question.id">
@@ -38,6 +39,14 @@ export default {
     },
     created() {
         this.getQuizResults();
+    },
+    computed: {
+        totalQuestions: function () {
+            return this.quiz.questions.length;
+        },
+        correctAnswers: function () {
+            return this.takerAnswers.filter(takerAnswer => takerAnswer.is_correct === 1).length;
+        },
     },
     methods: {
         getQuizResults() {
