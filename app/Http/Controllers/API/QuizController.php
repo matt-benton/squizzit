@@ -171,6 +171,15 @@ class QuizController extends Controller
         ]);
     }
 
+    public function getUserRole($id)
+    {
+        $quiz = Quiz::findOrFail($id);
+
+        $user = $quiz->users()->where('id', Auth::user()->id)->first();
+
+        return response(['role' => $user->pivot->role]);
+    }
+
     private function retrieveQuizWithRelations($id)
     {
         return Auth::user()->quizzes()->where('id', $id)->with('questions.answers')->first();

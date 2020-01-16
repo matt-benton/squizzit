@@ -32,6 +32,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/quizzes/join', 'API\QuizController@addTaker');
     Route::get('/quizzes/{id}/is_submitted', 'API\QuizController@isSubmitted');
     Route::get('/quizzes/{id}/results', 'API\QuizController@getResults');
+    Route::get('/quizzes/{id}/user_role', 'API\QuizController@getUserRole');
     Route::get('/quiz_invites/{id}/decline', 'API\QuizInviteController@decline');
 });
 
