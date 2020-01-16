@@ -32,12 +32,12 @@
                         </span>
                         <span>Make a Quiz</span>
                     </router-link>
-                    <a class="button is-rounded is-primary is-outlined ml-sm">
+                    <router-link to="/invites" class="button is-rounded is-primary is-outlined ml-sm">
                         <span class="icon is-small">
                             <i class="fas fa-user-plus"></i>
                         </span>
                         <span>Join a Quiz</span>
-                    </a>
+                    </router-link>
                 </div>
             </section>
         </div>
