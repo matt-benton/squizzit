@@ -27,7 +27,7 @@
                     <div class="navbar-end">
                         <router-link to="/invites" class="navbar-item">
                             Invites
-                            <span class="tag is-white is-rounded ml-xs" v-show="numQuizInvites > 0">{{ numQuizInvites }}</span>
+                            <span class="tag is-white is-rounded ml-xs" id="quiz-invite-counter" v-show="numQuizInvites > 0">{{ numQuizInvites }}</span>
                         </router-link>
 
                         <div class="navbar-item has-dropdown is-hoverable">
@@ -57,11 +57,15 @@
         data() {
             return {
                 email: localStorage.getItem('email'),
-                numQuizInvites: 0
             }
         },
         created() {
             this.getNumQuizInvites();
+        },
+        computed: {
+            numQuizInvites: function () {
+                return this.$store.state.numInvites;
+            }
         },
         methods: {
             logout() {
@@ -73,7 +77,7 @@
             getNumQuizInvites() {
                 axios.get('/api/quiz_invites')
                     .then(response => {
-                        this.numQuizInvites = response.data.quizInvites.length;
+                        this.$store.dispatch('storeNumInvites', response.data);
                     })
             }
         }

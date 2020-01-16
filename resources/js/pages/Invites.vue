@@ -70,6 +70,7 @@ export default {
                 .then(response => {
                     if (response.data.success) {
                         this.$router.push(`/quizzes/${invite.quiz.id}/take`);
+                        this.$store.dispatch('decrementNumInvites');
                     }
                 })
         },
@@ -77,6 +78,7 @@ export default {
             axios.get(`/api/quiz_invites/${invite.id}/decline`)
                 .then(response => {
                     this.clear(invite);
+                    this.$store.dispatch('decrementNumInvites');
                 })
         },
         clear(invite) {

@@ -6,7 +6,8 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
     state: {
         token: null,
-        email: null
+        email: null,
+        numInvites: null,
     },
     mutations: {
         storeUser (state, userData) {
@@ -16,7 +17,13 @@ export const store = new Vuex.Store({
         clearUser (state) {
             state.token = null;
             state.email = null;
-        }
+        },
+        storeNumInvites (state, data) {
+            state.numInvites = data.numInvites;
+        },
+        decrementNumInvites (state) {
+            state.numInvites--;
+        },
     },
     actions: {
         storeUser ({commit}, userData) {
@@ -39,6 +46,14 @@ export const store = new Vuex.Store({
                 token,
                 email
             })
+        },
+        storeNumInvites ({commit}, data) {
+            commit('storeNumInvites', {
+                numInvites: data.quizInvites.length,
+            })
+        },
+        decrementNumInvites ({commit}) {
+            commit('decrementNumInvites');
         },
     },
     getters: {

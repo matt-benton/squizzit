@@ -57,10 +57,12 @@ class QuizInviteTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($recipient, $quiz) {
             $browser->visit(new Login($recipient))
                     ->loginUser()
+                    ->assertSeeIn('#quiz-invite-counter', '1')
                     ->visit('/#/invites')
                     ->waitForText($quiz->name)
                     ->clickLink('Take Quiz')
                     ->pause(2000)
+                    ->waitUntilMissing('#quiz-invite-counter')
                     ->assertSee($quiz->name);
 
             $this->assertDatabaseHas('quiz_invites', [
@@ -85,8 +87,10 @@ class QuizInviteTest extends DuskTestCase
                     ->loginUser()
                     ->visit('/#/invites')
                     ->waitForText($quiz->name)
+                    ->assertSeeIn('#quiz-invite-counter', '1')
                     ->clickLink('Decline')
                     ->waitUntilMissing('.card')
+                    ->waitUntilMissing('#quiz-invite-counter')
                     ->assertDontSee($quiz->name);
 
             $this->assertDatabaseHas('quiz_invites', [
