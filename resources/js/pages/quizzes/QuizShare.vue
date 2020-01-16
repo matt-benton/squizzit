@@ -53,6 +53,18 @@
                 successMessage: ''
             }
         },
+        beforeRouteEnter(to, from, next) {
+        next(vm => {
+            axios.get(`api/quizzes/${vm.$route.params.id}/user_role`)
+                .then(response => {
+                    if (response.data.role === 'maker') {
+                        next();
+                    } else {
+                        next('/quizzes');
+                    }
+                });
+        });
+    },
         created() {
             this.getQuiz();
         },
