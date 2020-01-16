@@ -37,6 +37,17 @@ export default {
     },
     beforeRouteEnter(to, from, next) {
         next(vm => {
+            // make sure the user accessing this page is a quiz taker
+            axios.get(`api/quizzes/${vm.$route.params.id}/user_role`)
+                .then(response => {
+                    if (response.data.role === 'taker') {
+                        next();
+                    } else {
+                        next('/quizzes');
+                    }
+                });
+
+            // check to see if this quiz has been submitted
             axios.get(`/api/quizzes/${vm.$route.params.id}/is_submitted`)
                 .then(response => {
                     if (response.data === 1) {
