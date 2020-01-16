@@ -177,7 +177,14 @@ class QuizController extends Controller
 
         $user = $quiz->users()->where('id', Auth::user()->id)->first();
 
-        return response(['role' => $user->pivot->role]);
+        // it's possible a user might not be associated with a quiz at all
+        if (!$user) {
+            $role = 'none';
+        } else {
+            $role = $user->pivot->role;
+        }
+
+        return response(['role' => $role]);
     }
 
     private function retrieveQuizWithRelations($id)
