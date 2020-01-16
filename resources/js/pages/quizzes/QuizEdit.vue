@@ -76,7 +76,7 @@
                         if (response.data.role === 'maker') {
                             next();
                         } else {
-                            next(`/quizzes/${vm.$route.params.id}/take`);
+                            next(`/quizzes`);
                         }
                     });
             });

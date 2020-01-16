@@ -173,7 +173,11 @@ class QuizController extends Controller
 
     public function getUserRole($id)
     {
-        $quiz = Quiz::findOrFail($id);
+        $quiz = Quiz::find($id);
+
+        if (!$quiz) {
+            return response(['role' => 'none']);
+        }
 
         $user = $quiz->users()->where('id', Auth::user()->id)->first();
 
