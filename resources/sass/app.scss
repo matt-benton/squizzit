@@ -8,12 +8,16 @@
 // Font Awesome
 @import '~@fortawesome/fontawesome-free/css/all.css';
 
+body {
+    @apply font-body font-semibold text-gray-700;
+}
+
 .form-group {
     @apply my-8;
 }
 
 .form-label {
-    @apply text-lg text-gray-800;
+    @apply text-lg;
 }
 
 .form-control {
@@ -21,5 +25,5 @@
 }
 
 .btn {
-    @apply text-lg text-gray-800 px-6 py-2 bg-gray-400 rounded;
+    @apply text-lg px-6 py-2 bg-gray-400 rounded;
 }
