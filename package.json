@@ -31,6 +31,7 @@
     "dependencies": {
         "jsdom": "^14.0.0",
         "jsdom-global": "^3.0.2",
+        "tailwindcss": "^1.1.4",
         "vue-router": "^3.0.2",
         "vuelidate": "^0.7.4",
         "vuex": "^3.1.0"

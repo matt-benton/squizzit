@@ -2,7 +2,7 @@
     <section class="section">
         <div class="columns">
             <div class="column is-4 is-offset-4">
-                <div class="box">
+                <div class="bg-red-500">
                     <div class="field">
                         <label for="email" class="label">Email</label>
                         <div class="control has-icons-left">
@@ -26,7 +26,7 @@
                     <div class="field is-horizontal">
                         <div class="column is-two-thirds">
                             <div class="control">
-                                <button type="button" class="button is-primary is-rounded" @click="login" dusk="sign-in-button">Sign In</button>
+                                <button type="button" class="bg-green-500" @click="login" dusk="sign-in-button">Sign In</button>
                                 <router-link to="/" class="button is-text is-rounded">Go Back</router-link>
                             </div>
                         </div>
