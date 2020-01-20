@@ -1,47 +1,25 @@
 <template>
-    <section class="section">
-        <div class="columns">
-            <div class="column is-4 is-offset-4">
-                <div class="bg-red-500">
-                    <div class="field">
-                        <label for="email" class="label">Email</label>
-                        <div class="control has-icons-left">
-                            <input class="input" type="email" name="email" v-model="form.email" @keydown.enter="login">
-                            <span class="icon is-small is-left">
-                                <i class="far fa-envelope"></i>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="field">
-                        <label for="password" class="label">Password</label>
-                        <div class="control has-icons-left">
-                            <input class="input" type="password" name="password" v-model="form.password" @keydown.enter="login">
-                            <span class="icon is-small is-left">
-                                <i class="fas fa-lock"></i>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="field is-horizontal">
-                        <div class="column is-two-thirds">
-                            <div class="control">
-                                <button type="button" class="bg-green-500" @click="login" dusk="sign-in-button">Sign In</button>
-                                <router-link to="/" class="button is-text is-rounded">Go Back</router-link>
-                            </div>
-                        </div>
-                        <div class="column is-one-third">
-                            <div class="control">
-                                <router-link to="/auth/send_password_reset" class="button is-text is-rounded">Forgot password?</router-link>
-                            </div>
-                        </div>
-                    </div>
-
-                    <p class="help is-danger" v-if="form.error">{{ form.error }}</p>
-                </div>
+    <div class="flex justify-center content-center p-2 md:p-10">
+        <div class="bg-gray-100 p-4 md:p-8 w-full md:w-3/5 lg:w-2/5 xl:w-1/4">
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input class="form-control" type="email" name="email" v-model="form.email" @keydown.enter="login">
             </div>
+
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input class="form-control" type="password" name="password" v-model="form.password" @keydown.enter="login">
+            </div>
+
+            <div class="form-group">
+                <button type="button" class="btn" @click="login" dusk="sign-in-button">Sign In</button>
+                <router-link to="/"><button class="btn">Go Back</button></router-link>
+            </div>
+            <router-link to="/auth/send_password_reset" class="text-blue-500">Forgot password?</router-link>
+
+            <p class="text-red-700" v-if="form.error">{{ form.error }}</p>
         </div>
-    </section>
+    </div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-    <div class="container mx-auto bg-red-500">
+    <div>
         <navbar></navbar>
         <router-view></router-view>
     </div>
