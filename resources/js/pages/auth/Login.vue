@@ -1,6 +1,6 @@
 <template>
     <div class="flex justify-center content-center p-2 md:p-10">
-        <div class="bg-gray-100 p-4 md:p-8 w-full md:w-3/5 lg:w-2/5 xl:w-1/4">
+        <div class="form-panel">
             <div class="form-group">
                 <label for="email" class="form-label">Email</label>
                 <input class="form-control" type="email" name="email" v-model="form.email" @keydown.enter="login">
@@ -17,7 +17,7 @@
             </div>
             <router-link to="/auth/send_password_reset" class="text-blue-500">Forgot password?</router-link>
 
-            <p class="text-red-700" v-if="form.error">{{ form.error }}</p>
+            <p class="validation-text" v-if="form.error">{{ form.error }}</p>
         </div>
     </div>
 </template>
