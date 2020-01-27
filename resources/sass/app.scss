@@ -1,15 +1,37 @@
+@import url('https://fonts.googleapis.com/css?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap');
+
 @tailwind base;
 
 @tailwind components;
-
-@tailwind utilities;
-
 
 // Font Awesome
 @import '~@fortawesome/fontawesome-free/css/all.css';
 
 body {
     @apply font-body font-semibold text-gray-700;
+}
+
+.form-panel {
+    @apply bg-gray-100 p-4 w-full;
+}
+
+@screen md {
+    .form-panel {
+        @apply p-8 w-3/5;
+    }
+}
+
+@screen lg {
+    .form-panel {
+        @apply w-2/5;
+    }
+}
+
+@screen xl {
+    .form-panel {
+        @apply w-1/4;
+    }
 }
 
 .form-group {
@@ -27,3 +49,17 @@ body {
 .btn {
     @apply text-lg px-6 py-2 bg-gray-400 rounded;
 }
+
+.validation-text {
+    @apply text-red-700;
+}
+
+input.is-danger {
+    @apply bg-red-200;
+}
+
+input.is-success {
+    @apply bg-green-200;
+}
+
+@tailwind utilities;
