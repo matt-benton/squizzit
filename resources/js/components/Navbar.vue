@@ -16,7 +16,7 @@
             </div>
         </div>
         <div :class="menuOpen ? 'block' : 'hidden'" class="px-2 pt-2 pb-4 sm:flex sm:p-0">
-            <div class="relative">
+            <div class="relative nav-item">
                 <button @click="quizzesDropdownOpen = !quizzesDropdownOpen" class="relative z-10 block h-8">
                     Quizzes
                 </button>
@@ -31,12 +31,14 @@
                 </div>
             </div>
 
-            <router-link to="/invites" class="block px-2 py-1 text-white rounded hover:bg-gray-800">
-                Invites
-                <span class="tag is-white is-rounded ml-xs" id="quiz-invite-counter" v-show="numQuizInvites > 0">{{ numQuizInvites }}</span>
-            </router-link>
+            <div class="nav-item flex">
+                <router-link to="/invites" class="self-center">
+                    Invites
+                    <span id="quiz-invite-counter" v-show="numQuizInvites > 0">{{ numQuizInvites }}</span>
+                </router-link>
+            </div>
 
-            <div class="relative ml-6">
+            <div class="relative nav-item">
                 <button @click="emailDropdownOpen = !emailDropdownOpen" class="relative z-10 block h-8">
                     {{ email }}
                 </button>

@@ -9,7 +9,7 @@
 @import '~@fortawesome/fontawesome-free/css/all.css';
 
 body {
-    @apply font-body font-semibold text-gray-700;
+    @apply font-body text-gray-700;
 }
 
 .form-panel {
@@ -63,12 +63,20 @@ input.is-success {
 }
 
 // NAVBAR
+.nav-item {
+    @apply mx-2 text-gray-200 rounded px-2 py-1;
+}
+
+.nav-item:hover {
+    @apply bg-gray-800;
+}
+
 .dropdown {
     @apply absolute right-0 mt-2 py-2 w-48 bg-white rounded-lg shadow-xl;
 }
 
 .dropdown-exit-page-cover {
-    @apply fixed inset-0 h-full w-full bg-black opacity-50 cursor-default;
+    @apply fixed inset-0 h-full w-full cursor-default;
 }
 
 .dropdown-link {
