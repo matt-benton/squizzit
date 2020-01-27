@@ -62,4 +62,21 @@ input.is-success {
     @apply bg-green-200;
 }
 
+// NAVBAR
+.dropdown {
+    @apply absolute right-0 mt-2 py-2 w-48 bg-white rounded-lg shadow-xl;
+}
+
+.dropdown-exit-page-cover {
+    @apply fixed inset-0 h-full w-full bg-black opacity-50 cursor-default;
+}
+
+.dropdown-link {
+    @apply block px-4 py-2 text-gray-800;
+}
+
+.dropdown-link:hover {
+    @apply bg-indigo-500 text-white;
+}
+
 @tailwind utilities;

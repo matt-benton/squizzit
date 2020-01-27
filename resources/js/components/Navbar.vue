@@ -20,12 +20,12 @@
                 <button @click="quizzesDropdownOpen = !quizzesDropdownOpen" class="relative z-10 block h-8">
                     Quizzes
                 </button>
-                <button v-if="quizzesDropdownOpen" @click="quizzesDropdownOpen = false" class="fixed inset-0 h-full w-full bg-black opacity-50 cursor-default"></button>
-                <div :class="quizzesDropdownOpen ? 'block' : 'hidden'" class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-lg shadow-xl">
-                    <router-link to="/quizzes/create" class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">
+                <button v-if="quizzesDropdownOpen" @click="quizzesDropdownOpen = false" class="dropdown-exit-page-cover"></button>
+                <div :class="quizzesDropdownOpen ? 'block' : 'hidden'" class="dropdown">
+                    <router-link to="/quizzes/create" class="dropdown-link">
                         Make a New Quiz
                     </router-link>
-                    <router-link to="/quizzes" class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">
+                    <router-link to="/quizzes" class="dropdown-link">
                         My Quizzes
                     </router-link>
                 </div>
@@ -40,9 +40,9 @@
                 <button @click="emailDropdownOpen = !emailDropdownOpen" class="relative z-10 block h-8">
                     {{ email }}
                 </button>
-                <button v-if="emailDropdownOpen" @click="emailDropdownOpen = false" class="fixed inset-0 h-full w-full bg-black opacity-50 cursor-default"></button>
-                <div :class="emailDropdownOpen ? 'block' : 'hidden'" class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-lg shadow-xl">
-                    <a class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white" @click="logout">
+                <button v-if="emailDropdownOpen" @click="emailDropdownOpen = false" class="dropdown-exit-page-cover"></button>
+                <div :class="emailDropdownOpen ? 'block' : 'hidden'" class="dropdown">
+                    <a class="dropdown-link" @click="logout">
                         Logout
                     </a>
                 </div>
