@@ -30,18 +30,18 @@
                 </button>
             </div>
         </div>
-        <div :class="isOpen ? 'block' : 'hidden'" class="px-2 pt-2 pb-4 sm:flex sm:p-0">
+        <div class="px-2 pt-2 pb-4 sm:flex sm:p-0">
             <router-link to="/invites" class="block px-2 py-1 text-white rounded hover:bg-gray-800">
                 Invites
                 <span class="tag is-white is-rounded ml-xs" id="quiz-invite-counter" v-show="numQuizInvites > 0">{{ numQuizInvites }}</span>
             </router-link>
 
             <div class="relative ml-6">
-                <button class="block h-8">
+                <button @click="isOpen = !isOpen" class="relative z-10 block h-8">
                     {{ email }}
                 </button>
-
-                <div class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-lg shadow-xl">
+                <button v-if="isOpen" @click="isOpen = false" class="fixed inset-0 h-full w-full bg-black opacity-50 cursor-default"></button>
+                <div :class="isOpen ? 'block' : 'hidden'" class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-lg shadow-xl">
                     <a class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white" @click="logout">
                         Logout
                     </a>
