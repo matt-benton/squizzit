@@ -5,21 +5,6 @@
                 <router-link to="/quizzes" class="font-cursive text-yellow-500">
                     Squizzit
                 </router-link>
-
-                <!-- <div class="flex items-center cursor-pointer" v-on:mouseenter="quizzesMenuVisible = true" v-on:mouseleave="quizzesMenuVisible = false">
-                    <a class="navbar-link">
-                        Quizzes
-                    </a>
-
-                    <div class="absolute bottom-0 flex flex-col bg-blue-400" v-show="quizzesMenuVisible">
-                        <router-link to="/quizzes/create" class="navbar-item">
-                            Make A New Quiz
-                        </router-link>
-                        <router-link to="/quizzes" class="navbar-item">
-                            My Quizzes
-                        </router-link>
-                    </div>
-                </div> -->
             </div>
             <div class="sm:hidden">
                 <button @click="menuOpen = !menuOpen" type="button" class="block text-gray-500 hover:text-white focus:text-white focus:outline-none">
@@ -31,6 +16,21 @@
             </div>
         </div>
         <div :class="menuOpen ? 'block' : 'hidden'" class="px-2 pt-2 pb-4 sm:flex sm:p-0">
+            <div class="relative">
+                <button @click="quizzesDropdownOpen = !quizzesDropdownOpen" class="relative z-10 block h-8">
+                    Quizzes
+                </button>
+                <button v-if="quizzesDropdownOpen" @click="quizzesDropdownOpen = false" class="fixed inset-0 h-full w-full bg-black opacity-50 cursor-default"></button>
+                <div :class="quizzesDropdownOpen ? 'block' : 'hidden'" class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-lg shadow-xl">
+                    <router-link to="/quizzes/create" class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">
+                        Make a New Quiz
+                    </router-link>
+                    <router-link to="/quizzes" class="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white">
+                        My Quizzes
+                    </router-link>
+                </div>
+            </div>
+
             <router-link to="/invites" class="block px-2 py-1 text-white rounded hover:bg-gray-800">
                 Invites
                 <span class="tag is-white is-rounded ml-xs" id="quiz-invite-counter" v-show="numQuizInvites > 0">{{ numQuizInvites }}</span>
@@ -60,8 +60,8 @@
         data() {
             return {
                 email: localStorage.getItem('email'),
-                quizzesMenuVisible: true,
                 emailDropdownOpen: false,
+                quizzesDropdownOpen: false,
                 menuOpen: false,
             }
         },
