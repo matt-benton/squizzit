@@ -15,41 +15,56 @@
                 </button>
             </div>
         </div>
-        <div :class="menuOpen ? 'block' : 'hidden'" class="px-2 pt-2 pb-4 sm:flex sm:p-0">
-            <div class="relative nav-item">
-                <button @click="quizzesDropdownOpen = !quizzesDropdownOpen" class="relative z-10 block h-8">
-                    Quizzes
-                </button>
-                <button v-if="quizzesDropdownOpen" @click="quizzesDropdownOpen = false" class="dropdown-exit-page-cover"></button>
-                <div :class="quizzesDropdownOpen ? 'block' : 'hidden'" class="dropdown">
-                    <router-link to="/quizzes/create" class="dropdown-link">
-                        Make a New Quiz
+        <nav :class="menuOpen ? 'block' : 'hidden'" class="sm:block">
+            <div class="px-2 pt-2 pb-4 sm:flex sm:p-0">
+                <div class="relative nav-item">
+                    <button @click="quizzesDropdownOpen = !quizzesDropdownOpen" class="relative z-10 block h-8">
+                        Quizzes
+                    </button>
+                    <button v-if="quizzesDropdownOpen" @click="quizzesDropdownOpen = false" class="dropdown-exit-page-cover"></button>
+                    <div :class="quizzesDropdownOpen ? 'block' : 'hidden'" class="dropdown">
+                        <router-link to="/quizzes/create" class="dropdown-link">
+                            Make a New Quiz
+                        </router-link>
+                        <router-link to="/quizzes" class="dropdown-link">
+                            My Quizzes
+                        </router-link>
+                    </div>
+                </div>
+
+                <div class="nav-item flex">
+                    <router-link to="/invites" class="self-center">
+                        Invites
+                        <span id="quiz-invite-counter" v-show="numQuizInvites > 0">{{ numQuizInvites }}</span>
                     </router-link>
-                    <router-link to="/quizzes" class="dropdown-link">
-                        My Quizzes
-                    </router-link>
+                </div>
+
+                <!-- Email Dropdown -->
+                <div class="relative nav-item hidden sm:block">
+                    <button @click="emailDropdownOpen = !emailDropdownOpen" class="relative z-10 block h-8">
+                        {{ email }}
+                    </button>
+                    <button v-if="emailDropdownOpen" @click="emailDropdownOpen = false" class="dropdown-exit-page-cover"></button>
+                    <div :class="emailDropdownOpen ? 'block' : 'hidden'" class="dropdown">
+                        <a class="dropdown-link" @click="logout">
+                            Logout
+                        </a>
+                    </div>
                 </div>
             </div>
 
-            <div class="nav-item flex">
-                <router-link to="/invites" class="self-center">
-                    Invites
-                    <span id="quiz-invite-counter" v-show="numQuizInvites > 0">{{ numQuizInvites }}</span>
-                </router-link>
-            </div>
-
-            <div class="relative nav-item">
-                <button @click="emailDropdownOpen = !emailDropdownOpen" class="relative z-10 block h-8">
-                    {{ email }}
-                </button>
-                <button v-if="emailDropdownOpen" @click="emailDropdownOpen = false" class="dropdown-exit-page-cover"></button>
-                <div :class="emailDropdownOpen ? 'block' : 'hidden'" class="dropdown">
-                    <a class="dropdown-link" @click="logout">
+            <!-- Mobile "dropdown" -->
+            <div class="px-4 py-5 border-t border-gray-800 sm:hidden">
+                <div class="h-8">
+                    <span class="text-white">{{ email }}</span>
+                </div>
+                <div class="mt-4">
+                    <a class="mt-2 block text-gray-400 hover:text-white" @click="logout">
                         Logout
                     </a>
                 </div>
             </div>
-        </div>
+        </nav>
     </header>
 </template>
 
