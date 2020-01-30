@@ -89,8 +89,4 @@
     .checkbox {
         display: flex;
     }
-
-    textarea {
-        border-radius: 15px !important;
-    }
 </style>

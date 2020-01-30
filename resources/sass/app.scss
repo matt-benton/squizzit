@@ -46,6 +46,10 @@ body {
     @apply w-full h-10 my-1 bg-gray-200 p-2 text-lg;
 }
 
+.textarea {
+    @apply w-full my-1 bg-gray-200 p-2 text-lg;
+}
+
 .btn {
     @apply text-lg px-6 py-2 bg-gray-400 rounded;
 }
