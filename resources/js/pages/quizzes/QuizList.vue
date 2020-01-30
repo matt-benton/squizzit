@@ -1,46 +1,44 @@
 <template>
-    <div class="has-background-light">
-        <div class="container">
-            <section class="section pb-sm">
-                <p class="is-size-4 has-text-grey">My Quizzes</p>
-            </section>
-            <section class="section quiz-grid" v-if="quizzes.length > 0">
-                <div class="card" v-for="quiz in orderedQuizzes" :key="quiz.id">
-                    <header class="card-header">
-                        <router-link :to="`/quizzes/${quiz.id}`" class="card-header-title" v-if="quiz.pivot.role === 'maker'">
-                            {{ quiz.name }}
-                        </router-link>
-                        <router-link :to="`/quizzes/${quiz.id}/take`" class="card-header-title" v-else>
-                            {{ quiz.name }}
-                        </router-link>
-                    </header>
-                    <div class="card-content">
-                        {{ quiz.description }}
-                    </div>
-                </div>
-            </section>
-            <section class="columns" v-else>
-                <div class="column is-half is-offset-one-quarter has-text-grey">
-                    <h1 class="is-size-3 pb-sm pt-md">No quizzes available</h1>
-                    <h2 class="is-size-4 pb-md">
-                        To get started, join a quiz or make one yourself.  Once you
-                        you have made or joined a quiz, it will show up here.
-                    </h2>
-                    <router-link to="/quizzes/create" class="button is-rounded is-primary">
-                        <span class="icon is-small">
-                            <i class="fas fa-pen"></i>
-                        </span>
-                        <span>Make a Quiz</span>
+    <div class="container mx-auto pb-10">
+        <section class="p-5 text-gray-600">
+            <p>My Quizzes</p>
+        </section>
+        <section class="quiz-grid" v-if="quizzes.length > 0">
+            <div class="bg-gray-200 p-4 rounded" v-for="quiz in orderedQuizzes" :key="quiz.id">
+                <header class="pb-5 text-gray-700">
+                    <router-link :to="`/quizzes/${quiz.id}`" class="card-header-title" v-if="quiz.pivot.role === 'maker'">
+                        {{ quiz.name }}
                     </router-link>
-                    <router-link to="/invites" class="button is-rounded is-primary is-outlined ml-sm">
-                        <span class="icon is-small">
-                            <i class="fas fa-user-plus"></i>
-                        </span>
-                        <span>Join a Quiz</span>
+                    <router-link :to="`/quizzes/${quiz.id}/take`" class="card-header-title" v-else>
+                        {{ quiz.name }}
                     </router-link>
+                </header>
+                <div class="text-gray-600 text-sm">
+                    {{ quiz.description }}
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
+        <section class="columns" v-else>
+            <div class="column is-half is-offset-one-quarter has-text-grey">
+                <h1 class="is-size-3 pb-sm pt-md">No quizzes available</h1>
+                <h2 class="is-size-4 pb-md">
+                    To get started, join a quiz or make one yourself.  Once you
+                    you have made or joined a quiz, it will show up here.
+                </h2>
+                <router-link to="/quizzes/create" class="button is-rounded is-primary">
+                    <span class="icon is-small">
+                        <i class="fas fa-pen"></i>
+                    </span>
+                    <span>Make a Quiz</span>
+                </router-link>
+                <router-link to="/invites" class="button is-rounded is-primary is-outlined ml-sm">
+                    <span class="icon is-small">
+                        <i class="fas fa-user-plus"></i>
+                    </span>
+                    <span>Join a Quiz</span>
+                </router-link>
+            </div>
+        </section>
     </div>
 </template>
 
