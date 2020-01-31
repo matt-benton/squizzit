@@ -29,7 +29,7 @@
             <h5 class="text-sm text-gray-600">{{ quiz.description }}</h5>
         </div>
 
-        <hr>
+        <hr class="my-8">
         <!-- left side nav -->
         <div class="hidden" id="left-side-column">
             <aside class="menu" id="question-nav-list">
@@ -49,8 +49,27 @@
             </aside>
         </div>
 
-        <!-- main list -->
-        <div v-for="(question, index) in quiz.questions" :key="question.id" class="my-8">
+        <!-- main page section -->
+        
+        <!-- new question form -->
+        <div class="pt-4">
+            <textarea 
+                class="w-full mb-2" 
+                name="new_question" 
+                id="new-question-textarea" 
+                rows="4" 
+                placeholder="Enter a new question"
+                v-model="newQuestionText">
+            </textarea>
+            <button type="button" class="rounded bg-blue-500 p-1" @click="addQuestion">
+                <svg class="h-5 w-5 fill-current text-white" viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
+            </button>
+        </div>
+
+        <hr class="my-8">
+
+        <!-- question editors -->
+        <div v-for="(question, index) in quiz.questions" :key="question.id" :id="`question-${index}-editor`">
             <p class="text-gray-600 my-3 text-sm">Question {{ index + 1 }}</p>
             <question-editor 
                 :question="question" 
@@ -66,6 +85,7 @@
         data() {
             return {
                 quiz: '',
+                newQuestionText: '',
             }
         },
         beforeRouteEnter(to, from, next) {
@@ -101,13 +121,27 @@
                     })
                 }
             },
-            addQuestion (question) {
+            addQuestion () {
                 axios.post('/api/questions', {
-                    question
+                    quiz_id: this.quiz.id,
+                    question_text: this.newQuestionText,
                 })
                 .then(response => {
-                    this.quiz.questions.push(response.data.question);
+                    this.quiz.questions.push(response.data.question)
+                    // ! maybe use a promise to get the function below to work when the element is available
+                    // ! or check to see if it exists first
+                    this.scrollToQuestion(response.data.question.id);
+                    this.clearNewQuestionText();
                 })
+            },
+            clearNewQuestionText () {
+                this.newQuestionText = ''
+            },
+            scrollToQuestion (id) {
+                const index = this.findQuestionIndex(id)
+                console.log(`question-${index}-editor`)
+                const questionElement = document.getElementById(`question-${index}-editor`)
+                questionElement.scrollIntoView()
             },
             updateQuestion (question) {
                 axios.put(`/api/questions/${question.id}`, {
@@ -123,14 +157,6 @@
             },
             deselectQuestion () {
                 this.selectedQuestion = '';
-            },
-            returnNewQuestion () {
-                return {
-                    answers: [],
-                    quiz_id: this.quiz.id,
-                    text: '',
-                    type: ''
-                }
             },
             addAnswer (question_id) {
                 let question = this.findQuestion(question_id);

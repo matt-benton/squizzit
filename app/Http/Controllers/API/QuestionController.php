@@ -33,14 +33,14 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        $inputQuestion = $request->question;
-
         $question = new Question;
-        $question->quiz_id = $inputQuestion['quiz_id'];
-        $question->text = $inputQuestion['text'];
+        $question->quiz_id = $request->quiz_id;
+        $question->text = $request->question_text;
         $question->save();
 
-        $question->answers = $this->answer->saveManyAnswers($inputQuestion['answers'], $question);
+        // for some reason it won't show on the page without the answers array
+        // (may need to look into this later)
+        $question->answers = [];
 
         return response(['question' => $question]);
     }
