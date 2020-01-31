@@ -1,60 +1,60 @@
 <template>
-    <div id="quiz-edit-container">
-        <div class="container" id="quiz-edit-body">
-            <section class="section is-small">
-                <p>
-                    <input 
-                        id="quiz-name-input"
-                        type="text"
-                        class="mb-sm"
-                        placeholder="Quiz Title" 
-                        v-model.lazy="quiz.name"
-                        @change="updateQuiz">
-                    <router-link :to="`/quizzes/${quiz.id}/share`" class="button is-primary is-pulled-right is-rounded" id="share-button">
-                        <i class="fas fa-share-square"></i>
-                        &nbsp;
-                        Share
-                    </router-link>
-                </p>
-                <p>
-                    <input
-                        id="quiz-description-input"
-                        type="text"
-                        placeholder="Quiz Description"
-                        v-model.lazy="quiz.description"
-                        @change="updateQuiz">
-                </p>
-            </section>
+    <div class="container mx-auto px-2" id="quiz-edit-body">
+        <!-- <section class="section is-small">
+            <p>
+                <input 
+                    id="quiz-name-input"
+                    type="text"
+                    class="mb-sm"
+                    placeholder="Quiz Title" 
+                    v-model.lazy="quiz.name"
+                    @change="updateQuiz">
+                <router-link :to="`/quizzes/${quiz.id}/share`" class="button is-primary is-pulled-right is-rounded" id="share-button">
+                    <i class="fas fa-share-square"></i>
+                    &nbsp;
+                    Share
+                </router-link>
+            </p>
+            <p>
+                <input
+                    id="quiz-description-input"
+                    type="text"
+                    placeholder="Quiz Description"
+                    v-model.lazy="quiz.description"
+                    @change="updateQuiz">
+            </p>
+        </section> -->
+        <div class="my-4">
+            <h3 class="text-lg my-1">{{ quiz.name }}</h3>
+            <h5 class="text-sm text-gray-600">{{ quiz.description }}</h5>
+        </div>
 
-            <hr class="has-background-primary">
-            <div class="columns">
-                <!-- left side nav -->
-                <div class="column is-one-quarter" id="left-side-column">
-                    <aside class="menu" id="question-nav-list">
-                        <p class="menu-label">
-                            Questions 
-                            <button class="button is-primary is-rounded is-small is-pulled-right" id="new-question-button" @click="selectQuestion(returnNewQuestion())">+ New</button>
-                        </p>
-                        <ul class="menu-list">
-                            <li v-for="(question, index) in quiz.questions" :key="question.id" @click="selectQuestion(question)">
-                                <a :dusk="`question-link-${quiz.id}`">
-                                    {{ index + 1 }}.
-                                    &nbsp;
-                                    {{ question.text.length > 60 ? question.text.substring(0, 60) + '...' : question.text }}
-                                </a>
-                            </li>
-                        </ul>
-                    </aside>
-                </div>
+        <hr>
+        <!-- left side nav -->
+        <div class="hidden" id="left-side-column">
+            <aside class="menu" id="question-nav-list">
+                <p class="menu-label">
+                    Questions 
+                    <button class="button is-primary is-rounded is-small is-pulled-right" id="new-question-button" @click="selectQuestion(returnNewQuestion())">+ New</button>
+                </p>
+                <ul class="menu-list">
+                    <li v-for="(question, index) in quiz.questions" :key="question.id" @click="selectQuestion(question)">
+                        <a :dusk="`question-link-${quiz.id}`">
+                            {{ index + 1 }}.
+                            &nbsp;
+                            {{ question.text.length > 60 ? question.text.substring(0, 60) + '...' : question.text }}
+                        </a>
+                    </li>
+                </ul>
+            </aside>
+        </div>
 
-                <!-- questions/form -->
-                <div class="column ml-md">
-                    <question-editor 
-                        v-if="selectedQuestion" 
-                        :question="selectedQuestion" 
-                        @question-saved="saveQuestion($event)"></question-editor>
-                </div>
-            </div>
+        <!-- main list -->
+        <div v-for="(question, index) in quiz.questions" :key="question.id" class="my-8">
+            <p class="text-gray-600 my-3 text-sm">Question {{ index + 1 }}</p>
+            <question-editor 
+                :question="question" 
+                @question-saved="saveQuestion($event)"></question-editor>
         </div>
     </div>
 </template>
@@ -66,7 +66,6 @@
         data() {
             return {
                 quiz: '',
-                selectedQuestion: ''
             }
         },
         beforeRouteEnter(to, from, next) {

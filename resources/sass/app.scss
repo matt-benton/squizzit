@@ -9,7 +9,7 @@
 @import '~@fortawesome/fontawesome-free/css/all.css';
 
 body {
-    @apply font-body text-gray-700;
+    @apply font-body text-gray-700 bg-gray-200;
 }
 
 .form-panel {
@@ -51,7 +51,7 @@ body {
 }
 
 .btn {
-    @apply text-lg px-6 py-2 bg-gray-400 rounded;
+    @apply px-4 py-2 bg-gray-400 rounded;
 }
 
 .validation-text {
