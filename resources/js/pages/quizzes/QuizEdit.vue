@@ -45,52 +45,54 @@
         </div>
         <hr class="my-8">
 
-        <!-- left side nav -->
-        <div class="hidden" id="left-side-column">
-            <aside class="menu" id="question-nav-list">
-                <p class="menu-label">
-                    Questions 
-                    <button class="button is-primary is-rounded is-small is-pulled-right" id="new-question-button" @click="selectQuestion(returnNewQuestion())">+ New</button>
-                </p>
-                <ul class="menu-list">
-                    <li v-for="(question, index) in quiz.questions" :key="question.id" @click="selectQuestion(question)">
-                        <a :dusk="`question-link-${quiz.id}`">
-                            {{ index + 1 }}.
-                            &nbsp;
-                            {{ question.text.length > 60 ? question.text.substring(0, 60) + '...' : question.text }}
-                        </a>
-                    </li>
-                </ul>
-            </aside>
-        </div>
+        <div class="flex">
+            <!-- left side nav -->
+            <div class="hidden lg:block w-1/4 p-2 border-r border-solid border-gray-300 overflow-y-auto h-full" id="left-side-column">
+                <aside class="h-screen" id="question-nav-list">
+                    <p class="text-sm text-gray-600">
+                        Questions 
+                    </p>
+                    <ul class="text-sm font-light text-gray-700">
+                        <li v-for="(question, index) in quiz.questions" :key="question.id" @click="scrollToQuestion(question.id)" class="py-1">
+                            <a :dusk="`question-link-${quiz.id}`">
+                                {{ index + 1 }}.
+                                &nbsp;
+                                {{ question.text.length > 60 ? question.text.substring(0, 60) + '...' : question.text }}
+                            </a>
+                        </li>
+                    </ul>
+                </aside>
+            </div>
 
-        <!-- main page section -->
-        
-        <!-- new question form -->
-        <div class="pt-4">
-            <textarea 
-                class="w-full mb-2 p-2" 
-                name="new_question" 
-                id="new-question-textarea" 
-                rows="4" 
-                placeholder="Enter a new question"
-                v-model="newQuestionText">
-            </textarea>
-            <button type="button" class="rounded bg-blue-500 p-1" @click="addQuestion">
-                <svg class="h-5 w-5 fill-current text-white" viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
-            </button>
-        </div>
+            <!-- main page section -->
+            <div class="w-full lg:px-4 lg:w-3/4 h-screen lg:overflow-y-auto">
+                <!-- new question form -->
+                <div class="pt-4">
+                    <textarea 
+                        class="w-full mb-2 p-2" 
+                        name="new_question" 
+                        id="new-question-textarea" 
+                        rows="4" 
+                        placeholder="Enter a new question"
+                        v-model="newQuestionText">
+                    </textarea>
+                    <button type="button" class="rounded bg-blue-500 p-1" @click="addQuestion">
+                        <svg class="h-5 w-5 fill-current text-white" viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
+                    </button>
+                </div>
 
-        <hr class="my-8">
+                <hr class="my-8">
 
-        <!-- question editors -->
-        <div v-for="(question, index) in quiz.questions" :key="question.id" :id="`question-${index}-editor`">
-            <p class="text-gray-600 my-3 text-sm">Question {{ index + 1 }}</p>
-            <question-editor 
-                :question="question" 
-                @question-saved="saveQuestion($event)"
-                @question-removed="removeQuestion($event)"></question-editor>
-            <hr class="my-8">
+                <!-- question editors -->
+                <div v-for="(question, index) in quiz.questions" :key="question.id" :id="`question-${index}-editor`">
+                    <p class="text-gray-600 my-3 text-sm">Question {{ index + 1 }}</p>
+                    <question-editor 
+                        :question="question" 
+                        @question-saved="saveQuestion($event)"
+                        @question-removed="removeQuestion($event)"></question-editor>
+                    <hr class="my-8">
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -246,13 +248,3 @@
         }
     }
 </script>
-
-<style>
-
-
-#left-side-column {
-    overflow: scroll;
-    height: 66vh;
-}
-
-</style>
