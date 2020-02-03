@@ -46,18 +46,20 @@
                 </div>
             </div>
         </div>
-        <button class="btn text-sm" 
-            @click="addAnswer(question.id)" id="add-answer-button">
-            New Answer
-        </button>
-        <button v-show="question.text && questionHasAnswers(question)" 
-            class="btn bg-blue-500 text-white text-sm" 
-            @click="saveQuestion(question)"
-            id="save-question-button">
-            Save Question
-        </button>
-        <button class="btn text-red-500 text-sm" @click="removeQuestion(question.id)">Delete</button>
-        <p class="text-green-500 mt-3" v-show="questionSavedMessageVisible">Save successful!</p>
+        <div class="mt-2">
+            <button class="btn text-sm" 
+                @click="addAnswer(question.id)" id="add-answer-button">
+                New Answer
+            </button>
+            <button v-show="question.text && questionHasAnswers(question)" 
+                class="btn bg-blue-500 text-white text-sm" 
+                @click="saveQuestion(question)"
+                id="save-question-button">
+                Save Question
+            </button>
+            <button class="btn text-red-500 text-sm" @click="removeQuestion(question.id)">Delete</button>
+            <p class="text-green-500 mt-3" v-show="questionSavedMessageVisible">Save successful!</p>
+        </div>
     </div>
 </template>
 
