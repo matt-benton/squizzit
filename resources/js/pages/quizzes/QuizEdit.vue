@@ -127,11 +127,19 @@
                     question_text: this.newQuestionText,
                 })
                 .then(response => {
-                    this.quiz.questions.push(response.data.question)
-                    // ! maybe use a promise to get the function below to work when the element is available
-                    // ! or check to see if it exists first
-                    this.scrollToQuestion(response.data.question.id);
+                    // we have to wait for the question to be added to the list before we can scroll to it
+                    this.putQuestionInList(response.data.question)
+                        .then(questionId => {
+                            this.scrollToQuestion(questionId)
+                        })
                     this.clearNewQuestionText();
+                })
+            },
+            putQuestionInList (question) {
+                this.quiz.questions.push(question)
+
+                return new Promise((resolve) => {
+                    resolve(question.id)
                 })
             },
             clearNewQuestionText () {
@@ -139,7 +147,6 @@
             },
             scrollToQuestion (id) {
                 const index = this.findQuestionIndex(id)
-                console.log(`question-${index}-editor`)
                 const questionElement = document.getElementById(`question-${index}-editor`)
                 questionElement.scrollIntoView()
             },
