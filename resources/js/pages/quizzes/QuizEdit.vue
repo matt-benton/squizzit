@@ -1,31 +1,41 @@
 <template>
     <div class="container mx-auto px-2" id="quiz-edit-body">
-        <!-- <section class="section is-small">
-            <p>
-                <input 
-                    id="quiz-name-input"
-                    type="text"
-                    class="mb-sm"
-                    placeholder="Quiz Title" 
-                    v-model.lazy="quiz.name"
-                    @change="updateQuiz">
-                <router-link :to="`/quizzes/${quiz.id}/share`" class="button is-primary is-pulled-right is-rounded" id="share-button">
-                    <i class="fas fa-share-square"></i>
-                    &nbsp;
-                    Share
-                </router-link>
-            </p>
-            <p>
-                <input
-                    id="quiz-description-input"
-                    type="text"
-                    placeholder="Quiz Description"
-                    v-model.lazy="quiz.description"
-                    @change="updateQuiz">
-            </p>
-        </section> -->
-        <div class="my-4">
-            <h3 class="text-lg my-1">{{ quiz.name }}</h3>
+        <div class="my-2" v-if="editQuizFormVisible">
+            <input 
+                id="quiz-name-input"
+                type="text"
+                class="px-3 py-2 rounded w-full"
+                placeholder="Quiz Title" 
+                v-model.lazy="quiz.name">
+            <!-- <router-link :to="`/quizzes/${quiz.id}/share`" class="button is-primary is-pulled-right is-rounded" id="share-button">
+                <i class="fas fa-share-square"></i>
+                &nbsp;
+                Share
+            </router-link> -->
+            <input
+                id="quiz-description-input"
+                class="px-3 py-2 my-2 rounded w-full"
+                type="text"
+                placeholder="Quiz Description"
+                v-model.lazy="quiz.description">
+            <button 
+                class="btn bg-blue-500 text-white text-sm" 
+                @click="updateQuiz()">
+                Save
+            </button>
+            <button class="btn text-sm" @click="toggleEditQuizForm">
+                Cancel
+            </button>
+        </div>
+        <div class="my-4" v-else>
+            <h3 class="text-lg my-1">
+                {{ quiz.name }}
+                <button type="button" class="rounded bg-gray-100 p-1" @click="toggleEditQuizForm">
+                    <svg viewBox="0 0 24 24" class="h-3 w-3 fill-current text-gray-600">
+                        <path d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" />
+                    </svg>
+                </button>
+            </h3>
             <h5 class="text-sm text-gray-600">{{ quiz.description }}</h5>
         </div>
 
@@ -88,6 +98,7 @@
             return {
                 quiz: '',
                 newQuestionText: '',
+                editQuizFormVisible: '',
             }
         },
         beforeRouteEnter(to, from, next) {
@@ -119,7 +130,8 @@
                         description: this.quiz.description
                     })
                     .then(response => {
-                        this.quiz = response.data.quiz;
+                        this.quiz = response.data.quiz
+                        this.toggleEditQuizForm()
                     })
                 }
             },
@@ -215,7 +227,14 @@
                 }
 
                 this.deselectQuestion();
-            }
+            },
+            toggleEditQuizForm () {
+                if (this.editQuizFormVisible) {
+                    this.editQuizFormVisible = false
+                } else {
+                    this.editQuizFormVisible = true
+                }
+            },
         },
         components: {
             'question-editor': QuestionEditor
@@ -225,40 +244,6 @@
 
 <style>
 
-#quiz-edit-container {
-    height: 100vh;
-}
-
-#quiz-name-input {
-    background: whitesmoke;
-    border-bottom: 0;
-    border-left: 0;
-    border-right: 0;
-    border-top: 0;
-    box-shadow: 0 0;
-    border-radius: 0;
-    font-size: 2rem;
-    padding: 0;
-    color: #4a4a4a;
-}
-
-#quiz-name-input:focus {
-    outline: none;
-}
-
-#quiz-description-input {
-    border: 0;
-    box-shadow: 0 0;
-    color: #4a4a4a;
-    font-size: 1rem;
-    font-weight: 300 !important;
-    background: whitesmoke;
-    width: 100%;
-}
-
-#quiz-description-input {
-    outline: none;
-}
 
 #left-side-column {
     overflow: scroll;
