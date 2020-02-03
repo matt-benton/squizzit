@@ -1,5 +1,7 @@
 <template>
     <div class="container mx-auto px-2" id="quiz-edit-body">
+
+        <!-- quiz edit form -->
         <div class="my-2" v-if="editQuizFormVisible">
             <input 
                 id="quiz-name-input"
@@ -7,11 +9,6 @@
                 class="px-3 py-2 rounded w-full"
                 placeholder="Quiz Title" 
                 v-model.lazy="quiz.name">
-            <!-- <router-link :to="`/quizzes/${quiz.id}/share`" class="button is-primary is-pulled-right is-rounded" id="share-button">
-                <i class="fas fa-share-square"></i>
-                &nbsp;
-                Share
-            </router-link> -->
             <input
                 id="quiz-description-input"
                 class="px-3 py-2 my-2 rounded w-full"
@@ -27,6 +24,8 @@
                 Cancel
             </button>
         </div>
+
+        <!-- quiz headings -->
         <div class="my-4" v-else>
             <h3 class="text-lg my-1">
                 {{ quiz.name }}
@@ -35,11 +34,17 @@
                         <path d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" />
                     </svg>
                 </button>
+
+                <router-link :to="`/quizzes/${quiz.id}/share`">
+                    <button class="float-right py-1 px-2 text-sm text-blue-500 bg-gray-300 rounded" id="share-button">
+                        Share
+                    </button>
+                </router-link>
             </h3>
             <h5 class="text-sm text-gray-600">{{ quiz.description }}</h5>
         </div>
-
         <hr class="my-8">
+
         <!-- left side nav -->
         <div class="hidden" id="left-side-column">
             <aside class="menu" id="question-nav-list">
