@@ -53,7 +53,7 @@
                         Questions 
                     </p>
                     <ul class="text-sm font-light text-gray-700">
-                        <li v-for="(question, index) in quiz.questions" :key="question.id" @click="scrollToQuestion(question.id)" class="py-1">
+                        <li v-for="(question, index) in quiz.questions" :key="question.id" @click="scrollToQuestion(question.id)" class="py-1 cursor-pointer">
                             <a :dusk="`question-link-${quiz.id}`">
                                 {{ index + 1 }}.
                                 &nbsp;
