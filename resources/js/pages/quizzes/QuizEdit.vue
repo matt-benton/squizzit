@@ -43,7 +43,7 @@
             </h3>
             <h5 class="text-sm text-gray-600">{{ quiz.description }}</h5>
         </div>
-        <hr class="my-8">
+        <hr class="mt-8">
 
         <div class="flex">
             <!-- left side nav -->
@@ -67,7 +67,7 @@
             <!-- main page section -->
             <div class="w-full lg:px-4 lg:w-3/4 h-screen lg:overflow-y-auto">
                 <!-- new question form -->
-                <div class="pt-4">
+                <div class="pt-8">
                     <textarea 
                         class="w-full mb-2 p-2" 
                         name="new_question" 
