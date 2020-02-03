@@ -73,7 +73,8 @@
             <p class="text-gray-600 my-3 text-sm">Question {{ index + 1 }}</p>
             <question-editor 
                 :question="question" 
-                @question-saved="saveQuestion($event)"></question-editor>
+                @question-saved="saveQuestion($event)"
+                @question-removed="removeQuestion($event)"></question-editor>
             <hr class="my-8">
         </div>
     </div>

@@ -56,6 +56,7 @@
             id="save-question-button">
             Save Question
         </button>
+        <button class="btn text-red-500 text-sm" @click="removeQuestion(question.id)">Delete</button>
         <p class="text-green-500 mt-3" v-show="questionSavedMessageVisible">Save successful!</p>
     </div>
 </template>
@@ -84,6 +85,9 @@
             saveQuestion(question) {
                 this.$emit('question-saved', question)
                 this.flashQuestionSavedMessage()
+            },
+            removeQuestion(questionId) {
+                this.$emit('question-removed', questionId)
             },
             flashQuestionSavedMessage() {
                 this.questionSavedMessageVisible = true
