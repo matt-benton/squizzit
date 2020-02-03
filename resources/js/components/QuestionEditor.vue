@@ -1,7 +1,7 @@
 <template>
     <div>
         <textarea
-            class="border p-3 rounded w-full text-sm"
+            class="border p-2 rounded w-full text-sm"
             name="question_text"
             placeholder="Enter Question"
             v-model="question.text"></textarea>
@@ -50,16 +50,15 @@
                 </div>
             </div>
         </div>
-
-        <button v-show="question.text && questionHasAnswers(question)" 
-            class="btn text-sm" 
-            @click="$emit('question-saved', question)"
-            id="save-question-button">
-            Save Question
-        </button>
         <button class="btn text-sm" 
             @click="addAnswer(question.id)" id="add-answer-button">
             New Answer
+        </button>
+        <button v-show="question.text && questionHasAnswers(question)" 
+            class="btn bg-blue-500 text-white text-sm" 
+            @click="$emit('question-saved', question)"
+            id="save-question-button">
+            Save Question
         </button>
     </div>
 </template>
@@ -75,7 +74,7 @@
         props: ['question'],
         methods: {
             addAnswer() {
-                this.question.answers.push({ text: '' });
+                this.question.answers.push({ text: '', correct: 0 });
             },
             removeAnswer(index) {
                 this.question.answers.splice(index, 1);

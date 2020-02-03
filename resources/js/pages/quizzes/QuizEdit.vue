@@ -54,7 +54,7 @@
         <!-- new question form -->
         <div class="pt-4">
             <textarea 
-                class="w-full mb-2" 
+                class="w-full mb-2 p-2" 
                 name="new_question" 
                 id="new-question-textarea" 
                 rows="4" 
@@ -74,6 +74,7 @@
             <question-editor 
                 :question="question" 
                 @question-saved="saveQuestion($event)"></question-editor>
+            <hr class="my-8">
         </div>
     </div>
 </template>
