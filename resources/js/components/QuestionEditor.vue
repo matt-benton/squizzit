@@ -16,10 +16,6 @@
                     placeholder="Answer Text Here"
                     :dusk="`answer-input-${index}`">
                 <div class="flex items-center">
-                    <!-- <label class="checkbox">
-                        <input type="checkbox" :dusk="`answer-checkbox-${index}`" v-model="answer.correct">
-                        <span class="text-sm">Correct</span>
-                    </label> -->
 
                     <!-- correct answer button -->
                     <button 
@@ -56,10 +52,11 @@
         </button>
         <button v-show="question.text && questionHasAnswers(question)" 
             class="btn bg-blue-500 text-white text-sm" 
-            @click="$emit('question-saved', question)"
+            @click="saveQuestion(question)"
             id="save-question-button">
             Save Question
         </button>
+        <p class="text-green-500 mt-3" v-show="questionSavedMessageVisible">Save successful!</p>
     </div>
 </template>
 
@@ -68,7 +65,7 @@
     export default {
         data() {
             return {
-                
+                questionSavedMessageVisible: false,
             }
         },
         props: ['question'],
@@ -83,7 +80,18 @@
                 if (question.answers.length > 1) {
                     return true;
                 }
-            }
+            },
+            saveQuestion(question) {
+                this.$emit('question-saved', question)
+                this.flashQuestionSavedMessage()
+            },
+            flashQuestionSavedMessage() {
+                this.questionSavedMessageVisible = true
+
+                setTimeout(() => {
+                    this.questionSavedMessageVisible = false
+                }, 2000)
+            },
         }
     }
 </script>
