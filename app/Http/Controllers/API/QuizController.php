@@ -20,7 +20,13 @@ class QuizController extends Controller
      */
     public function index()
     {
-        return response(['quizzes' => Auth::user()->quizzes]);
+        $quizzes = Auth::user()->quizzes;
+
+        foreach ($quizzes as $quiz) {
+            $quiz->numQuestions = $quiz->questions()->count();
+        }
+
+        return response(['quizzes' => $quizzes]);
     }
 
     /**

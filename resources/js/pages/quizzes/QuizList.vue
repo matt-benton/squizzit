@@ -4,7 +4,7 @@
             <p>My Quizzes</p>
         </section>
         <section class="quiz-grid" v-if="quizzes.length > 0">
-            <div class="bg-gray-200 p-4 rounded" v-for="quiz in orderedQuizzes" :key="quiz.id">
+            <div class="m-3 p-4 bg-gray-100 rounded" v-for="quiz in orderedQuizzes" :key="quiz.id">
                 <header class="pb-5 text-gray-700">
                     <router-link :to="`/quizzes/${quiz.id}`" class="card-header-title" v-if="quiz.pivot.role === 'maker'">
                         {{ quiz.name }}
@@ -13,8 +13,9 @@
                         {{ quiz.name }}
                     </router-link>
                 </header>
-                <div class="text-gray-600 text-sm">
-                    {{ quiz.description }}
+                <div class="text-gray-600 text-xs">
+                    <p class="mb-4">{{ quiz.description }}</p>
+                    <p>{{ quiz.numQuestions }} questions</p>
                 </div>
             </div>
         </section>
@@ -73,8 +74,19 @@
 
 .quiz-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 30px;
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+    .quiz-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (min-width: 768px) {
+    .quiz-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 </style>
