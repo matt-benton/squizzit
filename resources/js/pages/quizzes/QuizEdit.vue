@@ -47,8 +47,8 @@
 
         <div class="flex">
             <!-- left side nav -->
-            <div class="hidden lg:block w-1/4 p-2 border-r border-solid border-gray-300 overflow-y-auto h-full" id="left-side-column">
-                <aside class="h-screen" id="question-nav-list">
+            <div class="hidden lg:block w-1/4 p-2 border-r border-solid border-gray-300" id="left-side-column">
+                <aside id="question-nav-list">
                     <p class="text-sm text-gray-600">
                         Questions 
                     </p>
@@ -65,7 +65,7 @@
             </div>
 
             <!-- main page section -->
-            <div class="w-full lg:px-4 lg:w-3/4 h-screen lg:overflow-y-auto">
+            <div class="w-full lg:px-4 lg:w-3/4">
                 <!-- new question form -->
                 <div class="pt-8">
                     <textarea 
