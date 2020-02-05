@@ -1,21 +1,18 @@
 <template>
     <div class="container mx-auto pb-10">
-        <section class="p-5 text-gray-600">
-            <p>My Quizzes</p>
+        <section v-if="createdQuizzes.length > 0">
+            <h3 class="p-5 text-gray-600">My Created Quizzes</h3>
+            <div class="quiz-grid">
+                <div class="mx-3 mb-6" v-for="quiz in createdQuizzes" :key="quiz.id">
+                    <quiz-card :quiz="quiz"></quiz-card>
+                </div>
+            </div>
         </section>
-        <section class="quiz-grid" v-if="quizzes.length > 0">
-            <div class="m-3 p-4 bg-gray-100 rounded" v-for="quiz in orderedQuizzes" :key="quiz.id">
-                <header class="pb-5 text-gray-700">
-                    <router-link :to="`/quizzes/${quiz.id}`" class="card-header-title" v-if="quiz.pivot.role === 'maker'">
-                        {{ quiz.name }}
-                    </router-link>
-                    <router-link :to="`/quizzes/${quiz.id}/take`" class="card-header-title" v-else>
-                        {{ quiz.name }}
-                    </router-link>
-                </header>
-                <div class="text-gray-600 text-xs">
-                    <p class="mb-4">{{ quiz.description }}</p>
-                    <p>{{ quiz.numQuestions }} questions</p>
+        <section v-if="joinedQuizzes.length > 0">
+            <h3 class="p-5 text-gray-600">My Joined Quizzes</h3>
+            <div class="quiz-grid" v-if="joinedQuizzes.length > 0">
+                <div class="mx-3 mb-6" v-for="quiz in joinedQuizzes" :key="quiz.id">
+                    <quiz-card :quiz="quiz"></quiz-card>
                 </div>
             </div>
         </section>
@@ -44,6 +41,7 @@
 </template>
 
 <script>
+    import QuizCard from '../../components/QuizCard.vue'
 
     export default {
         data() {
@@ -52,9 +50,12 @@
             }
         },
         computed: {
-            orderedQuizzes: function () {
-                return this.quizzes.sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase());
-            }
+            joinedQuizzes: function () {
+                return this.quizzes.filter(quiz => quiz.pivot.role === 'taker')
+            },
+            createdQuizzes: function () {
+                return this.quizzes.filter(quiz => quiz.pivot.role === 'maker')
+            },
         },
         created() {
             this.getQuizzes();
@@ -67,6 +68,9 @@
                 })
             }
         },
+        components: {
+            'quiz-card': QuizCard,
+        }
     }
 </script>
 
