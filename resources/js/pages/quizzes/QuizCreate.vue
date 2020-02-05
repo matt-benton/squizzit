@@ -25,7 +25,7 @@
 
             <div class="form-group">
                 <div class="form-group">
-                    <button class="btn" :disabled="$v.$invalid" @click="submit" dusk="save-quiz-button">Save Quiz</button>
+                    <button class="btn btn-dark" :disabled="$v.$invalid" @click="submit" dusk="save-quiz-button">Save Quiz</button>
                 </div>
             </div>
         </div>
