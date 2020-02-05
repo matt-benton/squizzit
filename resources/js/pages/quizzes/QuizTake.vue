@@ -1,30 +1,32 @@
 <template>
-    <div class="has-background-light">
-        <div class="container">
-            <section class="section is-small">
-                <h1 class="is-size-3 has-text-weight-normal" id="quiz-title">{{ quiz.name }}</h1>
-                <h3 class="is-size-5 has-text-weight-light">{{ quiz.description }}</h3>
-            </section>
-            <hr class="has-background-primary">
-            <section class="section" v-for="(question, index) in quiz.questions" :key="question.id">
-                <p class="menu-label">Question {{ index + 1 }}</p>
-                <p class="mb-sm">{{ question.text }}</p>
-                <div class="control">
-                    <label class="radio radio-label mb-sm" v-for="answer in question.answers" :key="answer.id">
-                        <input 
-                            type="radio" 
-                            :name="`question-${ index + 1 }-answers`" 
-                            :value="answer.id" 
-                            v-model="question.takerAnswer.answer_id"
-                            @change="saveAnswer(question)">
-                        {{ answer.text }}
-                    </label>
-                </div>
-            </section>
-            <section class="section is-small">
-                <button class="button is-primary is-rounded" id="submit-quiz-button" @click="submitQuiz">Submit Answers</button>
-            </section>
+    <div class="container mx-auto p-2 md:px-20">
+        <div class="my-4">
+            <h3 class="text-lg my-1">
+                {{ quiz.name }}
+            </h3>
+            <h5 class="text-sm text-gray-600">
+                {{ quiz.description }}
+            </h5>
         </div>
+        <hr>
+        <section class="py-5" v-for="(question, index) in quiz.questions" :key="question.id">
+            <p class="text-sm text-gray-600">Question {{ index + 1 }}</p>
+            <p class="my-2">{{ question.text }}</p>
+            <div class="flex flex-col p-4">
+                <label class="my-1 cursor-pointer" v-for="answer in question.answers" :key="answer.id">
+                    <input 
+                        type="radio" 
+                        :name="`question-${ index + 1 }-answers`" 
+                        :value="answer.id" 
+                        v-model="question.takerAnswer.answer_id"
+                        @change="saveAnswer(question)">
+                    {{ answer.text }}
+                </label>
+            </div>
+        </section>
+        <section class="">
+            <button class="btn btn-dark" id="submit-quiz-button" @click="submitQuiz">Submit Answers</button>
+        </section>
     </div>
 </template>
 
@@ -85,12 +87,3 @@ export default {
     },
 }
 </script>
-
-<style>
-
-.radio-label {
-    display: block;
-    margin-left: 0 !important;
-}
-
-</style>
