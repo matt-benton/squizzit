@@ -107,4 +107,12 @@ input.is-success {
     @apply bg-blue-500 text-white;
 }
 
+.btn-dark {
+    @apply bg-blue-900 text-white;
+}
+
+.btn-secondary {
+    @apply bg-gray-600 text-white;
+}
+
 @tailwind utilities;
