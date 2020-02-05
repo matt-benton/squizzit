@@ -101,4 +101,22 @@ input.is-success {
     @apply bg-gray-600 text-white;
 }
 
+
+// CARD
+.card {
+    @apply h-full bg-gray-100 rounded shadow-md;
+}
+
+.card-header {
+    @apply text-lg p-5;
+}
+
+.card-body {
+    @apply text-gray-600 p-5;
+}
+
+.card-footer {
+    @apply text-gray-600 p-5;
+}
+
 @tailwind utilities;

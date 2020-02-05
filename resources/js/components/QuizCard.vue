@@ -1,6 +1,6 @@
 <template>
-    <div class="h-full bg-gray-100 rounded shadow-md">
-        <header class="p-5 text-lg">
+    <div class="card">
+        <header class="card-header">
             <router-link :to="`/quizzes/${quiz.id}`" class="card-header-title" v-if="quiz.pivot.role === 'maker'">
                 {{ quiz.name }}
             </router-link>
@@ -8,10 +8,10 @@
                 {{ quiz.name }}
             </router-link>
         </header>
-        <div class="p-5 text-gray-600">
-            <p class="mb-4">{{ quiz.description }}</p>
+        <div class="card-body">
+            <p>{{ quiz.description }}</p>
         </div>
-        <div class="p-5 text-gray-600">
+        <div class="card-footer">
             <p>{{ quiz.numQuestions }} questions</p>
         </div>
     </div>
