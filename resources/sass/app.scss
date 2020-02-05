@@ -50,10 +50,6 @@ body {
     @apply w-full my-1 bg-gray-200 p-2 text-lg;
 }
 
-.btn {
-    @apply px-4 py-2 bg-gray-400 rounded;
-}
-
 .validation-text {
     @apply text-red-700;
 }
@@ -89,6 +85,26 @@ input.is-success {
 
 .dropdown-link:hover {
     @apply bg-indigo-500 text-white;
+}
+
+
+// ALERTS
+.alert {
+    @apply p-5 w-full rounded bg-gray-400;
+}
+
+.alert-success {
+    @apply bg-green-600 text-white;
+}
+
+
+// BUTTONS
+.btn {
+    @apply px-4 py-2 rounded;
+}
+
+.btn-primary {
+    @apply bg-blue-500 text-white;
 }
 
 @tailwind utilities;

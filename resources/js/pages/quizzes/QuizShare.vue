@@ -1,40 +1,43 @@
 <template>
-    <div>
-        <div class="container">
-            <section class="section is-small">
-                <h1 class="is-size-3 has-text-weight-normal">
-                    {{ quiz.name }}
-                    <router-link :to="`/quizzes/${quiz.id}`">
-                        <button class="button is-white is-pulled-right is-rounded">Back to Quiz</button>
-                    </router-link>
-                </h1>
-                <h3 class="is-size-5 has-text-weight-light">{{ quiz.description }}</h3>
-            </section>
-            <hr class="has-background-primary">
-            <section class="section">
-                <div class="notification is-success" v-show="successMessage">
-                    <button class="delete" @click="resetSuccessMessage"></button>
-                    {{ successMessage }}
-                </div>
+    <div class="container mx-auto p-2">
+        <div class="my-4">
+            <h3 class="text-lg my-1">
+                {{ quiz.name }}
+
+                <router-link :to="`/quizzes/${quiz.id}`">
+                    <button class="float-right py-1 px-2 text-sm text-blue-500 bg-gray-300 rounded" id="share-button">
+                        Back to Quiz
+                    </button>
+                </router-link>
+            </h3>
+            <h5 class="text-sm text-gray-600">{{ quiz.description }}</h5>
+        </div>
+        <hr class="my-8">
+        <section class="flex flex-col items-center">
+            <div class="alert alert-success mb-6" v-show="successMessage">
+                <button class="delete" @click="resetSuccessMessage"></button>
+                {{ successMessage }}
+            </div>
+            <div class="form-panel">
                 <form id="invite-form">
                     <div class="field has-addons">
-                        <div class="control">
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
                             <input 
-                                class="input" 
-                                type="text" 
-                                placeholder="Email of person to invite" 
+                                class="form-control" 
+                                type="text"
                                 v-model="form.email.value"
                                 @keydown.enter.prevent="sendInvite"
                                 name="email">
                         </div>
-                        <div class="control">
-                            <button class="button is-primary" @click.prevent="sendInvite" id="invite-button">Invite</button>
+                        <div class="form-group">
+                            <button class="btn btn-primary" @click.prevent="sendInvite" id="invite-button">Invite</button>
                         </div>
                     </div>
-                    <p class="help is-danger">{{ form.email.errorMessage }}</p>
+                    <p class="validation-text">{{ form.email.errorMessage }}</p>
                 </form>
-            </section>
-        </div>
+            </div>
+        </section>
     </div>
 </template>
 
@@ -50,7 +53,7 @@
                         errorMessage: ''
                     }
                 },
-                successMessage: ''
+                successMessage: '',
             }
         },
         beforeRouteEnter(to, from, next) {
