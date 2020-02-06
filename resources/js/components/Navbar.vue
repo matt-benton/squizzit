@@ -33,9 +33,9 @@
                 </div>
 
                 <div class="nav-item flex">
-                    <router-link to="/invites" class="self-center">
+                    <router-link to="/invites" class="self-center flex flex-no-wrap">
                         Invites
-                        <span id="quiz-invite-counter" v-show="numQuizInvites > 0">{{ numQuizInvites }}</span>
+                        <span id="quiz-invite-counter" class="bg-yellow-500 w-4 ml-1 h-4 text-gray-900 flex justify-center items-center text-xs" v-show="numQuizInvites > 0">{{ numQuizInvites }}</span>
                     </router-link>
                 </div>
 
@@ -106,3 +106,11 @@
         }
     }
 </script>
+
+<style>
+
+#quiz-invite-counter {
+    border-radius: 290486px;
+}
+
+</style>
