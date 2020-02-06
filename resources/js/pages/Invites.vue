@@ -22,23 +22,21 @@
                 </footer>
             </div>
         </section>
-        <section class="columns" v-else>
-            <div class="column is-half is-offset-one-quarter has-text-grey">
-                <h1 class="is-size-3 pb-sm pt-md">No active invites.</h1>
-                <h2 class="is-size-4 pb-md">
+        <section class="flex flex-col items-center p-5" v-else>
+            <div class="">
+                <h1 class="mb-5 text-2xl">No active invites.</h1>
+                <h3 class="text-md mb-5">
                     When someone invites you to a quiz, it will show up here.
-                </h2>
-                <router-link to="/quizzes/create" class="button is-rounded is-primary">
-                    <span class="icon is-small">
-                        <i class="fas fa-pen"></i>
-                    </span>
-                    <span>Create Quiz and Invite Friends</span>
+                </h3>
+                <router-link to="/quizzes/create">
+                    <button class="btn btn-dark">
+                        Create a Quiz
+                    </button>
                 </router-link>
                 <router-link to="/quizzes" class="button is-rounded is-primary is-outlined ml-sm">
-                    <span class="icon is-small">
-                        <i class="fas fa-user-plus"></i>
-                    </span>
-                    <span>Back to My Quizzes</span>
+                    <button class="btn btn-secondary">
+                        My Quizzes
+                    </button>
                 </router-link>
             </div>
         </section>
