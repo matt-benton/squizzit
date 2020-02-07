@@ -11,12 +11,12 @@
                     </h2>
                     <div class="flex flex-col w-full mt-5 sm:flex-row">
                         <router-link to="/auth/login" class="sm:mr-3">
-                            <button class="mb-5 py-2 w-full bg-blue-900 text-white rounded sm:px-8 sm:py-3">
+                            <button class="mb-5 py-2 w-full btn-dark rounded sm:px-8 sm:py-3">
                                 Login
                             </button>        
                         </router-link>
                         <router-link to="/auth/signup">
-                            <button class="py-2 w-full bg-blue-900 text-white rounded sm:px-8 sm:py-3">
+                            <button class="py-2 w-full btn-dark rounded sm:px-8 sm:py-3">
                                 Make an Account
                             </button>
                         </router-link>

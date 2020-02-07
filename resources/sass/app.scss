@@ -95,12 +95,24 @@ input.is-success {
     @apply bg-blue-500 text-white;
 }
 
+.btn-primary:hover {
+    @apply bg-blue-600;
+}
+
 .btn-dark {
     @apply bg-blue-900 text-white;
 }
 
+.btn-dark:hover {
+    @apply bg-gray-800;
+}
+
 .btn-secondary {
     @apply bg-gray-600 text-white;
+}
+
+.btn-secondary:hover {
+    @apply bg-gray-700;
 }
 
 
