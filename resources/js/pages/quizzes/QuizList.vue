@@ -4,7 +4,9 @@
             <h3 class="p-5 text-gray-600">My Created Quizzes</h3>
             <div class="quiz-grid">
                 <div class="mx-3 mb-6" v-for="quiz in createdQuizzes" :key="quiz.id">
-                    <quiz-card :quiz="quiz"></quiz-card>
+                    <router-link :to="`/quizzes/${quiz.id}`">
+                        <quiz-card :quiz="quiz"></quiz-card>
+                    </router-link>
                 </div>
             </div>
         </section>
@@ -12,7 +14,9 @@
             <h3 class="p-5 text-gray-600">My Joined Quizzes</h3>
             <div class="quiz-grid" v-if="joinedQuizzes.length > 0">
                 <div class="mx-3 mb-6" v-for="quiz in joinedQuizzes" :key="quiz.id">
-                    <quiz-card :quiz="quiz"></quiz-card>
+                    <router-link :to="`/quizzes/${quiz.id}/take`">
+                        <quiz-card :quiz="quiz"></quiz-card>
+                    </router-link>
                 </div>
             </div>
         </section>
