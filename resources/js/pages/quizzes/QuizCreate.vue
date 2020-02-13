@@ -8,6 +8,7 @@
                             :class="{ 'is-danger': $v.form.name.$error, 'is-success': $v.form.name.$invalid === false }"
                             type="text"
                             name="name"
+                            id="quiz-name-input"
                             placeholder="Name Your Quiz"
                             v-model.trim="$v.form.name.$model">
                 <p class="validation-text" v-if="$v.form.name.$error">The name field is required.</p>
@@ -18,6 +19,7 @@
                 <textarea 
                     class="textarea" 
                     name="description" 
+                    id="quiz-description-input"
                     placeholder="Describe Your Quiz" 
                     v-model="form.description"
                     rows="4"></textarea>

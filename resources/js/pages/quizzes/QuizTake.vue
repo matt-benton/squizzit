@@ -1,7 +1,7 @@
 <template>
     <div class="container mx-auto p-2 md:px-20">
         <div class="my-4">
-            <h3 class="text-lg my-1">
+            <h3 class="text-lg my-1" id="quiz-title">
                 {{ quiz.name }}
             </h3>
             <h5 class="text-sm text-gray-600">

@@ -17,6 +17,7 @@
                 v-model.lazy="quiz.description">
             <button 
                 class="btn bg-blue-500 text-white text-sm" 
+                id="quiz-save-button"
                 @click="updateQuiz()">
                 Save
             </button>
@@ -26,10 +27,10 @@
         </div>
 
         <!-- quiz headings -->
-        <div class="my-4" v-else>
+        <div class="my-4" v-else id="quiz-heading">
             <h3 class="text-lg my-1">
                 {{ quiz.name }}
-                <button type="button" class="rounded bg-gray-100 p-1" @click="toggleEditQuizForm">
+                <button type="button" class="rounded bg-gray-100 p-1" @click="toggleEditQuizForm" id="quiz-edit-button">
                     <svg viewBox="0 0 24 24" class="h-3 w-3 fill-current text-gray-600">
                         <path d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" />
                     </svg>
@@ -76,7 +77,7 @@
                         placeholder="Enter a new question"
                         v-model="newQuestionText">
                     </textarea>
-                    <button type="button" class="rounded bg-blue-500 p-1" @click="addQuestion">
+                    <button type="button" class="rounded bg-blue-500 p-1" @click="addQuestion" id="add-question-button">
                         <svg class="h-5 w-5 fill-current text-white" viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
                     </button>
                 </div>

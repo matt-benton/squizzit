@@ -46,9 +46,9 @@ class QuizCreate extends Page
                 ->type('description', 'This is a quiz that was made by an automated test.')
                 ->click('@save-quiz-button')
                 ->pause(1000)
-                ->assertInputValue('#quiz-name-input', 'My Test Quiz')
-                ->assertInputValue(
-                    '#quiz-description-input',
+                ->assertSeeIn('#quiz-heading', 'My Test Quiz')
+                ->assertSeeIn(
+                    '#quiz-heading',
                     'This is a quiz that was made by an automated test.'
                 );
     }

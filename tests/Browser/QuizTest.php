@@ -43,15 +43,12 @@ class QuizTest extends DuskTestCase
             $browser->visit(new Login($user))
                     ->loginUser()
                     ->visit(new QuizEdit($quiz))
-                    ->pause(1000)
-                    ->clear('#quiz-name-input')
-                    ->pause(1000)
-                    ->keys('#quiz-name-input', $nameInputText)
-                    ->pause(1000)
-                    ->clear('#quiz-description-input')
-                    ->pause(1000)
-                    ->keys('#quiz-description-input', $descriptionInputText)
-                    ->click('hr')
+                    ->waitFor('#quiz-edit-button')
+                    ->click('#quiz-edit-button')
+                    ->waitFor('#quiz-name-input')
+                    ->type('#quiz-name-input', $nameInputText)
+                    ->type('#quiz-description-input', $descriptionInputText)
+                    ->click('#quiz-save-button')
                     ->pause(1000);
 
             $this->assertDatabaseMissing('quizzes', [
@@ -75,19 +72,21 @@ class QuizTest extends DuskTestCase
                     ->loginUser()
                     ->visit(new QuizCreate)
                     ->createQuiz()
-                    ->click('#new-question-button')
                     // the save question button should not be visible if the textarea is empty
-                    ->assertMissing('#save-question-button')
-                    ->type('question_text', 'What is your name?')
+                    ->type('new_question', 'What is your name?')
+                    ->click('#add-question-button')
+                    ->waitFor('#question-0-editor')
                     // the save question button should still be invisible until we add two answers
+                    ->assertDontSeeIn('#question-0-editor', '#save-question-button')
                     ->click('#add-answer-button')
-                    ->type('@answer-input-0', 'Mark')
+                    ->waitFor('@question-1-answer-input-0')
+                    ->type('@question-1-answer-input-0', 'Mark')
                     // still need to add one more answer before the button is visible
-                    ->assertMissing('#save-question-button')
+                    ->assertDontSeeIn('#question-0-editor', '#save-question-button')
                     ->click('#add-answer-button')
-                    ->type('@answer-input-1', 'Jerry')
+                    ->waitFor('@question-1-answer-input-1')
+                    ->type('@question-1-answer-input-1', 'Jerry')
                     ->click('#save-question-button')
-                    ->assertMissing('#question-editor-container')
                     ->pause(1000)
                     ->assertSeeIn('#question-nav-list', 'What is your name?');
         });
@@ -106,13 +105,13 @@ class QuizTest extends DuskTestCase
                     ->visit(new QuizEdit($quiz))
                     ->waitFor("@question-link-{$question->id}")
                     ->click("@question-link-{$question->id}")
-                    ->addAnswerToQuestion(0, 'Answer 1')
-                    ->addAnswerToQuestion(1, 'Answer 2')
+                    ->addAnswerToQuestion(0, 'Answer 1', $question->id)
+                    ->addAnswerToQuestion(1, 'Answer 2', $question->id)
                     ->waitFor('#save-question-button')
                     ->click('#save-question-button')
                     ->assertMissing('#question-editor-container')
                     ->click('@question-link-1')
-                    ->assertValue('@answer-input-0', 'Answer 1');
+                    ->assertValue('@question-1-answer-input-0', 'Answer 1');
 
             $this->assertDatabaseHas('answers', [
                 'question_id' => $question->id,
@@ -135,13 +134,12 @@ class QuizTest extends DuskTestCase
                     ->visit(new QuizEdit($quiz))
                     ->pause(1000)
                     ->click('@question-link-1')
-                    ->waitFor('@answer-input-0')
-                    ->click('@remove-answer-button-0')
-                    ->waitUntilMissing('@answer-input-2') // We have 3 answers, if we remove one then the third answer "element" will be missing
+                    ->waitFor('@question-1-answer-input-0')
+                    ->click('@question-1-answer-0-delete-button')
+                    ->waitUntilMissing('@question-1-answer-input-2') // We have 3 answers, if we remove one then the third answer "element" will be missing
                     ->click('#save-question-button')
-                    ->click('@question-link-1')
-                    ->waitFor('#question-editor-container')
-                    ->assertMissing('@answer-input-2');
+                    ->waitForText('Save successful!')
+                    ->assertMissing('@question-1-answer-input-2');
 
             $this->assertDatabaseMissing('answers', [
                 'question_id' => $question->id,
@@ -164,14 +162,11 @@ class QuizTest extends DuskTestCase
                     ->visit(new QuizEdit($quiz))
                     ->waitFor('@question-link-1')
                     ->click('@question-link-1')
-                    ->waitFor('@answer-input-0')
-                    ->type('@answer-input-0', 'This answer has been edited.')
-                    ->check('@answer-checkbox-0')
+                    ->waitFor('@question-1-answer-input-0')
+                    ->type('@question-1-answer-input-0', 'This answer has been edited.')
+                    ->click('@question-1-answer-0-correct-button')
                     ->click('#save-question-button')
-                    ->waitUntilMissing('#question-editor-container')
-                    ->click('@question-link-1')
-                    ->waitFor('#question-editor-container')
-                    ->assertValue('@answer-input-0', 'This answer has been edited.');
+                    ->waitForText('Save successful!');
 
             $this->assertDatabaseHas('answers', [
                 'question_id' => $question->id,

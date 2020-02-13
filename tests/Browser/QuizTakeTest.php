@@ -123,15 +123,15 @@ class QuizTakeTest extends DuskTestCase
                     ->loginUser()
                     ->visit("/#/quizzes/")
                     ->waitFor($quiz->title)
-                    ->click('.card-header-title')
+                    ->click('.card')
                     ->waitForText($questions[0]->text)
                     ->waitForText('Your Score: 75')
                     ->assertSee('You answered 3 out of 4 questions correctly.')
-                    ->assertVisible('.fa-check-circle')
-                    ->assertVisible('.fa-times')
-                    ->assertVisible('.has-text-success')
-                    ->assertVisible('.has-text-danger')
-                    ->assertVisible('.has-text-weight-bold');
+                    ->assertVisible('#correct-icon')
+                    ->assertVisible('#incorrect-icon')
+                    ->assertVisible('.text-green-500')
+                    ->assertVisible('.text-red-500')
+                    ->assertVisible('.font-medium');
         });
     }
 }

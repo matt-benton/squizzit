@@ -14,14 +14,15 @@
                     name="answer_text"
                     v-model="answer.text" 
                     placeholder="Answer Text Here"
-                    :dusk="`answer-input-${index}`">
+                    :dusk="`question-${question.id}-answer-input-${index}`">
                 <div class="flex items-center">
 
                     <!-- correct answer button -->
                     <button 
                         class="rounded p-1 md:ml-2" 
                         :class="[answer.correct === 1 ? 'bg-green-400 text-white' : 'bg-gray-100 text-green-300 hover:text-green-500']"
-                        @click="answer.correct = 1">
+                        @click="answer.correct = 1"
+                        :dusk="`question-${question.id}-answer-${index}-correct-button`">
                         <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
                             <path d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M12 20C7.59 20 4 16.41 4 12S7.59 4 12 4 20 7.59 20 12 16.41 20 12 20M16.59 7.58L10 14.17L7.41 11.59L6 13L10 17L18 9L16.59 7.58Z" />
                         </svg>
@@ -38,7 +39,7 @@
                     </button>
 
                     <!-- remove answer button -->
-                    <button class="rounded text-gray-600 p-1 ml-2" @click="removeAnswer(index)">
+                    <button class="rounded text-gray-600 p-1 ml-2" @click="removeAnswer(index)" :dusk="`question-${question.id}-answer-${index}-delete-button`">
                         <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
                             <path d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" />
                         </svg>

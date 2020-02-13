@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 use App\User;
 use Hash;
 
-class SignUpTest extends DuskTestCase
+class AuthTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
@@ -23,8 +23,8 @@ class SignUpTest extends DuskTestCase
                     ->type('password', 'Secret001')
                     ->type('password_confirmation', 'Secret001')
                     ->click('@sign-up-button')
-                    ->waitForText('Home')
-                    ->assertSee('Home');
+                    ->waitForText('No quizzes available')
+                    ->assertSee('No quizzes available');
         });
     }
 
@@ -41,8 +41,8 @@ class SignUpTest extends DuskTestCase
                     ->type('email', 'matt@test.com')
                     ->type('password', 'Secret001')
                     ->click('@sign-in-button')
-                    ->waitForText('Home')
-                    ->assertSee('Home');
+                    ->waitForText('No quizzes available')
+                    ->assertSee('No quizzes available');
         });
     }
 
