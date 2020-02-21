@@ -1,9 +1,11 @@
 <template>
     <div class="container mx-auto p-2">
-        <section class="section is-small">
-            <h1 class="text-2xl text-gray-800 my-5">{{ quiz.name }}</h1>
-            <h3 class="text-md text-gray-700">Your Score: <span class="text-2xl text-blue-600 ml-1">{{ score }}</span></h3>
-            <p class="text-md my-2 text-gray-700">You answered {{ correctAnswers }} out of {{ totalQuestions }} questions correctly.</p>
+        <section class="p-6 mt-3 bg-blue-500 rounded shadow-lg text-white">
+            <div class="flex justify-between">
+                <h1 class="text-2xl">{{ quiz.name }}</h1>
+                <h3 class="text-md">Your Score: <span class="text-2xl ml-1">{{ score }}</span></h3>
+            </div>
+            <p class="text-md my-2">You answered {{ correctAnswers }} out of {{ totalQuestions }} questions correctly.</p>
         </section>
         <section class="my-5 p-6 shadow-md bg-gray-100" v-for="(question, questionIndex) in quiz.questions" :key="question.id">
             <p class="text-gray-600 flex items-center">
