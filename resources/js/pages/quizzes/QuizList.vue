@@ -1,25 +1,27 @@
 <template>
     <div class="container mx-auto pb-10">
-        <section v-if="createdQuizzes.length > 0">
-            <h3 class="p-5 text-gray-600">My Created Quizzes</h3>
-            <div class="quiz-grid">
-                <div class="mx-3 mb-6" v-for="quiz in createdQuizzes" :key="quiz.id">
-                    <router-link :to="`/quizzes/${quiz.id}`">
-                        <quiz-card :quiz="quiz"></quiz-card>
-                    </router-link>
+        <div v-if="createdQuizzes.length > 0 || joinedQuizzes.length > 0">
+            <section v-show="createdQuizzes.length > 0">
+                <h3 class="p-5 text-gray-600">My Created Quizzes</h3>
+                <div class="quiz-grid">
+                    <div class="mx-3 mb-6" v-for="quiz in createdQuizzes" :key="quiz.id">
+                        <router-link :to="`/quizzes/${quiz.id}`">
+                            <quiz-card :quiz="quiz"></quiz-card>
+                        </router-link>
+                    </div>
                 </div>
-            </div>
-        </section>
-        <section v-if="joinedQuizzes.length > 0">
-            <h3 class="p-5 text-gray-600">My Joined Quizzes</h3>
-            <div class="quiz-grid" v-if="joinedQuizzes.length > 0">
-                <div class="mx-3 mb-6" v-for="quiz in joinedQuizzes" :key="quiz.id">
-                    <router-link :to="`/quizzes/${quiz.id}/take`">
-                        <quiz-card :quiz="quiz"></quiz-card>
-                    </router-link>
+            </section>
+            <section v-show="joinedQuizzes.length > 0">
+                <h3 class="p-5 text-gray-600">My Joined Quizzes</h3>
+                <div class="quiz-grid">
+                    <div class="mx-3 mb-6" v-for="quiz in joinedQuizzes" :key="quiz.id">
+                        <router-link :to="`/quizzes/${quiz.id}/take`">
+                            <quiz-card :quiz="quiz"></quiz-card>
+                        </router-link>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
         <section class="flex flex-col items-center p-5" v-else>
             <div class="max-w-xl mt-10">
                 <h1 class="mb-5 text-2xl">No quizzes available</h1>
