@@ -16,44 +16,43 @@
                 placeholder="Quiz Description"
                 v-model.lazy="quiz.description">
             <button 
-                class="btn bg-blue-500 text-white text-sm" 
+                class="btn btn-dark" 
                 id="quiz-save-button"
                 @click="updateQuiz()">
                 Save
             </button>
-            <button class="btn text-sm" @click="toggleEditQuizForm">
+            <button class="btn btn-secondary" @click="toggleEditQuizForm">
                 Cancel
             </button>
         </div>
 
         <!-- quiz headings -->
         <div class="my-4" v-else id="quiz-heading">
-            <h3 class="text-lg my-1">
+            <h3 class="text-2xl my-1 text-gray-800">
                 {{ quiz.name }}
-                <button type="button" class="rounded bg-gray-100 p-1" @click="toggleEditQuizForm" id="quiz-edit-button">
-                    <svg viewBox="0 0 24 24" class="h-3 w-3 fill-current text-gray-600">
+                <button type="button" class="rounded bg-gray-300 hover:bg-gray-400 p-1" @click="toggleEditQuizForm" id="quiz-edit-button">
+                    <svg viewBox="0 0 24 24" class="h-3 w-3 fill-current">
                         <path d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" />
                     </svg>
                 </button>
 
                 <router-link :to="`/quizzes/${quiz.id}/share`">
-                    <button class="float-right py-1 px-2 text-sm text-blue-500 bg-gray-300 rounded" id="share-button">
+                    <button class="float-right py-1 px-2 text-sm btn-dark rounded" id="share-button">
                         Share
                     </button>
                 </router-link>
             </h3>
-            <h5 class="text-sm text-gray-600">{{ quiz.description }}</h5>
+            <h5 class="text-sm text-gray-700">{{ quiz.description }}</h5>
         </div>
-        <hr class="mt-8">
 
         <div class="flex">
             <!-- left side nav -->
             <div class="hidden lg:block w-1/4 p-2 border-r border-solid border-gray-300" id="left-side-column">
                 <aside id="question-nav-list">
-                    <p class="text-sm text-gray-600">
+                    <p class="text-sm text-gray-700">
                         Questions 
                     </p>
-                    <ul class="text-sm font-light text-gray-700">
+                    <ul class="text-sm font-light text-gray-800">
                         <li v-for="(question, index) in quiz.questions" :key="question.id" @click="scrollToQuestion(question.id)" class="py-1 cursor-pointer">
                             <a :dusk="`question-link-${quiz.id}`">
                                 {{ index + 1 }}.
@@ -77,7 +76,7 @@
                         placeholder="Enter a new question"
                         v-model="newQuestionText">
                     </textarea>
-                    <button type="button" class="rounded bg-blue-500 p-1" @click="addQuestion" id="add-question-button">
+                    <button type="button" class="rounded btn-primary p-1" @click="addQuestion" id="add-question-button">
                         <svg class="h-5 w-5 fill-current text-white" viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
                     </button>
                 </div>
@@ -86,7 +85,7 @@
 
                 <!-- question editors -->
                 <div v-for="(question, index) in quiz.questions" :key="question.id" :id="`question-${index}-editor`">
-                    <p class="text-gray-600 my-3 text-sm">Question {{ index + 1 }}</p>
+                    <p class="text-gray-700 my-3 text-sm">Question {{ index + 1 }}</p>
                     <question-editor 
                         :question="question" 
                         @question-saved="saveQuestion($event)"

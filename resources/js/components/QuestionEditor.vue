@@ -48,12 +48,12 @@
             </div>
         </div>
         <div class="mt-2">
-            <button class="btn text-sm" 
+            <button class="btn btn-secondary text-sm" 
                 @click="addAnswer(question.id)" id="add-answer-button">
                 New Answer
             </button>
             <button v-show="question.text && questionHasAnswers(question)" 
-                class="btn bg-blue-500 text-white text-sm" 
+                class="btn btn-primary text-sm" 
                 @click="saveQuestion(question)"
                 id="save-question-button">
                 Save Question
