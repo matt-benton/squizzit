@@ -1,58 +1,96 @@
 <template>
-    <div id="quiz-edit-container">
-        <div class="container" id="quiz-edit-body">
-            <section class="section is-small">
-                <p>
-                    <input 
-                        id="quiz-name-input"
-                        type="text"
-                        class="mb-sm"
-                        placeholder="Quiz Title" 
-                        v-model.lazy="quiz.name"
-                        @change="updateQuiz">
-                    <router-link :to="`/quizzes/${quiz.id}/share`" class="button is-primary is-pulled-right is-rounded" id="share-button">
-                        <i class="fas fa-share-square"></i>
-                        &nbsp;
-                        Share
-                    </router-link>
-                </p>
-                <p>
-                    <input
-                        id="quiz-description-input"
-                        type="text"
-                        placeholder="Quiz Description"
-                        v-model.lazy="quiz.description"
-                        @change="updateQuiz">
-                </p>
-            </section>
+    <div class="container mx-auto px-2" id="quiz-edit-body">
 
-            <hr class="has-background-primary">
-            <div class="columns">
-                <!-- left side nav -->
-                <div class="column is-one-quarter" id="left-side-column">
-                    <aside class="menu" id="question-nav-list">
-                        <p class="menu-label">
-                            Questions 
-                            <button class="button is-primary is-rounded is-small is-pulled-right" id="new-question-button" @click="selectQuestion(returnNewQuestion())">+ New</button>
-                        </p>
-                        <ul class="menu-list">
-                            <li v-for="(question, index) in quiz.questions" :key="question.id" @click="selectQuestion(question)">
-                                <a :dusk="`question-link-${quiz.id}`">
-                                    {{ index + 1 }}.
-                                    &nbsp;
-                                    {{ question.text.length > 60 ? question.text.substring(0, 60) + '...' : question.text }}
-                                </a>
-                            </li>
-                        </ul>
-                    </aside>
+        <!-- quiz edit form -->
+        <div class="my-2" v-if="editQuizFormVisible">
+            <input 
+                id="quiz-name-input"
+                type="text"
+                class="px-3 py-2 rounded w-full"
+                placeholder="Quiz Title" 
+                v-model.lazy="quiz.name">
+            <input
+                id="quiz-description-input"
+                class="px-3 py-2 my-2 rounded w-full"
+                type="text"
+                placeholder="Quiz Description"
+                v-model.lazy="quiz.description">
+            <button 
+                class="btn btn-dark" 
+                id="quiz-save-button"
+                @click="updateQuiz()">
+                Save
+            </button>
+            <button class="btn btn-secondary" @click="toggleEditQuizForm">
+                Cancel
+            </button>
+        </div>
+
+        <!-- quiz headings -->
+        <div class="my-4" v-else id="quiz-heading">
+            <h3 class="text-2xl my-1 text-gray-800">
+                {{ quiz.name }}
+                <button type="button" class="rounded bg-gray-300 hover:bg-gray-400 p-1" @click="toggleEditQuizForm" id="quiz-edit-button">
+                    <svg viewBox="0 0 24 24" class="h-3 w-3 fill-current">
+                        <path d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" />
+                    </svg>
+                </button>
+
+                <router-link :to="`/quizzes/${quiz.id}/share`">
+                    <button class="float-right py-1 px-2 text-sm btn-dark rounded" id="share-button">
+                        Share
+                    </button>
+                </router-link>
+            </h3>
+            <h5 class="text-sm text-gray-700">{{ quiz.description }}</h5>
+        </div>
+
+        <div class="flex">
+            <!-- left side nav -->
+            <div class="hidden lg:block w-1/4 p-2 border-r border-solid border-gray-300" id="left-side-column">
+                <aside id="question-nav-list">
+                    <p class="text-sm text-gray-700">
+                        Questions 
+                    </p>
+                    <ul class="text-sm font-light text-gray-800">
+                        <li v-for="(question, index) in quiz.questions" :key="question.id" @click="scrollToQuestion(question.id)" class="py-1 cursor-pointer">
+                            <a :dusk="`question-link-${quiz.id}`">
+                                {{ index + 1 }}.
+                                &nbsp;
+                                {{ question.text.length > 60 ? question.text.substring(0, 60) + '...' : question.text }}
+                            </a>
+                        </li>
+                    </ul>
+                </aside>
+            </div>
+
+            <!-- main page section -->
+            <div class="w-full lg:px-4 lg:w-3/4">
+                <!-- new question form -->
+                <div class="pt-8">
+                    <textarea 
+                        class="w-full mb-2 p-2" 
+                        name="new_question" 
+                        id="new-question-textarea" 
+                        rows="4" 
+                        placeholder="Enter a new question"
+                        v-model="newQuestionText">
+                    </textarea>
+                    <button type="button" class="rounded btn-primary p-1" @click="addQuestion" id="add-question-button">
+                        <svg class="h-5 w-5 fill-current text-white" viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
+                    </button>
                 </div>
 
-                <!-- questions/form -->
-                <div class="column ml-md">
+                <hr class="my-8">
+
+                <!-- question editors -->
+                <div v-for="(question, index) in quiz.questions" :key="question.id" :id="`question-${index}-editor`">
+                    <p class="text-gray-700 my-3 text-sm">Question {{ index + 1 }}</p>
                     <question-editor 
-                        v-if="selectedQuestion" 
-                        :question="selectedQuestion" 
-                        @question-saved="saveQuestion($event)"></question-editor>
+                        :question="question" 
+                        @question-saved="saveQuestion($event)"
+                        @question-removed="removeQuestion($event)"></question-editor>
+                    <hr class="my-8">
                 </div>
             </div>
         </div>
@@ -66,7 +104,8 @@
         data() {
             return {
                 quiz: '',
-                selectedQuestion: ''
+                newQuestionText: '',
+                editQuizFormVisible: '',
             }
         },
         beforeRouteEnter(to, from, next) {
@@ -98,17 +137,39 @@
                         description: this.quiz.description
                     })
                     .then(response => {
-                        this.quiz = response.data.quiz;
+                        this.quiz = response.data.quiz
+                        this.toggleEditQuizForm()
                     })
                 }
             },
-            addQuestion (question) {
+            addQuestion () {
                 axios.post('/api/questions', {
-                    question
+                    quiz_id: this.quiz.id,
+                    question_text: this.newQuestionText,
                 })
                 .then(response => {
-                    this.quiz.questions.push(response.data.question);
+                    // we have to wait for the question to be added to the list before we can scroll to it
+                    this.putQuestionInList(response.data.question)
+                        .then(questionId => {
+                            this.scrollToQuestion(questionId)
+                        })
+                    this.clearNewQuestionText();
                 })
+            },
+            putQuestionInList (question) {
+                this.quiz.questions.push(question)
+
+                return new Promise((resolve) => {
+                    resolve(question.id)
+                })
+            },
+            clearNewQuestionText () {
+                this.newQuestionText = ''
+            },
+            scrollToQuestion (id) {
+                const index = this.findQuestionIndex(id)
+                const questionElement = document.getElementById(`question-${index}-editor`)
+                questionElement.scrollIntoView()
             },
             updateQuestion (question) {
                 axios.put(`/api/questions/${question.id}`, {
@@ -124,14 +185,6 @@
             },
             deselectQuestion () {
                 this.selectedQuestion = '';
-            },
-            returnNewQuestion () {
-                return {
-                    answers: [],
-                    quiz_id: this.quiz.id,
-                    text: '',
-                    type: ''
-                }
             },
             addAnswer (question_id) {
                 let question = this.findQuestion(question_id);
@@ -181,54 +234,17 @@
                 }
 
                 this.deselectQuestion();
-            }
+            },
+            toggleEditQuizForm () {
+                if (this.editQuizFormVisible) {
+                    this.editQuizFormVisible = false
+                } else {
+                    this.editQuizFormVisible = true
+                }
+            },
         },
         components: {
             'question-editor': QuestionEditor
         }
     }
 </script>
-
-<style>
-
-#quiz-edit-container {
-    height: 100vh;
-}
-
-#quiz-name-input {
-    background: whitesmoke;
-    border-bottom: 0;
-    border-left: 0;
-    border-right: 0;
-    border-top: 0;
-    box-shadow: 0 0;
-    border-radius: 0;
-    font-size: 2rem;
-    padding: 0;
-    color: #4a4a4a;
-}
-
-#quiz-name-input:focus {
-    outline: none;
-}
-
-#quiz-description-input {
-    border: 0;
-    box-shadow: 0 0;
-    color: #4a4a4a;
-    font-size: 1rem;
-    font-weight: 300 !important;
-    background: whitesmoke;
-    width: 100%;
-}
-
-#quiz-description-input {
-    outline: none;
-}
-
-#left-side-column {
-    overflow: scroll;
-    height: 66vh;
-}
-
-</style>

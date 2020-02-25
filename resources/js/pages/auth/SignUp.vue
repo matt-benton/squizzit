@@ -1,100 +1,67 @@
 <template>
-    <section class="section">
-        <div class="columns">
-            <div class="column is-4 is-offset-4">
-                <div class="box">
-
-                    <!-- Email -->
-                    <div class="field">
-                        <label for="email" class="label">Email</label>
-                        <div class="control has-icons-left has-icons-right">
-                            <input class="input"
-                                    :class="{ 'is-danger': $v.form.email.$error, 'is-success': $v.form.email.$invalid === false }"
-                                    type="text"
-                                    name="email"
-                                    v-model.trim.lazy="$v.form.email.$model"
-                                    @keydown.enter="register">
-                            <span class="icon is-small is-left">
-                                <i class="far fa-envelope"></i>
-                            </span>
-                            <span class="icon is-small is-right" v-if="$v.form.email.$error">
-                                <i class="fas fa-exclamation-triangle"></i>
-                            </span>
-                            <span class="icon is-small is-right" v-else-if="$v.form.email.$invalid === false">
-                                <i class="fas fa-check"></i>
-                            </span>
-                            <p class="help is-danger" v-show="$v.form.email.$dirty && $v.form.email.required === false">An email address is required.</p>
-                            <p class="help is-danger" v-show="$v.form.email.$dirty && $v.form.email.email === false">The email must be a valid email address.</p>
-                            <p class="help is-danger" v-show="$v.form.email.$error && $v.form.email.isUnique === false">An account with this email address is already registered.</p>
-                        </div>
-                    </div>
-
-                    <!-- Password -->
-                    <div class="field">
-                        <label for="password" class="label">Password</label>
-                        <div class="control has-icons-left has-icons-right">
-                            <input class="input"
-                                    :class="{ 'is-danger': $v.form.password.$error, 'is-success': $v.form.password.$invalid === false }"
-                                    type="password"
-                                    name="password"
-                                    id="password-input"
-                                    v-model.trim.lazy="$v.form.password.$model"
-                                    @keydown.enter="register">
-                            <span class="icon is-small is-left">
-                                <i class="fas fa-lock"></i>
-                            </span>
-                            <span class="icon is-small is-right" v-if="$v.form.password.$error">
-                                <i class="fas fa-exclamation-triangle"></i>
-                            </span>
-                            <span class="icon is-small is-right" v-else-if="$v.form.password.$invalid === false">
-                                <i class="fas fa-check"></i>
-                            </span>
-                            <ul class="help is-danger" style="list-style-type:disc; margin-left: 3em" v-if="$v.form.password.$error">
-                                <li>Eight character minimum</li>
-                                <li>At least one lowercase letter</li>
-                                <li>At least one uppercase letter</li>
-                                <li>At least one number</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Password Confirmation -->
-                    <div class="field">
-                        <label class="label" for="password_confirmation">Confirm Password</label>
-                        <div class="control has-icons-left has-icons-right">
-                            <input class="input"
-                                :class="{ 'is-danger': $v.form.password_confirmation.$error, 'is-success': $v.form.password_confirmation.$invalid === false && $v.form.password_confirmation.$dirty }"
-                                type="password"
-                                name="password_confirmation"
-                                v-model.trim="$v.form.password_confirmation.$model"
+    <div class="flex flex-col items-center p-2 md:p-10">
+        <div>
+            <h1 class="font-cursive text-yellow-500 text-2xl mb-3 mx-3">Squizzit</h1>
+            <div class="form-panel">
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                        <input class="form-control"
+                                :class="{ 'is-danger': $v.form.email.$error, 'is-success': $v.form.email.$invalid === false }"
+                                type="text"
+                                name="email"
+                                v-model.trim.lazy="$v.form.email.$model"
                                 @keydown.enter="register">
-                            <span class="icon is-small is-left">
-                                <i class="fas fa-lock"></i>
-                            </span>
-                            <span class="icon is-small is-right" v-if="$v.form.password_confirmation.$error">
-                                <i class="fas fa-exclamation-triangle"></i>
-                            </span>
-                            <span class="icon is-small is-right" v-else-if="$v.form.password_confirmation.$invalid === false && $v.form.password_confirmation.$dirty">
-                                <i class="fas fa-check"></i>
-                            </span>
-                        </div>
-                    </div>
+                                <p class="validation-text" v-show="$v.form.email.$dirty && $v.form.email.required === false">An email address is required.</p>
+                                <p class="validation-text" v-show="$v.form.email.$dirty && $v.form.email.email === false">The email must be a valid email address.</p>
+                                <p class="validation-text" v-show="$v.form.email.$error && $v.form.email.isUnique === false">An account with this email address is already registered.</p>
+                            </div>
 
-                    <div class="field">
-                        <div class="control">
-                            <button
-                                    type="button"
-                                    class="button is-primary is-rounded"
-                                    @click="register"
-                                    :disabled="$v.$invalid"
-                                    dusk="sign-up-button">Sign Up</button>
-                            <router-link to="/" class="button is-text is-rounded">Go Back</router-link>
-                        </div>
-                    </div>
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input class="form-control"
+                            :class="{ 'is-danger': $v.form.password.$error, 'is-success': $v.form.password.$invalid === false }"
+                            type="password"
+                            name="password"
+                            id="password-input"
+                            v-model.trim.lazy="$v.form.password.$model"
+                            @keydown.enter="register">
+                    <ul class="validation-text" style="list-style-type:disc; margin-left: 3em" v-if="$v.form.password.$error">
+                        <li>Eight character minimum</li>
+                        <li>At least one lowercase letter</li>
+                        <li>At least one uppercase letter</li>
+                        <li>At least one number</li>
+                    </ul>
+                </div>
+
+                <!-- Password Confirmation -->
+                <div class="form-group">
+                    <label class="form-label" for="password_confirmation">Confirm Password</label>
+                    <input class="form-control"
+                        :class="{ 'is-danger': $v.form.password_confirmation.$error, 'is-success': $v.form.password_confirmation.$invalid === false && $v.form.password_confirmation.$dirty }"
+                        type="password"
+                        name="password_confirmation"
+                        v-model.trim="$v.form.password_confirmation.$model"
+                        @keydown.enter="register">
+                </div>
+
+                <div class="form-group">
+                    <button
+                        type="button"
+                        class="btn btn-dark"
+                        @click="register"
+                        :disabled="$v.$invalid"
+                        dusk="sign-up-button">
+                        Sign Up
+                    </button>
+                    <router-link to="/">
+                        <button class="btn btn-secondary">Go Back</button>
+                    </router-link>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 </template>
 
 <script>

@@ -8,8 +8,10 @@
 .env
 .env.dusk.local
 .env.backup
+.env.testing
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+.DS_Store

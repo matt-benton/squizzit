@@ -15,8 +15,8 @@
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     </head>
-    <body>
-        <div id="app" class="has-background-light">
+    <body class="min-h-screen">
+        <div id="app" class="h-full">
             <router-view></router-view>
         </div>
     </body>

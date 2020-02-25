@@ -2,11 +2,11 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class QuizInvite extends Model
 {
-    public $timestamps = false;
     protected $fillable = ['email', 'quiz_id'];
 
     public function quiz()

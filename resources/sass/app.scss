@@ -1,12 +1,136 @@
-// Bulma
-@import '~bulma/css/bulma.css';
+@import url('https://fonts.googleapis.com/css?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap');
+
+@tailwind base;
+
+@tailwind components;
 
 // Font Awesome
 @import '~@fortawesome/fontawesome-free/css/all.css';
 
-// Spacing utilities
-@import 'spacing';
-
-#app {
-    height: 100vh;
+body {
+    @apply font-body text-gray-700 bg-gray-200;
 }
+
+
+// FORMS
+.form-panel {
+    @apply bg-gray-100 px-10 py-6;
+}
+
+.form-group {
+    @apply my-8;
+}
+
+.form-label {
+    @apply text-lg;
+}
+
+.form-control {
+    @apply w-full h-10 my-1 bg-gray-200 p-2 text-lg rounded;
+}
+
+.textarea {
+    @apply w-full my-1 bg-gray-200 p-2 text-lg;
+}
+
+.validation-text {
+    @apply text-red-700;
+}
+
+input.is-danger {
+    @apply bg-red-200;
+}
+
+input.is-success {
+    @apply bg-green-200;
+}
+
+// NAVBAR
+.nav-item {
+    @apply text-gray-200 rounded px-2 py-1;
+}
+
+.nav-item:hover {
+    @apply bg-gray-800;
+}
+
+.dropdown {
+    @apply absolute right-0 mt-2 py-2 w-48 bg-white rounded-lg shadow-xl;
+}
+
+.dropdown-exit-page-cover {
+    @apply fixed inset-0 h-full w-full cursor-default;
+}
+
+.dropdown-link {
+    @apply block px-4 py-2 text-gray-800;
+}
+
+.dropdown-link:hover {
+    @apply bg-indigo-500 text-white;
+}
+
+
+// ALERTS
+.alert {
+    @apply p-5 w-full rounded bg-gray-400;
+}
+
+.alert-success {
+    @apply bg-green-600 text-white;
+}
+
+.alert-primary {
+    @apply bg-blue-500 text-white;
+}
+
+
+// BUTTONS
+.btn {
+    @apply px-4 py-2 rounded;
+}
+
+.btn-primary {
+    @apply bg-blue-500 text-white;
+}
+
+.btn-primary:hover {
+    @apply bg-blue-600;
+}
+
+.btn-dark {
+    @apply bg-blue-900 text-white;
+}
+
+.btn-dark:hover {
+    @apply bg-gray-800;
+}
+
+.btn-secondary {
+    @apply bg-gray-600 text-white;
+}
+
+.btn-secondary:hover {
+    @apply bg-gray-700;
+}
+
+
+// CARD
+.card {
+    @apply h-full bg-gray-100 rounded;
+}
+
+.card-header {
+    @apply text-lg p-5;
+}
+
+.card-body {
+    @apply text-gray-600 p-5;
+}
+
+.card-footer {
+    @apply text-gray-600 p-5;
+}
+
+@tailwind utilities;
