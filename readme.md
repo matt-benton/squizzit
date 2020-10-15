@@ -44,8 +44,8 @@ php artisan dusk:chrome-driver
 ```
 
 ```bash
-# Migrate testing database
-php artisan migrate --env=dusk.local
+# Run tests
+php artisan dusk
 
 ```
 
